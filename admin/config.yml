@@ -1,0 +1,41 @@
+backend:
+  name: git-gateway
+  branch: main
+locale: pt
+media_folder: assets/blog
+public_folder: /assets/blog
+
+collections:
+  - name: conteudo
+    label: Conteúdo do site
+    files:
+      - name: posts
+        label: Blog
+        file: data/posts.json
+        fields:
+          - label: Posts (o primeiro da lista aparece no topo)
+            name: posts
+            widget: list
+            summary: "{{fields.data}} – {{fields.titulo}}"
+            fields:
+              - { label: "ID na URL (sem espaços nem acentos)", name: id, widget: string }
+              - { label: Data, name: data, widget: datetime, format: "DD/MM/YYYY", date_format: "DD/MM/YYYY", time_format: false }
+              - { label: Categoria, name: cat, widget: select, options: [Mercado, Tecnologia, Operação] }
+              - { label: Título, name: titulo, widget: string }
+              - { label: Resumo, name: resumo, widget: text }
+              - { label: Imagem, name: img, widget: image }
+              - { label: Texto, name: corpo, widget: markdown }
+
+      - name: vagas
+        label: Vagas
+        file: data/vagas.json
+        fields:
+          - label: Vagas
+            name: vagas
+            widget: list
+            summary: "{{fields.t}}"
+            fields:
+              - { label: Cargo, name: t, widget: string }
+              - { label: Área, name: a, widget: select, options: [Operação, Engenharia, Administrativo] }
+              - { label: Local, name: l, widget: string }
+              - { label: Regime, name: r, widget: string }

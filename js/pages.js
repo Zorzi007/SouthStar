@@ -63,3 +63,5 @@ $$('form.ajax').forEach(f => f.addEventListener('submit', async e => {
     m.style.color = '#4da3ff'; m.textContent = 'Enviado com sucesso!'; f.reset();
   } catch { m.style.color = '#ef4444'; m.textContent = 'Erro ao enviar. Tente novamente.'; }
 }));
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');

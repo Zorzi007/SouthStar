@@ -23,7 +23,7 @@ const setTheme = t => {
 $('#themeBtn').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
 
 /* Idiomas */
-function applyLang() {
+{
   $$('[data-en]').forEach(el => {
     if (el.dataset.pt === undefined) el.dataset.pt = el.innerHTML;
     el.innerHTML = lang === 'en' ? el.dataset.en : el.dataset.pt;
@@ -39,7 +39,27 @@ function applyLang() {
   lucide.createIcons();
   if (window.Chart) renderCharts();
 }
-$('#langBtn').onclick = () => { lang = lang === 'en' ? 'pt' : 'en'; applyLang(); };
+/* Idiomas: PT → EN → ES */
+const LANGS = ['pt', 'en', 'es'];
+if (!LANGS.includes(lang)) lang = 'pt';
+const tr = (pt, en) => lang === 'pt' ? pt : lang === 'en' ? en : ((window.ES || {})[en] || en);
+function applyLang() {
+  $$('[data-en]').forEach(el => {
+    if (el.dataset.pt === undefined) el.dataset.pt = el.innerHTML;
+    el.innerHTML = tr(el.dataset.pt, el.dataset.en);
+  });
+  $$('[data-en-ph]').forEach(el => {
+    if (!el.dataset.ptPh) el.dataset.ptPh = el.placeholder;
+    el.placeholder = tr(el.dataset.ptPh, el.dataset.enPh);
+  });
+  document.documentElement.lang = { pt: 'pt-BR', en: 'en', es: 'es' }[lang];
+  $('#langBtn').textContent = LANGS[(LANGS.indexOf(lang) + 1) % 3].toUpperCase();
+  localStorage.setItem('lang', lang);
+  renderNews();
+  lucide.createIcons();
+  if (window.Chart) renderCharts();
+}
+$('#langBtn').onclick = () => { lang = LANGS[(LANGS.indexOf(lang) + 1) % 3]; applyLang(); };
 
 /* Header, menu e topo */
 const header = $('#header');
@@ -287,3 +307,5 @@ $('#cookieNo').onclick = () => { localStorage.setItem('cookies', 'no'); $('#cook
 $('#year').textContent = new Date().getFullYear();
 setTheme(localStorage.getItem('theme') || 'dark');
 applyLang();
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
