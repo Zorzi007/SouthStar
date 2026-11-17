@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imprensa | South Star Battery Metals</title>
+<meta name="description" content="Kit de mídia, releases e contato de imprensa da South Star Battery Metals.">
+<link rel="canonical" href="https://southstarbatterymetals.com/imprensa.html">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="hdr"></div>
+
+<main>
+ <section class="page-hero">
+  <div class="container">
+   <p class="tag">Sala de imprensa</p>
+   <h1 class="title">Imprensa e Mídia</h1>
+   <p>Materiais oficiais, releases e contato para jornalistas.</p>
+  </div>
+ </section>
+
+ <!-- KIT DE MÍDIA -->
+ <section>
+  <div class="container">
+   <p class="tag">Downloads</p>
+   <h2 class="title">Kit de mídia</h2>
+   <div class="kit">
+    <div class="mk reveal"><i data-lucide="image" class="ic"></i><h3>Logotipos</h3><p>SVG e PNG, versões clara e escura.</p><a href="assets/logo-southstar.svg" class="btn btn-out" download>SVG</a><a href="assets/logo-southstar.png" class="btn btn-out" download>PNG</a></div>
+    <div class="mk reveal"><i data-lucide="camera" class="ic"></i><h3>Fotos em alta</h3><p>Mina, planta e equipe.</p><a href="assets/fotos-alta.zip" class="btn btn-out" download>Baixar ZIP</a></div>
+    <div class="mk reveal"><i data-lucide="file-text" class="ic"></i><h3>Fact sheet</h3><p>Resumo da empresa em uma página.</p><a href="assets/fact-sheet.pdf" class="btn btn-out" download>PDF</a></div>
+    <div class="mk reveal"><i data-lucide="package" class="ic"></i><h3>Kit completo</h3><p>Todos os materiais em um só arquivo.</p><a href="assets/press-kit.zip" class="btn btn-main" download>Baixar kit</a></div>
+   </div>
+
+   <h3 class="sub">Cores da marca <small class="muted" style="display:inline">(clique para copiar)</small></h3>
+   <div class="swatches" id="swatches"></div>
+  </div>
+ </section>
+
+ <!-- RELEASES -->
+ <section class="projects">
+  <div class="container">
+   <p class="tag">Releases</p>
+   <h2 class="title">Comunicados oficiais</h2>
+   <ul class="docs">
+    <li><a href="https://www.sedarplus.ca" target="_blank" rel="noopener"><i data-lucide="newspaper"></i><b>Ago/2026</b> Primeiro pedido de compra após a retomada</a></li>
+    <li><a href="https://www.otcmarkets.com/filing/587831/content" target="_blank" rel="noopener"><i data-lucide="file-bar-chart"></i><b>Ago/2026</b> Resultados do 2º trimestre de 2026</a></li>
+    <li><a href="https://southstarbatterymetals.com/wp-content/uploads/2026/04/03_STS-Scrubber-Trommell-Bamastar-RogerioRSU20260310_v3Final.pdf" target="_blank" rel="noopener"><i data-lucide="newspaper"></i><b>Mar/2026</b> Scrubber/trommel instalado e novo COO</a></li>
+    <li><a href="https://www.sedarplus.ca" target="_blank" rel="noopener"><i data-lucide="external-link"></i> Arquivo completo no SEDAR+</a></li>
+   </ul>
+  </div>
+ </section>
+
+ <!-- CONTATO DE IMPRENSA -->
+ <section>
+  <div class="container ir-grid">
+   <div class="reveal">
+    <p class="tag">Contato</p>
+    <h2 class="title">Assessoria de imprensa</h2>
+    <ul class="checks">
+     <li>[PREENCHER: nome do responsável]</li>
+     <li>press@southstarbatterymetals.com</li>
+     <li>Entrevistas em português e inglês</li>
+    </ul>
+   </div>
+   <form class="ajax alert-form reveal" action="https://formspree.io/f/SEU_ID" method="POST">
+    <input type="hidden" name="_subject" value="Solicitação de imprensa">
+    <input name="nome" placeholder="Nome" required>
+    <input name="veiculo" placeholder="Veículo / publicação" required>
+    <input name="email" type="email" placeholder="E-mail" required>
+    <textarea name="pauta" rows="4" placeholder="Pauta e prazo" required></textarea>
+    <button class="btn btn-main">Enviar solicitação</button>
+    <p class="form-msg" role="status"></p>
+   </form>
+  </div>
+ </section>
+</main>
+
+<div id="ftr"></div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="pages.js"></script>
+<script>
+const CORES = [['Navy', '#0a1a4a'], ['Royal', '#1f4fd1'], ['Star', '#4da3ff'], ['Ice', '#9cc9ff'], ['Deep', '#050d24']];
+$('#swatches').innerHTML = CORES.map(([n, h]) =>
+  `<button class="swatch" data-hex="${h}"><i style="background:${h}"></i><span><b>${n}</b><br>${h}</span></button>`).join('');
+$$('.swatch').forEach(s => s.onclick = () => {
+  navigator.clipboard.writeText(s.dataset.hex);
+  const b = s.querySelector('b'), old = b.textContent;
+  b.textContent = 'Copiado!'; setTimeout(() => b.textContent = old, 1200);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog | South Star Battery Metals</title>
+<meta name="description" content="Análises e notícias sobre o mercado de grafite, baterias e a operação Santa Cruz.">
+<link rel="canonical" href="https://southstarbatterymetals.com/blog.html">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="hdr"></div>
+
+<main>
+ <section class="page-hero">
+  <div class="container">
+   <p class="tag">Insights</p>
+   <h1 class="title" id="pgTitle">Blog South Star</h1>
+   <p id="pgDesc">Mercado de grafite, baterias, transição energética e bastidores da mina Santa Cruz.</p>
+  </div>
+ </section>
+
+ <section>
+  <div class="container" id="blogRoot">
+   <div class="toolbar">
+    <div class="filters" role="group" aria-label="Filtrar posts">
+     <button class="filter active" data-cat="all">Todos</button>
+     <button class="filter" data-cat="Mercado">Mercado</button>
+     <button class="filter" data-cat="Tecnologia">Tecnologia</button>
+     <button class="filter" data-cat="Operação">Operação</button>
+    </div>
+    <label class="sr-only" for="q">Buscar</label>
+    <input id="q" type="search" placeholder="Buscar artigos...">
+   </div>
+   <div class="cards" id="posts"></div>
+  </div>
+ </section>
+</main>
+
+<div id="ftr"></div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="pages.js"></script>
+<script>
+/* Para publicar um post novo, basta acrescentar um objeto neste array */
+const POSTS = [
+ {
+  id: 'grafite-estrategico', data: '10/11/2026', cat: 'Mercado',
+  titulo: 'Por que o grafite natural virou um mineral estratégico',
+  resumo: 'A concentração do refino na China faz o Ocidente buscar novas fontes de suprimento.',
+  img: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=1200&fm=webp&q=70',
+  corpo: `<p>O grafite é o maior componente em peso das baterias de íon-lítio, porque forma o ânodo. Mesmo assim, a cadeia de refino global continua muito concentrada.</p>
+  <h2>O risco da concentração</h2><p>Com cerca de 90% do refino na China, qualquer restrição de exportação afeta montadoras e fabricantes de baterias no mundo todo.</p>
+  <h2>A oportunidade brasileira</h2><p>O Brasil tem grandes reservas de grafite e acordos comerciais favoráveis, o que o torna uma alternativa natural para os EUA e a Europa.</p>`
+ },
+ {
+  id: 'do-floco-ao-anodo', data: '27/10/2026', cat: 'Tecnologia',
+  titulo: 'Do floco ao ânodo: como o grafite chega à bateria',
+  resumo: 'Entenda as etapas de esferonização, purificação e revestimento.',
+  img: 'https://images.unsplash.com/photo-1620714223084-8fcacc6dfd8d?w=1200&fm=webp&q=70',
+  corpo: `<p>O concentrado em flocos passa por várias etapas antes de virar material de ânodo:</p>
+  <ul><li><b>Micronização e esferonização:</b> os flocos são arredondados para aumentar a densidade.</li>
+  <li><b>Purificação:</b> o teor de carbono sobe para acima de 99,95%.</li>
+  <li><b>Revestimento:</b> uma camada de carbono melhora a vida útil e o desempenho.</li></ul>
+  <p>Esse produto final é chamado de grafite esférico revestido (CSPG).</p>`
+ },
+ {
+  id: 'retomada-santa-cruz', data: '05/09/2026', cat: 'Operação',
+  titulo: 'Santa Cruz: os bastidores da retomada',
+  resumo: 'Novos equipamentos, renegociação de energia e foco em custo.',
+  img: 'https://images.unsplash.com/photo-1578319439584-104c94d37305?w=1200&fm=webp&q=70',
+  corpo: `<p>A instalação do scrubber/trommel e a renegociação do contrato de energia foram decisivas para reduzir o custo caixa da operação.</p>
+  <h2>Próximos passos</h2><p>O foco agora é ganhar estabilidade operacional e preparar a expansão para 10.000 t/ano em 2027.</p>`
+ }
+];
+
+const root = $('#blogRoot');
+const slug = new URLSearchParams(location.search).get('p');
+const post = POSTS.find(p => p.id === slug);
+
+if (post) {
+  /* Página de um post */
+  document.title = `${post.titulo} | Blog South Star`;
+  $('#pgTitle').textContent = post.titulo;
+  $('#pgDesc').textContent = `${post.data} · ${post.cat}`;
+  const url = encodeURIComponent(location.href), t = encodeURIComponent(post.titulo);
+  root.innerHTML = `
+   <article class="post reveal">
+    <a href="blog.html" class="more">← Voltar ao blog</a>
+    <img src="${post.img}" alt="${post.titulo}">
+    ${post.corpo}
+    <div class="share">
+     <a class="btn btn-out" target="_blank" rel="noopener" href="https://www.linkedin.com/sharing/share-offsite/?url=${url}"><i data-lucide="linkedin"></i> LinkedIn</a>
+     <a class="btn btn-out" target="_blank" rel="noopener" href="https://wa.me/?text=${t}%20${url}"><i data-lucide="message-circle"></i> WhatsApp</a>
+     <button class="btn btn-out" onclick="navigator.clipboard.writeText(location.href);this.lastChild.textContent=' Copiado!'"><i data-lucide="link"></i> Copiar link</button>
+    </div>
+   </article>`;
+  lucide.createIcons(); observeReveal();
+} else {
+  /* Lista de posts */
+  let cat = 'all';
+  const render = () => {
+    const q = $('#q').value.toLowerCase();
+    const list = POSTS.filter(p => (cat === 'all' || p.cat === cat) && (p.titulo + p.resumo).toLowerCase().includes(q));
+    $('#posts').innerHTML = list.length ? list.map(p => `
+     <article class="card reveal">
+      <img src="${p.img.replace('w=1200', 'w=600')}" alt="${p.titulo}" loading="lazy">
+      <div class="body"><small>${p.data}</small><span class="cat">${p.cat}</span>
+       <h3>${p.titulo}</h3><p>${p.resumo}</p>
+       <a class="more" href="?p=${p.id}">Ler artigo →</a></div>
+     </article>`).join('') : '<p class="empty">Nenhum artigo encontrado.</p>';
+    observeReveal();
+  };
+  $$('.filter').forEach(b => b.onclick = () => {
+    $$('.filter').forEach(x => x.classList.remove('active'));
+    b.classList.add('active'); cat = b.dataset.cat; render();
+  });
+  $('#q').addEventListener('input', render);
+  render();
+}
+</script>
+</body>
+</html>

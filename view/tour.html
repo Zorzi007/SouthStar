@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tour 360° | South Star Battery Metals</title>
+<meta name="description" content="Visite virtualmente a mina de grafite Santa Cruz, na Bahia.">
+<link rel="canonical" href="https://southstarbatterymetals.com/tour.html">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="hdr"></div>
+
+<main>
+ <section class="page-hero">
+  <div class="container">
+   <p class="tag">Visita virtual</p>
+   <h1 class="title">Tour 360° – Mina Santa Cruz</h1>
+   <p>Arraste a imagem para explorar a operação e clique nos pontos para ver os detalhes.</p>
+  </div>
+ </section>
+
+ <section>
+  <div class="container">
+   <div class="filters" role="group" aria-label="Escolher cena" style="margin-bottom:20px">
+    <button class="filter active" data-scene="mina">Cava</button>
+    <button class="filter" data-scene="planta">Planta</button>
+   </div>
+   <div id="pano" class="reveal"></div>
+   <small class="muted">Use o mouse ou o dedo para girar. O botão no canto ativa a tela cheia.</small>
+  </div>
+ </section>
+
+ <section class="projects">
+  <div class="container">
+   <p class="tag">Vídeo</p>
+   <h2 class="title">Vista aérea com drone</h2>
+   <div class="video-wrap reveal">
+    <!-- Troque VIDEO_ID pelo ID do vídeo no YouTube -->
+    <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID?rel=0" title="Vídeo aéreo da mina Santa Cruz" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+   </div>
+  </div>
+ </section>
+</main>
+
+<div id="ftr"></div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+<script src="pages.js"></script>
+<script>
+/* As imagens precisam ser panorâmicas equiretangulares (proporção 2:1) */
+const viewer = pannellum.viewer('pano', {
+  default: { firstScene: 'mina', autoLoad: true, autoRotate: -2, sceneFadeDuration: 800 },
+  scenes: {
+    mina: {
+      title: 'Cava – Mina Santa Cruz',
+      panorama: 'assets/mina-360.jpg',
+      hotSpots: [
+        { pitch: -5, yaw: 30, type: 'info', text: 'Minério friável: lavra sem explosivos' },
+        { pitch: -2, yaw: 150, type: 'scene', text: 'Ir para a planta', sceneId: 'planta' }
+      ]
+    },
+    planta: {
+      title: 'Planta de beneficiamento',
+      panorama: 'assets/planta-360.jpg',
+      hotSpots: [
+        { pitch: 0, yaw: 0, type: 'info', text: 'Flotação: concentrado com até 99% de Cg' },
+        { pitch: -2, yaw: -150, type: 'scene', text: 'Voltar para a cava', sceneId: 'mina' }
+      ]
+    }
+  }
+});
+$$('.filter').forEach(b => b.onclick = () => viewer.loadScene(b.dataset.scene));
+viewer.on('scenechange', id => $$('.filter').forEach(b => b.classList.toggle('active', b.dataset.scene === id)));
+</script>
+</body>
+</html>

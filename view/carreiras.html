@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carreiras | South Star Battery Metals</title>
+<meta name="description" content="Trabalhe na South Star: vagas na mina Santa Cruz, sul da Bahia.">
+<link rel="canonical" href="https://southstarbatterymetals.com/carreiras.html">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="hdr"></div>
+
+<main>
+ <section class="page-hero">
+  <div class="container">
+   <p class="tag">Trabalhe conosco</p>
+   <h1 class="title">Construa o futuro da energia com a gente</h1>
+   <p>Vagas na mina Santa Cruz, no sul da Bahia, com prioridade para talentos da região.</p>
+  </div>
+ </section>
+
+ <section>
+  <div class="container">
+   <p class="tag">Por que a South Star</p>
+   <h2 class="title">Benefícios</h2>
+   <div class="perks">
+    <div class="mk reveal"><i data-lucide="hard-hat" class="ic"></i><h3>Segurança</h3><p>Cultura de dano zero.</p></div>
+    <div class="mk reveal"><i data-lucide="graduation-cap" class="ic"></i><h3>Capacitação</h3><p>Treinamento técnico contínuo.</p></div>
+    <div class="mk reveal"><i data-lucide="heart-pulse" class="ic"></i><h3>Saúde</h3><p>Plano de saúde e odontológico.</p></div>
+    <div class="mk reveal"><i data-lucide="map-pin" class="ic"></i><h3>Contratação local</h3><p>Desenvolvimento da comunidade.</p></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="projects">
+  <div class="container">
+   <p class="tag">Oportunidades</p>
+   <h2 class="title">Vagas abertas</h2>
+   <div class="filters" role="group" aria-label="Filtrar vagas" style="margin-bottom:25px">
+    <button class="filter active" data-area="all">Todas</button>
+    <button class="filter" data-area="Operação">Operação</button>
+    <button class="filter" data-area="Engenharia">Engenharia</button>
+    <button class="filter" data-area="Administrativo">Administrativo</button>
+   </div>
+   <div id="jobs"></div>
+  </div>
+ </section>
+
+ <section id="candidatura">
+  <div class="container ir-grid">
+   <div class="reveal">
+    <p class="tag">Candidatura</p>
+    <h2 class="title">Envie seu currículo</h2>
+    <p>Não encontrou sua vaga? Mande uma candidatura espontânea para o nosso banco de talentos.</p>
+   </div>
+   <form class="ajax alert-form reveal" action="https://formspree.io/f/SEU_ID" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_subject" value="Nova candidatura">
+    <input name="nome" placeholder="Nome completo" required>
+    <input name="email" type="email" placeholder="E-mail" required>
+    <input name="telefone" type="tel" placeholder="Telefone / WhatsApp" required>
+    <select name="vaga" id="vagaSel" required><option value="">Vaga de interesse</option><option>Banco de talentos</option></select>
+    <label class="muted" style="margin:0">Currículo (PDF, até 5 MB)<input name="curriculo" type="file" accept=".pdf" required></label>
+    <label class="chk"><input type="checkbox" required> Autorizo o uso dos meus dados para o processo seletivo, conforme a <a href="privacidade.html" style="color:var(--accent)">LGPD</a>.</label>
+    <button class="btn btn-main">Enviar candidatura</button>
+    <p class="form-msg" role="status"></p>
+   </form>
+  </div>
+ </section>
+</main>
+
+<div id="ftr"></div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="pages.js"></script>
+<script>
+/* Edite as vagas aqui [PREENCHER com as vagas reais] */
+const VAGAS = [
+  { t: 'Operador de Planta de Beneficiamento', a: 'Operação', l: 'Santa Cruz – BA', r: 'CLT · Turno' },
+  { t: 'Técnico de Segurança do Trabalho', a: 'Operação', l: 'Santa Cruz – BA', r: 'CLT' },
+  { t: 'Engenheiro(a) de Processos', a: 'Engenharia', l: 'Santa Cruz – BA', r: 'CLT' },
+  { t: 'Analista Administrativo-Financeiro', a: 'Administrativo', l: 'Bahia – Híbrido', r: 'CLT' }
+];
+$('#vagaSel').insertAdjacentHTML('beforeend', VAGAS.map(v => `<option>${v.t}</option>`).join(''));
+
+let area = 'all';
+const render = () => {
+  const list = VAGAS.filter(v => area === 'all' || v.a === area);
+  $('#jobs').innerHTML = list.length ? list.map(v => `
+   <div class="job reveal">
+    <div><h3>${v.t}</h3>
+     <div class="meta"><span><i data-lucide="briefcase"></i>${v.a}</span><span><i data-lucide="map-pin"></i>${v.l}</span><span><i data-lucide="clock"></i>${v.r}</span></div>
+    </div>
+    <a href="#candidatura" class="btn btn-main" data-vaga="${v.t}">Candidatar-se</a>
+   </div>`).join('') : '<p class="empty">Nenhuma vaga nesta área no momento.</p>';
+  lucide.createIcons(); observeReveal();
+  $$('[data-vaga]').forEach(b => b.onclick = () => $('#vagaSel').value = b.dataset.vaga);
+};
+$$('.filter').forEach(b => b.onclick = () => {
+  $$('.filter').forEach(x => x.classList.remove('active'));
+  b.classList.add('active'); area = b.dataset.area; render();
+});
+render();
+</script>
+</body>
+</html>
