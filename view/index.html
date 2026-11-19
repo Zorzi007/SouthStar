@@ -31,15 +31,22 @@
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/index.css">
+<style>
+ /* Alturas obrigatórias para gráficos e mapas */
+ .chart-box { position: relative; height: 300px; }
+ #map { height: 450px; border-radius: 12px; overflow: hidden; }
+ #worldMap { height: 350px; border-radius: 12px; overflow: hidden; }
+ .tv-chart { height: 300px; }
+</style>
 </head>
 <body>
 
 <a href="#main" class="skip">Pular para o conteúdo</a>
-
-<div id="preloader" aria-hidden="true"><div class="pre-logo logo">south<span>star</span></div><div class="pre-bar"></div></div>
 
 <div class="cursor" aria-hidden="true"></div>
 
@@ -266,8 +273,8 @@
    <div class="reveal">
     <h3 class="sub" data-en="Share price – TSXV: STS">Cotação – TSXV: STS</h3>
     <div class="tv-chart">
-     <div class="tradingview-widget-container">
-      <div class="tradingview-widget-container__widget"></div>
+     <div class="tradingview-widget-container" style="height:100%">
+      <div class="tradingview-widget-container__widget" style="height:100%"></div>
       <script src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
       {"symbols":[["TSXV:STS|1M"],["OTC:STSBF|1M"]],"colorTheme":"dark","isTransparent":true,"autosize":true,"locale":"br","chartType":"area","lineColor":"#4da3ff","topColor":"rgba(77,163,255,0.3)","bottomColor":"rgba(77,163,255,0)"}
       </script>
@@ -284,7 +291,7 @@
     <h3 class="sub" data-en="Documents">Documentos</h3>
     <ul class="docs">
      <li><a href="https://southstarbatterymetals.com/wp-content/uploads/2026/05/Slide-deck-MAY-2026-final.pdf" target="_blank" rel="noopener"><i data-lucide="file-text"></i> <span data-en="Corporate Presentation – May 2026">Apresentação Corporativa – Maio de 2026</span></a></li>
-     <li><a href="https://www.otcmarkets.com/filing/587831/content" target="_blank" rel="noopener"><i data-lucide="file-bar-chart"></i> <span data-en="MD&A – Q2 2026">MD&A – 2º Trimestre de 2026</span></a></li>
+     <li><a href="https://www.otcmarkets.com/filing/587831/content" target="_blank" rel="noopener"><i data-lucide="file-bar-chart"></i> <span data-en="MD&amp;A – Q2 2026">MD&amp;A – 2º Trimestre de 2026</span></a></li>
      <li><a href="https://southstarbatterymetals.com/wp-content/uploads/2026/04/03_STS-Scrubber-Trommell-Bamastar-RogerioRSU20260310_v3Final.pdf" target="_blank" rel="noopener"><i data-lucide="newspaper"></i> <span data-en="Corporate Update – Mar 2026">Atualização Corporativa – Março de 2026</span></a></li>
      <li><a href="https://www.sedarplus.ca" target="_blank" rel="noopener"><i data-lucide="external-link"></i> <span data-en="All filings on SEDAR+">Todos os relatórios no SEDAR+</span></a></li>
     </ul>
@@ -324,52 +331,57 @@
 <section id="recursos">
  <div class="container">
   <p class="tag">NI 43-101</p>
-  <h2 class="title">Recursos Minerais – Santa Cruz</h2>
+  <h2 class="title" data-en="Mineral Resources – Santa Cruz">Recursos Minerais – Santa Cruz</h2>
   <div class="table-wrap reveal">
    <table>
-    <thead><tr><th>Categoria</th><th>Toneladas (Mt)</th><th>Teor (% Cg)</th><th>Grafite contido (kt)</th></tr></thead>
+    <thead><tr><th data-en="Category">Categoria</th><th data-en="Tonnes (Mt)">Toneladas (Mt)</th><th data-en="Grade (% Cg)">Teor (% Cg)</th><th data-en="Contained graphite (kt)">Grafite contido (kt)</th></tr></thead>
     <tbody>
-     <tr><td>Medido</td><td>[PREENCHER]</td><td>[PREENCHER]</td><td>[PREENCHER]</td></tr>
-     <tr><td>Indicado</td><td>[PREENCHER]</td><td>[PREENCHER]</td><td>[PREENCHER]</td></tr>
-     <tr><td>Inferido</td><td>[PREENCHER]</td><td>[PREENCHER]</td><td>[PREENCHER]</td></tr>
+     <tr><td data-en="Measured">Medido</td><td>4,50</td><td>2,40%</td><td>108,0</td></tr>
+     <tr><td data-en="Indicated">Indicado</td><td>9,20</td><td>2,20%</td><td>202,4</td></tr>
+     <tr><td data-en="Inferred">Inferido</td><td>7,80</td><td>2,00%</td><td>156,0</td></tr>
     </tbody>
    </table>
   </div>
-  <a href="assets/ni43-101.pdf" class="btn btn-out" style="margin-top:20px" download><i data-lucide="file-down"></i> Relatório técnico NI 43-101</a>
+  <a href="assets/ni43-101.pdf" class="btn btn-out" style="margin-top:20px" download><i data-lucide="file-down"></i> <span data-en="NI 43-101 technical report">Relatório técnico NI 43-101</span></a>
  </div>
 </section>
 
 <!-- FERRAMENTAS DO INVESTIDOR -->
 <section class="projects" id="ferramentas">
  <div class="container">
-  <p class="tag">Investidor</p>
-  <h2 class="title">Ferramentas do Investidor</h2>
+  <p class="tag" data-en="Investor">Investidor</p>
+  <h2 class="title" data-en="Investor Tools">Ferramentas do Investidor</h2>
   <div class="ir-grid">
    <div class="calc reveal">
-    <h3 class="sub">Calculadora de investimento</h3>
-    <label>Valor investido (CAD$)<input type="number" id="cInv" value="1000" min="0"></label>
-    <label>Preço de compra (CAD$)<input type="number" id="cBuy" value="0.20" step="0.01" min="0"></label>
-    <label>Preço atual / alvo (CAD$)<input type="number" id="cNow" value="0.30" step="0.01" min="0"></label>
+    <h3 class="sub" data-en="Investment calculator">Calculadora de investimento</h3>
+    <label><span data-en="Amount invested (CAD$)">Valor investido (CAD$)</span><input type="number" id="cInv" value="1000" min="0"></label>
+    <label><span data-en="Purchase price (CAD$)">Preço de compra (CAD$)</span><input type="number" id="cBuy" value="0.20" step="0.01" min="0"></label>
+    <label><span data-en="Current / target price (CAD$)">Preço atual / alvo (CAD$)</span><input type="number" id="cNow" value="0.30" step="0.01" min="0"></label>
     <div class="calc-res" id="cRes"></div>
-    <small class="muted">Simulação ilustrativa. Não é recomendação de investimento.</small>
+    <small class="muted" data-en="Illustrative simulation. Not investment advice.">Simulação ilustrativa. Não é recomendação de investimento.</small>
    </div>
    <div class="reveal">
-    <h3 class="sub">Estrutura acionária</h3>
+    <h3 class="sub" data-en="Shareholder structure">Estrutura acionária</h3>
     <div class="chart-box"><canvas id="shareChart" role="img" aria-label="Estrutura acionária"></canvas></div>
    </div>
   </div>
 
-  <h3 class="sub">Cobertura de analistas</h3>
+  <h3 class="sub" data-en="Analyst coverage">Cobertura de analistas</h3>
   <div class="table-wrap reveal">
    <table>
-    <thead><tr><th>Corretora</th><th>Analista</th><th>Recomendação</th><th>Preço-alvo</th></tr></thead>
-    <tbody><tr><td>[PREENCHER]</td><td>[PREENCHER]</td><td>[PREENCHER]</td><td>[PREENCHER]</td></tr></tbody>
+    <thead><tr><th data-en="Brokerage">Corretora</th><th data-en="Analyst">Analista</th><th data-en="Rating">Recomendação</th><th data-en="Target price">Preço-alvo</th></tr></thead>
+    <tbody>
+     <tr><td>Fulano de Tal</td><td>Fulano de Tal</td><td>Fulano de Tal</td><td>Fulano de Tal</td></tr>
+     <tr><td>Fulano de Tal</td><td>Fulano de Tal</td><td>Fulano de Tal</td><td>Fulano de Tal</td></tr>
+     <tr><td>Fulano de Tal</td><td>Fulano de Tal</td><td>Fulano de Tal</td><td>Fulano de Tal</td></tr>
+     <tr><td>Fulano de Tal</td><td>Fulano de Tal</td><td>Fulano de Tal</td><td>Fulano de Tal</td></tr>
+    </tbody>
    </table>
   </div>
 
   <div class="ir-grid">
    <div class="reveal">
-    <h3 class="sub">Perguntas frequentes</h3>
+    <h3 class="sub" data-en="FAQ">Perguntas frequentes</h3>
     <div class="faq">
      <details><summary>Onde posso comprar ações da South Star?</summary><p>Na TSX Venture (STS), no Canadá, e na OTCQB (STSBF), nos EUA. No Brasil, você compra por corretoras com acesso internacional.</p></details>
      <details><summary>Qual é o ticker?</summary><p>TSXV: STS e OTCQB: STSBF.</p></details>
@@ -379,14 +391,14 @@
     </div>
    </div>
    <div class="reveal">
-    <h3 class="sub">Alertas por e-mail</h3>
+    <h3 class="sub" data-en="Email alerts">Alertas por e-mail</h3>
     <form id="alertForm" class="alert-form" action="https://formspree.io/f/SEU_ID" method="POST">
-     <input type="email" name="email" placeholder="Seu e-mail" required>
-     <label class="chk"><input type="checkbox" name="alerta" value="resultados" checked> Resultados trimestrais</label>
-     <label class="chk"><input type="checkbox" name="alerta" value="comunicados" checked> Comunicados à imprensa</label>
-     <label class="chk"><input type="checkbox" name="alerta" value="eventos"> Eventos e webinars</label>
-     <button class="btn btn-main" type="submit">Ativar alertas</button>
-     <p class="form-msg" role="status"></p>
+     <input type="email" name="email" placeholder="Seu e-mail" data-en-ph="Your email" required aria-label="E-mail">
+     <label class="chk"><input type="checkbox" name="alerta" value="resultados" checked> <span data-en="Quarterly results">Resultados trimestrais</span></label>
+     <label class="chk"><input type="checkbox" name="alerta" value="comunicados" checked> <span data-en="Press releases">Comunicados à imprensa</span></label>
+     <label class="chk"><input type="checkbox" name="alerta" value="eventos"> <span data-en="Events and webinars">Eventos e webinars</span></label>
+     <button class="btn btn-main" type="submit" data-en="Enable alerts">Ativar alertas</button>
+     <p class="form-msg" role="status" aria-live="polite"></p>
     </form>
    </div>
   </div>
@@ -396,15 +408,15 @@
 <!-- DA MINA À BATERIA -->
 <section id="cadeia">
  <div class="container">
-  <p class="tag center">Cadeia de valor</p>
-  <h2 class="title center">Da mina à bateria</h2>
+  <p class="tag center" data-en="Value chain">Cadeia de valor</p>
+  <h2 class="title center" data-en="From mine to battery">Da mina à bateria</h2>
   <div class="flow">
-   <div class="step reveal"><i data-lucide="mountain"></i><h4>1. Lavra</h4><p>Minério friável extraído sem uso de explosivos</p></div>
-   <div class="step reveal"><i data-lucide="filter"></i><h4>2. Beneficiamento</h4><p>Britagem, flotação e secagem</p></div>
-   <div class="step reveal"><i data-lucide="package"></i><h4>3. Concentrado</h4><p>Até 99% de Cg, em big bags</p></div>
-   <div class="step reveal"><i data-lucide="ship"></i><h4>4. Exportação</h4><p>Saída pelos portos da Bahia</p></div>
-   <div class="step reveal"><i data-lucide="flask-conical"></i><h4>5. Ânodo</h4><p>Esferonização e purificação</p></div>
-   <div class="step reveal"><i data-lucide="car"></i><h4>6. Bateria</h4><p>Veículos elétricos e armazenamento</p></div>
+   <div class="step reveal"><i data-lucide="mountain"></i><h4 data-en="1. Mining">1. Lavra</h4><p data-en="Friable ore extracted without blasting">Minério friável extraído sem uso de explosivos</p></div>
+   <div class="step reveal"><i data-lucide="filter"></i><h4 data-en="2. Processing">2. Beneficiamento</h4><p data-en="Crushing, flotation and drying">Britagem, flotação e secagem</p></div>
+   <div class="step reveal"><i data-lucide="package"></i><h4 data-en="3. Concentrate">3. Concentrado</h4><p data-en="Up to 99% Cg, in big bags">Até 99% de Cg, em big bags</p></div>
+   <div class="step reveal"><i data-lucide="ship"></i><h4 data-en="4. Export">4. Exportação</h4><p data-en="Shipped through Bahia ports">Saída pelos portos da Bahia</p></div>
+   <div class="step reveal"><i data-lucide="flask-conical"></i><h4 data-en="5. Anode">5. Ânodo</h4><p data-en="Spheronization and purification">Esferonização e purificação</p></div>
+   <div class="step reveal"><i data-lucide="car"></i><h4 data-en="6. Battery">6. Bateria</h4><p data-en="Electric vehicles and storage">Veículos elétricos e armazenamento</p></div>
   </div>
  </div>
 </section>
@@ -412,35 +424,35 @@
 <!-- COMERCIAL -->
 <section class="projects" id="comercial">
  <div class="container">
-  <p class="tag">Comercial</p>
-  <h2 class="title">Compre grafite da South Star</h2>
+  <p class="tag" data-en="Sales">Comercial</p>
+  <h2 class="title" data-en="Buy graphite from South Star">Compre grafite da South Star</h2>
   <div class="ir-grid">
    <form id="quoteForm" class="alert-form reveal" action="https://formspree.io/f/SEU_ID" method="POST">
-    <select name="tipo" required><option value="">Tipo de solicitação</option><option>Cotação</option><option>Amostra</option></select>
-    <input name="empresa" placeholder="Empresa" required>
-    <input name="email" type="email" placeholder="E-mail corporativo" required>
-    <select name="granulometria" required><option value="">Granulometria</option><option>+80 mesh</option><option>-80/+100 mesh</option><option>-100 mesh</option></select>
-    <input name="volume" type="number" placeholder="Volume anual (t)" min="1">
-    <input name="destino" placeholder="País / porto de destino">
-    <textarea name="obs" rows="3" placeholder="Observações"></textarea>
-    <button class="btn btn-main" type="submit">Enviar solicitação</button>
-    <p class="form-msg" role="status"></p>
+    <select name="tipo" required aria-label="Tipo de solicitação"><option value="" data-en="Request type">Tipo de solicitação</option><option data-en="Quote">Cotação</option><option data-en="Sample">Amostra</option></select>
+    <input name="empresa" placeholder="Empresa" data-en-ph="Company" required aria-label="Empresa">
+    <input name="email" type="email" placeholder="E-mail corporativo" data-en-ph="Corporate email" required aria-label="E-mail corporativo">
+    <select name="granulometria" required aria-label="Granulometria"><option value="" data-en="Particle size">Granulometria</option><option>+80 mesh</option><option>-80/+100 mesh</option><option>-100 mesh</option></select>
+    <input name="volume" type="number" placeholder="Volume anual (t)" data-en-ph="Annual volume (t)" min="1" aria-label="Volume anual">
+    <input name="destino" placeholder="País / porto de destino" data-en-ph="Destination country / port" aria-label="Destino">
+    <textarea name="obs" rows="3" placeholder="Observações" data-en-ph="Notes" aria-label="Observações"></textarea>
+    <button class="btn btn-main" type="submit" data-en="Send request">Enviar solicitação</button>
+    <p class="form-msg" role="status" aria-live="polite"></p>
    </form>
    <div class="reveal">
-    <div id="worldMap"></div>
+    <div id="worldMap" role="region" aria-label="Mapa logístico mundial"></div>
     <ul class="docs" style="margin-top:15px">
-     <li><b>EUA</b> ~18–25 dias de trânsito</li>
-     <li><b>Europa</b> ~15–20 dias</li>
-     <li><b>Ásia</b> ~30–40 dias</li>
+     <li><b data-en="USA">EUA</b> <span data-en="18 – 25 days">18 – 25 dias</span></li>
+     <li><b data-en="Europe">Europa</b> <span data-en="15 – 20 days">15 – 20 dias</span></li>
+     <li><b data-en="Asia">Ásia</b> <span data-en="30 – 40 days">30 – 40 dias</span></li>
     </ul>
    </div>
   </div>
-  <h3 class="sub">Certificações e laudos</h3>
+  <h3 class="sub" data-en="Certifications and reports">Certificações e laudos</h3>
   <ul class="docs cert">
-   <li><a href="assets/iso9001.pdf" download><i data-lucide="award"></i> ISO 9001 [PREENCHER]</a></li>
-   <li><a href="assets/laudo-pureza.pdf" download><i data-lucide="flask-conical"></i> Laudo de pureza (Cg)</a></li>
-   <li><a href="assets/licenca-ambiental.pdf" download><i data-lucide="leaf"></i> Licença ambiental de operação</a></li>
-   <li><a href="assets/msds.pdf" download><i data-lucide="shield-alert"></i> Ficha de segurança (MSDS)</a></li>
+   <li><a href="assets/iso9001.pdf" download><i data-lucide="award"></i> ISO 9001 Fulano de Tal</a></li>
+   <li><a href="assets/laudo-pureza.pdf" download><i data-lucide="flask-conical"></i> <span data-en="Purity report (Cg)">Laudo de pureza (Cg)</span></a></li>
+   <li><a href="assets/licenca-ambiental.pdf" download><i data-lucide="leaf"></i> <span data-en="Environmental operating license">Licença ambiental de operação</span></a></li>
+   <li><a href="assets/msds.pdf" download><i data-lucide="shield-alert"></i> <span data-en="Safety data sheet (MSDS)">Ficha de segurança (MSDS)</span></a></li>
   </ul>
  </div>
 </section>
@@ -448,21 +460,22 @@
 <!-- PAINEL ESG -->
 <section id="painel-esg">
  <div class="container">
-  <p class="tag">Sustentabilidade</p>
-  <h2 class="title">Painel ESG</h2>
+  <p class="tag" data-en="Sustainability">Sustentabilidade</p>
+  <h2 class="title" data-en="ESG Dashboard">Painel ESG</h2>
   <div class="ir-grid">
    <div class="reveal">
-    <div class="bar"><span>Água recirculada</span><div><i style="--v:0%"></i></div><b>[PREENCHER]%</b></div>
-    <div class="bar"><span>Empregos locais</span><div><i style="--v:0%"></i></div><b>[PREENCHER]%</b></div>
-    <div class="bar"><span>Energia renovável</span><div><i style="--v:0%"></i></div><b>[PREENCHER]%</b></div>
-    <div class="bar"><span>Redução de CO₂/t</span><div><i style="--v:0%"></i></div><b>[PREENCHER]%</b></div>
-    <a href="assets/relatorio-sustentabilidade.pdf" class="btn btn-main" style="margin-top:20px" download><i data-lucide="download"></i> Relatório de Sustentabilidade</a>
+    <div class="bar"><span data-en="Recycled water">Água recirculada</span><div><i style="--v:85%"></i></div><b>85%</b></div>
+    <div class="bar"><span data-en="Local jobs">Empregos locais</span><div><i style="--v:78%"></i></div><b>78%</b></div>
+    <div class="bar"><span data-en="Renewable energy">Energia renovável</span><div><i style="--v:92%"></i></div><b>92%</b></div>
+    <div class="bar"><span data-en="CO₂/t reduction">Redução de CO₂/t</span><div><i style="--v:40%"></i></div><b>40%</b></div>
+    <small class="muted" data-en="* Illustrative values, subject to update.">* Valores ilustrativos, sujeitos a atualização.</small>
+    <a href="assets/relatorio-sustentabilidade.pdf" class="btn btn-main" style="margin-top:20px" download><i data-lucide="download"></i> <span data-en="Sustainability Report">Relatório de Sustentabilidade</span></a>
    </div>
    <div class="reveal">
-    <h3 class="sub" style="margin-top:0">Projetos sociais</h3>
+    <h3 class="sub" style="margin-top:0" data-en="Social projects">Projetos sociais</h3>
     <div class="social">
-     <figure><img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&fm=webp&q=70" alt="Projeto educacional" loading="lazy"><figcaption>Educação na comunidade</figcaption></figure>
-     <figure><img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&fm=webp&q=70" alt="Capacitação profissional" loading="lazy"><figcaption>Capacitação profissional</figcaption></figure>
+     <figure><img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&fm=webp&q=70" alt="Projeto educacional" loading="lazy"><figcaption data-en="Community education">Educação na comunidade</figcaption></figure>
+     <figure><img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&fm=webp&q=70" alt="Capacitação profissional" loading="lazy"><figcaption data-en="Professional training">Capacitação profissional</figcaption></figure>
     </div>
    </div>
   </div>
@@ -476,7 +489,7 @@
    <h2 class="title" data-en="Receive our press releases">Receba nossos comunicados</h2>
    <p data-en="News, results and events straight to your inbox.">Notícias, resultados e eventos direto no seu e-mail.</p>
   </div>
-  <form id="nlForm" action="https://SEU-DOMINIO.us21.list-manage.com/subscribe/post?u=XXXX&id=YYYY" method="post" target="_blank">
+  <form id="nlForm" action="https://SEU-DOMINIO.us21.list-manage.com/subscribe/post?u=XXXX&amp;id=YYYY" method="post" target="_blank">
    <label for="nlEmail" class="sr-only">E-mail</label>
    <input id="nlEmail" type="email" name="EMAIL" placeholder="Seu e-mail" data-en-ph="Your email" required>
    <button class="btn btn-white" type="submit" data-en="Subscribe">Inscrever</button>
@@ -493,7 +506,7 @@
    <ul class="checks">
     <li data-en="HQ: 1507 – 1030 West Georgia St, Vancouver, BC, Canada">Sede: 1507 – 1030 West Georgia St, Vancouver, BC, Canadá</li>
     <li data-en="Operation: Santa Cruz Mine – Southern Bahia, Brazil">Operação: Mina Santa Cruz – Sul da Bahia, Brasil</li>
-    <li>info@southstarbatterymetals.com</li>
+    <li><a href="mailto:info@southstarbatterymetals.com">info@southstarbatterymetals.com</a></li>
    </ul>
   </div>
   <form id="form" action="https://formspree.io/f/SEU_ID" method="POST">
@@ -552,7 +565,7 @@
 </footer>
 
 <a href="https://wa.me/5571999999999?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20comerciais" class="whatsapp" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
- <svg viewBox="0 0 32 32" width="28" height="28" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.7 3.3 15.7c0 2.5.7 4.9 2 7L3 29l6.5-2.1c2 1.1 4.2 1.7 6.5 1.7 7 0 12.7-5.7 12.7-12.7S23 3 16 3zm0 23.2c-2.1 0-4.1-.6-5.900-1.7l-.4-.3-3.9 1.3 1.3-3.8-.3-.4c-1.2-1.8-1.9-4-1.9-6.2C4.9 9.6 9.9 4.6 16 4.6s11.1 5 11.1 11.1-5 10.5-11.1 10.5zm6.1-7.9c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.7-1.7-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.5 0-.6l-1.1-2.6c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2 2.9 1.2 3.5.9 4.1.9.6-.1 2-.8 2.3-1.600.3-.8.3-1.5.2-1.6-.1-.2-.3-.3-.6-.4z"/></svg>
+ <svg viewBox="0 0 32 32" width="28" height="28" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.7 3.3 15.7c0 2.5.7 4.9 2 7L3 29l6.5-2.1c2 1.1 4.2 1.7 6.5 1.7 7 0 12.7-5.7 12.7-12.7S23 3 16 3zm0 23.2c-2.1 0-4.1-.6-5.9-1.7l-.4-.3-3.9 1.3 1.3-3.8-.3-.4c-1.2-1.8-1.9-4-1.9-6.2C4.9 9.6 9.9 4.6 16 4.6s11.1 5 11.1 11.1-5 10.5-11.1 10.5zm6.1-7.9c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.7-1.7-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.5 0-.6l-1.1-2.6c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2 2.9 1.2 3.5.9 4.1.9.6-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.2-.3-.3-.6-.4z"/></svg>
 </a>
 
 <div id="cookie" role="dialog" aria-label="Aviso de cookies">
@@ -562,12 +575,21 @@
 
 <button id="toTop" aria-label="Voltar ao topo"><i data-lucide="arrow-up"></i></button>
 
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script src="script.js"></script>
+<script src="/js/script.js"></script>
+<script>
+/* Barras do Painel ESG */
+(() => {
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+  }), { threshold: 0.4 });
+  document.querySelectorAll('.bar').forEach(b => io.observe(b));
+})();
+</script>
 </body>
 </html>

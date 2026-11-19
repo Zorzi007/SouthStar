@@ -1,0 +1,48 @@
+/* ==================== VAGAS ==================== */
+
+.job {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    transition: 0.3s;
+}
+
+.job:hover {
+    border-color: var(--accent);
+}
+
+.job .meta {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-top: 6px;
+}
+
+.job .meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.job .meta svg {
+    width: 16px;
+}
+
+
+/* ==================== BENEFÍCIOS ==================== */
+
+.perks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}

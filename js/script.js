@@ -1,311 +1,380 @@
-const $ = s => document.querySelector(s);
-const $$ = s => document.querySelectorAll(s);
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-let lang = new URLSearchParams(location.search).get('lang') || localStorage.getItem('lang') || 'pt';
+/* =========================================================
+   South Star Battery Metals – script.js
+   ========================================================= */
+'use strict';
 
-/* Cores da marca */
-const C = { star: '#4da3ff', royal: '#1f4fd1', navy: '#0a1a4a', ice: '#9cc9ff' };
+const $  = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
-/* Preloader */
-window.addEventListener('load', () => setTimeout(() => $('#preloader').classList.add('hide'), 400));
-
-/* Ícones */
-lucide.createIcons();
-
-/* Tema */
-const setTheme = t => {
-  document.documentElement.dataset.theme = t;
-  localStorage.setItem('theme', t);
-  $('#themeBtn').innerHTML = `<i data-lucide="${t === 'dark' ? 'sun' : 'moon'}"></i>`;
-  lucide.createIcons();
-  if (window.Chart) renderCharts();
+const C = {
+  accent: '#4da3ff',
+  accent2: '#22d3ee',
+  blue: '#1f4fd1',
+  mine: [-16.08, -39.60],      // Mina Santa Cruz (aprox.)
+  port: [-14.79, -39.03]       // Porto de Ilhéus (aprox.)
 };
-$('#themeBtn').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
 
-/* Idiomas */
-{
-  $$('[data-en]').forEach(el => {
-    if (el.dataset.pt === undefined) el.dataset.pt = el.innerHTML;
-    el.innerHTML = lang === 'en' ? el.dataset.en : el.dataset.pt;
-  });
-  $$('[data-en-ph]').forEach(el => {
-    if (!el.dataset.ptPh) el.dataset.ptPh = el.placeholder;
-    el.placeholder = lang === 'en' ? el.dataset.enPh : el.dataset.ptPh;
-  });
-  document.documentElement.lang = lang === 'en' ? 'en' : 'pt-BR';
-  $('#langBtn').textContent = lang === 'en' ? 'PT' : 'EN';
-  localStorage.setItem('lang', lang);
-  renderNews();
-  lucide.createIcons();
-  if (window.Chart) renderCharts();
+const icons = () => window.lucide && lucide.createIcons();
+const safe = (name, fn) => { try { fn(); } catch (e) { console.error(`[${name}]`, e); } };
+const isEN = () => document.documentElement.lang === 'en';
+const t = (pt, en) => (isEN() ? en : pt);
+const cssVar = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+/* ---------- Ícones ---------- */
+icons();
+
+/* ---------- Tema ---------- */
+function setTheme(mode) {
+  document.documentElement.dataset.theme = mode;
+  localStorage.setItem('theme', mode);
+  const btn = $('#themeBtn');
+  if (btn) {
+    btn.innerHTML = `<i data-lucide="${mode === 'dark' ? 'sun' : 'moon'}"></i>`;
+    icons();
+  }
+  safe('gráficos', () => window.Chart && renderCharts());
 }
-/* Idiomas: PT → EN → ES */
-const LANGS = ['pt', 'en', 'es'];
-if (!LANGS.includes(lang)) lang = 'pt';
-const tr = (pt, en) => lang === 'pt' ? pt : lang === 'en' ? en : ((window.ES || {})[en] || en);
+$('#themeBtn')?.addEventListener('click', () =>
+  setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
+
+/* ---------- Idioma ---------- */
 function applyLang() {
+  const en = localStorage.getItem('lang') === 'en' ||
+             new URLSearchParams(location.search).get('lang') === 'en';
+  document.documentElement.lang = en ? 'en' : 'pt-BR';
+
   $$('[data-en]').forEach(el => {
     if (el.dataset.pt === undefined) el.dataset.pt = el.innerHTML;
-    el.innerHTML = tr(el.dataset.pt, el.dataset.en);
+    el.innerHTML = en ? el.dataset.en : el.dataset.pt;
   });
   $$('[data-en-ph]').forEach(el => {
-    if (!el.dataset.ptPh) el.dataset.ptPh = el.placeholder;
-    el.placeholder = tr(el.dataset.ptPh, el.dataset.enPh);
+    if (el.dataset.ptPh === undefined) el.dataset.ptPh = el.placeholder;
+    el.placeholder = en ? el.dataset.enPh : el.dataset.ptPh;
   });
-  document.documentElement.lang = { pt: 'pt-BR', en: 'en', es: 'es' }[lang];
-  $('#langBtn').textContent = LANGS[(LANGS.indexOf(lang) + 1) % 3].toUpperCase();
-  localStorage.setItem('lang', lang);
-  renderNews();
-  lucide.createIcons();
-  if (window.Chart) renderCharts();
-}
-$('#langBtn').onclick = () => { lang = LANGS[(LANGS.indexOf(lang) + 1) % 3]; applyLang(); };
 
-/* Header, menu e topo */
-const header = $('#header');
-window.addEventListener('scroll', () => {
-  header.classList.toggle('scrolled', scrollY > 50);
-  $('#toTop').classList.toggle('show', scrollY > 600);
+  const btn = $('#langBtn');
+  if (btn) btn.textContent = en ? 'PT' : 'EN';
+
+  icons();
+  safe('notícias', renderNews);
+  safe('calculadora', calc);
+  safe('gráficos', () => window.Chart && renderCharts());
+}
+$('#langBtn')?.addEventListener('click', () => {
+  localStorage.setItem('lang', isEN() ? 'pt' : 'en');
+  const url = new URL(location);
+  url.searchParams.delete('lang');
+  history.replaceState(null, '', url);
+  applyLang();
 });
-$('#toTop').onclick = () => scrollTo({ top: 0, behavior: 'smooth' });
-const menu = $('#menu'), burger = $('#burger');
-burger.onclick = () => {
+
+/* ---------- Menu mobile ---------- */
+const burger = $('#burger'), menu = $('#menu');
+burger?.addEventListener('click', () => {
   const open = menu.classList.toggle('open');
   burger.setAttribute('aria-expanded', open);
-};
-menu.querySelectorAll('a').forEach(a => a.onclick = () => {
+  burger.innerHTML = `<i data-lucide="${open ? 'x' : 'menu'}"></i>`;
+  icons();
+});
+$$('#menu a').forEach(a => a.addEventListener('click', () => {
   menu.classList.remove('open');
-  burger.setAttribute('aria-expanded', false);
+  burger?.setAttribute('aria-expanded', 'false');
+  if (burger) { burger.innerHTML = '<i data-lucide="menu"></i>'; icons(); }
+}));
+
+/* ---------- Header / voltar ao topo ---------- */
+const header = $('#header'), toTop = $('#toTop');
+const onScroll = () => {
+  const y = scrollY;
+  header?.classList.toggle('scrolled', y > 50);
+  toTop?.classList.toggle('show', y > 600);
+};
+addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+toTop?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* ---------- Cursor ---------- */
+safe('cursor', () => {
+  const cur = $('.cursor');
+  if (!cur || matchMedia('(pointer:coarse)').matches) return cur?.remove();
+  addEventListener('mousemove', e => {
+    cur.style.transform = `translate(${e.clientX}px,${e.clientY}px)`;
+  }, { passive: true });
 });
 
-/* Revelar ao rolar */
-const revealObs = new IntersectionObserver(es => es.forEach(e => {
-  if (e.isIntersecting) { e.target.classList.add('show'); revealObs.unobserve(e.target); }
-}), { threshold: .15 });
-$$('.reveal').forEach(el => revealObs.observe(el));
+/* ---------- Reveal + contadores + barras ESG ---------- */
+/* ---------- Reveal + contadores + barras ESG ---------- */
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const COUNT_SEL = '.count, .counter, [data-target], [data-count]';
 
-/* Contadores */
-const countObs = new IntersectionObserver(es => es.forEach(e => {
-  if (!e.isIntersecting) return;
-  const el = e.target, target = +el.dataset.target, suf = el.dataset.suffix || '';
-  let cur = 0;
-  const step = target / 60;
-  const t = setInterval(() => {
-    cur += step;
-    if (cur >= target) { cur = target; clearInterval(t); }
-    el.textContent = Math.floor(cur).toLocaleString(lang === 'en' ? 'en-US' : 'pt-BR') + suf;
-  }, 25);
-  countObs.unobserve(el);
-}), { threshold: .5 });
-$$('.count').forEach(el => countObs.observe(el));
-
-/* GSAP */
-if (!reduced && window.gsap) {
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.from('.hero-content > *', { y: 50, opacity: 0, duration: 1, stagger: .15, delay: .6, ease: 'power3.out' });
-  gsap.to('.hero-video', { yPercent: 20, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('.parallax', { yPercent: -10, ease: 'none', scrollTrigger: { trigger: '.parallax-wrap', scrub: true } });
+function countUp(el) {
+  if (el.dataset.done) return;
+  el.dataset.done = '1';
+  const target = parseFloat(el.dataset.target ?? el.dataset.count ?? '0') || 0;
+  const pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+  const dec = (String(target).split('.')[1] || '').length;
+  const fmt = n => pre + n.toLocaleString(isEN() ? 'en-US' : 'pt-BR',
+    { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suf;
+  if (reduce) return (el.textContent = fmt(target));
+  const start = performance.now(), dur = 1800;
+  const step = now => {
+    const p = Math.min((now - start) / dur, 1);
+    el.textContent = fmt(target * (1 - Math.pow(1 - p, 3)));
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }
 
-/* Cursor */
-const cursor = $('.cursor');
-if (matchMedia('(pointer:fine)').matches && !reduced) {
-  window.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
-  $$('a,button,.gallery img').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('big'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+const io = new IntersectionObserver(entries => entries.forEach(e => {
+  if (!e.isIntersecting) return;
+  const el = e.target;
+  if (el.matches(COUNT_SEL)) countUp(el);
+  else el.classList.add(el.classList.contains('bar') ? 'on' : 'show');
+  io.unobserve(el);
+}), { threshold: 0.1 });
+
+$$(`.reveal, .bar, ${COUNT_SEL}`).forEach(el => io.observe(el));
+
+// Garantia: anima tudo que ficou parado depois de 4 s
+setTimeout(() => $$(COUNT_SEL).forEach(countUp), 4000);
+
+
+/* ---------- Parallax ---------- */
+safe('parallax', () => {
+  if (reduce || !window.gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
+  $$('.parallax').forEach(img => gsap.to(img, {
+    yPercent: -10, ease: 'none',
+    scrollTrigger: { trigger: img.parentElement, scrub: true }
+  }));
+});
+
+/* ---------- Gráficos ---------- */
+const charts = {};
+function renderCharts() {
+  const text = cssVar('--text') || '#dbe6ff';
+  const grid = cssVar('--border') || '#ffffff1a';
+  Chart.defaults.color = text;
+  Chart.defaults.font.family = 'Inter, sans-serif';
+
+  const make = (id, cfg) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    charts[id]?.destroy();
+    charts[id] = new Chart(el, cfg);
+  };
+  const scales = {
+    x: { grid: { color: grid } },
+    y: { grid: { color: grid }, beginAtZero: true }
+  };
+
+  make('prodChart', {
+    type: 'bar',
+    data: {
+      labels: [t('Fase 1', 'Phase 1'), t('Meta 2027', '2027 target'), t('Licenciado', 'Permitted')],
+      datasets: [{
+        label: t('Capacidade (t/ano)', 'Capacity (t/yr)'),
+        data: [5000, 10000, 50000],
+        backgroundColor: [C.accent, C.accent2, C.blue],
+        borderRadius: 8
+      }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales }
+  });
+
+  make('costChart', {
+    type: 'line',
+    data: {
+      labels: ['2025', t('1º tri 2026', 'Q1 2026'), t('2º tri 2026', 'Q2 2026'), t('3º tri 2026', 'Q3 2026')],
+      datasets: [{
+        label: 'US$/t',
+        data: [1950, 1400, 950, 780],          // ilustrativo
+        borderColor: C.accent,
+        backgroundColor: 'rgba(77,163,255,.2)',
+        fill: true, tension: .35, pointRadius: 5
+      }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales }
+  });
+
+  make('shareChart', {
+    type: 'doughnut',
+    data: {
+      labels: [t('Administração', 'Management'), t('Institucionais', 'Institutional'), t('Varejo', 'Retail')],
+      datasets: [{
+        data: [40, 25, 35],                    // ilustrativo
+        backgroundColor: [C.accent, C.blue, C.accent2],
+        borderWidth: 0
+      }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom' } } }
   });
 }
 
-/* Gráficos */
-let charts = [];
-function renderCharts() {
-  charts.forEach(c => c.destroy());
-  const css = getComputedStyle(document.documentElement);
-  const txt = css.getPropertyValue('--text').trim();
-  const grid = css.getPropertyValue('--border').trim();
-  const cardBg = css.getPropertyValue('--card').trim();
-  Chart.defaults.color = txt;
-  Chart.defaults.font.family = 'Inter';
-  const en = lang === 'en';
-  const opts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { color: grid } }, y: { grid: { color: grid }, beginAtZero: true } } };
+/* ---------- Mapas ---------- */
+let map, wm;
+safe('mapas', () => {
+  if (!window.L) return;
+  const tiles = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+  const attr = '&copy; OpenStreetMap &copy; CARTO';
+  const dot = color => L.divIcon({
+    className: '',
+    html: `<span style="display:block;width:16px;height:16px;border-radius:50%;background:${color};border:3px solid #fff;box-shadow:0 0 12px ${color}"></span>`,
+    iconSize: [16, 16]
+  });
 
-  const pc = $('#prodChart').getContext('2d');
-  const barGrad = pc.createLinearGradient(0, 0, 0, 280);
-  barGrad.addColorStop(0, C.star);
-  barGrad.addColorStop(1, C.royal);
+  if ($('#map')) {
+    map = L.map('map', { scrollWheelZoom: false }).setView([-15.4, -39.3], 8);
+    L.tileLayer(tiles, { attribution: attr, maxZoom: 18 }).addTo(map);
+    L.marker(C.mine, { icon: dot(C.accent) }).addTo(map).bindPopup('<b>Mina Santa Cruz</b>').openPopup();
+    L.marker(C.port, { icon: dot(C.accent2) }).addTo(map).bindPopup('<b>Porto de Ilhéus</b>');
+    L.polyline([C.mine, C.port], { color: C.accent, dashArray: '6 8' }).addTo(map);
+  }
 
-  const cc = $('#costChart').getContext('2d');
-  const areaGrad = cc.createLinearGradient(0, 0, 0, 260);
-  areaGrad.addColorStop(0, 'rgba(77,163,255,.45)');
-  areaGrad.addColorStop(1, 'rgba(31,79,209,0)');
+  if ($('#worldMap')) {
+    wm = L.map('worldMap', { scrollWheelZoom: false, worldCopyJump: true }).setView([10, -20], 2);
+    L.tileLayer(tiles, { attribution: attr }).addTo(wm);
+    const dest = [
+      { n: 'EUA / USA', c: [29.76, -95.37] },
+      { n: 'Europa / Europe', c: [51.92, 4.48] },
+      { n: 'Ásia / Asia', c: [31.23, 121.47] }
+    ];
+    L.marker(C.port, { icon: dot(C.accent) }).addTo(wm).bindPopup('<b>Bahia, Brasil</b>');
+    dest.forEach(d => {
+      L.marker(d.c, { icon: dot(C.accent2) }).addTo(wm).bindPopup(`<b>${d.n}</b>`);
+      L.polyline([C.port, d.c], { color: C.accent, weight: 2, dashArray: '6 8' }).addTo(wm);
+    });
+  }
+});
+const fixMaps = () => { map?.invalidateSize(); wm?.invalidateSize(); };
+addEventListener('resize', fixMaps);
+addEventListener('load', fixMaps);
 
-  charts = [
-    new Chart(pc, {
-      type: 'bar',
-      data: {
-        labels: en ? ['Phase 1', '2027 target', 'Permitted'] : ['Fase 1', 'Meta 2027', 'Licença'],
-        datasets: [{ data: [5000, 10000, 50000], backgroundColor: [C.star, C.royal, barGrad], borderRadius: 8 }]
-      },
-      options: { ...opts, plugins: { legend: { display: false }, title: { display: true, text: en ? 'Capacity (t/yr)' : 'Capacidade (t/ano)' } } }
-    }),
-    new Chart(cc, {
-      type: 'line',
-      data: {
-        labels: en ? ['Before restart', 'After restart'] : ['Antes da retomada', 'Após a retomada'],
-        datasets: [{ data: [2000, 800], borderColor: C.star, backgroundColor: areaGrad, fill: true, tension: .4, pointRadius: 6, pointBackgroundColor: C.ice, pointBorderColor: C.royal }]
-      },
-      options: opts
-    }),
-    /* Estrutura acionária (ajuste os % reais) */
-    new Chart($('#shareChart'), {
-      type: 'doughnut',
-      data: {
-        labels: en ? ['CEO (Tiago Cunha)', 'Institutional', 'Free float'] : ['CEO (Tiago Cunha)', 'Institucionais', 'Free float'],
-        datasets: [{ data: [40, 20, 40], backgroundColor: [C.star, C.royal, C.navy], borderColor: cardBg, borderWidth: 3 }]
-      },
-      options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'bottom' } } }
-    })
-  ];
-}
-
-/* Mapas */
-const tiles = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-const attr = { attribution: '© OpenStreetMap © CARTO' };
-const starIcon = L.divIcon({ className: '', iconSize: [18, 18], html: `<div style="width:18px;height:18px;background:${C.star};border:3px solid #fff;border-radius:50%;box-shadow:0 0 15px ${C.star}"></div>` });
-const portIcon = L.divIcon({ className: '', iconSize: [14, 14], html: `<div style="width:14px;height:14px;background:${C.royal};border:2px solid #fff;border-radius:50%"></div>` });
-
-/* Mapa Santa Cruz */
-const map = L.map('map', { scrollWheelZoom: false }).setView([-14.9, -39.0], 7);
-L.tileLayer(tiles, attr).addTo(map);
-L.marker([-16.28, -39.03], { icon: starIcon }).addTo(map).bindPopup('<b>Mina Santa Cruz</b><br>Sul da Bahia').openPopup();
-L.marker([-14.78, -39.03], { icon: portIcon }).addTo(map).bindPopup('Porto de Ilhéus');
-L.marker([-12.97, -38.51], { icon: portIcon }).addTo(map).bindPopup('Porto de Salvador');
-L.polyline([[-16.28, -39.03], [-14.78, -39.03], [-12.97, -38.51]], { color: C.star, dashArray: '6 8' }).addTo(map);
-
-/* Mapa logístico mundial */
-const wm = L.map('worldMap', { scrollWheelZoom: false, worldCopyJump: true }).setView([15, -30], 2);
-L.tileLayer(tiles, attr).addTo(wm);
-const origin = [-14.78, -39.03];
-L.marker(origin, { icon: starIcon }).addTo(wm).bindPopup('<b>Porto de Ilhéus</b><br>Origem');
-[['Houston, EUA', [29.76, -95.36]], ['Roterdã, Europa', [51.92, 4.48]], ['Busan, Ásia', [35.1, 129.04]]].forEach(([n, p]) => {
-  L.marker(p, { icon: portIcon }).addTo(wm).bindPopup(n);
-  L.polyline([origin, p], { color: C.star, weight: 2, dashArray: '6 8' }).addTo(wm);
+/* ---------- Galeria / lightbox ---------- */
+safe('lightbox', () => {
+  const lb = $('#lightbox'); if (!lb) return;
+  const lbImg = $('img', lb);
+  const close = () => lb.classList.remove('open');
+  $$('.gallery img').forEach(img => {
+    img.tabIndex = 0;
+    const open = () => {
+      lbImg.src = img.src.replace(/w=\d+/, 'w=1600');
+      lbImg.alt = img.alt;
+      lb.classList.add('open');
+      $('button', lb).focus();
+    };
+    img.addEventListener('click', open);
+    img.addEventListener('keydown', e => e.key === 'Enter' && open());
+  });
+  $('button', lb).addEventListener('click', close);
+  lb.addEventListener('click', e => e.target === lb && close());
+  addEventListener('keydown', e => e.key === 'Escape' && close());
 });
 
-/* Calculadora */
-const calc = () => {
-  const inv = +$('#cInv').value, buy = +$('#cBuy').value, now = +$('#cNow').value;
-  if (!buy) { $('#cRes').textContent = 'Informe o preço de compra.'; return; }
-  const qty = Math.floor(inv / buy), total = qty * now, pct = (now / buy - 1) * 100;
-  const f = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'CAD' });
-  $('#cRes').innerHTML = `${qty.toLocaleString('pt-BR')} ações<b>${f(total)}</b>${pct >= 0 ? '▲' : '▼'} ${pct.toFixed(1)}% (${f(total - qty * buy)})`;
-};
-['#cInv', '#cBuy', '#cNow'].forEach(s => $(s).addEventListener('input', calc));
-calc();
+/* ---------- Notícias ---------- */
+const NEWS = [
+  { cat: 'op',   d: '2026-08-12', pt: 'Primeiro pedido de compra após a retomada', en: 'First purchase order after restart' },
+  { cat: 'op',   d: '2026-03-10', pt: 'Scrubber/trommel instalado em Santa Cruz', en: 'Scrubber/trommel installed at Santa Cruz' },
+  { cat: 'corp', d: '2026-03-10', pt: 'Rogerio Barcellos é nomeado COO', en: 'Rogerio Barcellos appointed COO' },
+  { cat: 'fin',  d: '2026-08-28', pt: 'Resultados do 2º trimestre de 2026', en: 'Q2 2026 results' },
+  { cat: 'corp', d: '2025-09-15', pt: 'Tiago Cunha assume como CEO', en: 'Tiago Cunha appointed CEO' },
+  { cat: 'op',   d: '2025-05-20', pt: 'Primeiro embarque de concentrado para os EUA', en: 'First concentrate shipment to the US' },
+  { cat: 'op',   d: '2024-12-05', pt: 'Inauguração oficial da mina Santa Cruz', en: 'Official inauguration of Santa Cruz mine' }
+].sort((a, b) => b.d.localeCompare(a.d));
 
-/* Notícias */
-const news = [
-  { d: 'Ago/2026', de: 'Aug 2026', c: 'op', pt: ['Primeiro pedido após a retomada', 'Custo caixa cai 60% e a produção volta três meses antes do previsto.'], en: ['First purchase order after restart', 'Cash cost down 60%, restart three months ahead of schedule.'] },
-  { d: 'Ago/2026', de: 'Aug 2026', c: 'fin', pt: ['Resultados do 2º trimestre de 2026', 'Publicado o MD&A do semestre encerrado em 30/06/2026.'], en: ['Q2 2026 results', 'MD&A for the period ended June 30, 2026 published.'] },
-  { d: 'Mai/2026', de: 'May 2026', c: 'fin', pt: ['Nova apresentação corporativa', 'Apresentação "Graphite for the Future" disponível.'], en: ['New corporate presentation', '"Graphite for the Future" deck available.'] },
-  { d: 'Mar/2026', de: 'Mar 2026', c: 'op', pt: ['Scrubber/trommel instalado', 'Equipamento aumenta a confiabilidade da planta.'], en: ['Scrubber/trommel installed', 'Equipment increases plant reliability.'] },
-  { d: 'Mar/2026', de: 'Mar 2026', c: 'corp', pt: ['Novo COO', 'Rogerio Barcellos é promovido a Diretor de Operações.'], en: ['New COO', 'Rogerio Barcellos promoted to Chief Operating Officer.'] },
-  { d: 'Set/2025', de: 'Sep 2025', c: 'corp', pt: ['Mudança na liderança', 'Tiago Cunha assume como Presidente e CEO.'], en: ['Leadership change', 'Tiago Cunha appointed President & CEO.'] },
-  { d: 'Mai/2025', de: 'May 2025', c: 'op', pt: ['Primeiro embarque', 'Primeira nova produção de grafite das Américas desde 1996.'], en: ['First shipment', 'First new graphite production in the Americas since 1996.'] },
-  { d: 'Dez/2024', de: 'Dec 2024', c: 'op', pt: ['Inauguração oficial', 'A mina Santa Cruz é inaugurada na Bahia.'], en: ['Official inauguration', 'Santa Cruz mine inaugurated in Bahia.'] }
-];
-const catName = { op: ['Operação', 'Operations'], corp: ['Corporativo', 'Corporate'], fin: ['Financeiro', 'Financial'] };
-let cat = 'all', page = 1;
-const perPage = 3;
+let newsCat = 'all', newsPage = 1;
+const PER_PAGE = 3;
+const CAT = { op: ['Operação', 'Operations'], corp: ['Corporativo', 'Corporate'], fin: ['Financeiro', 'Financial'] };
+
 function renderNews() {
-  const list = news.filter(n => cat === 'all' || n.c === cat);
-  const pages = Math.ceil(list.length / perPage);
-  if (page > pages) page = 1;
-  const i = lang === 'en' ? 1 : 0, k = lang === 'en' ? 'en' : 'pt';
-  $('#newsList').innerHTML = list.slice((page - 1) * perPage, page * perPage).map(n => `
-    <article class="card"><div class="body">
-      <small>${lang === 'en' ? n.de : n.d}</small><span class="cat">${catName[n.c][i]}</span>
-      <h3>${n[k][0]}</h3><p>${n[k][1]}</p>
-    </div></article>`).join('');
-  $('#pagination').innerHTML = Array.from({ length: pages }, (_, x) =>
-    `<button class="${x + 1 === page ? 'active' : ''}" aria-label="Página ${x + 1}">${x + 1}</button>`).join('');
-  $$('#pagination button').forEach((b, x) => b.onclick = () => { page = x + 1; renderNews(); });
+  const list = $('#newsList'), pag = $('#pagination');
+  if (!list) return;
+  const items = NEWS.filter(n => newsCat === 'all' || n.cat === newsCat);
+  const pages = Math.max(1, Math.ceil(items.length / PER_PAGE));
+  newsPage = Math.min(newsPage, pages);
+  const loc = isEN() ? 'en-US' : 'pt-BR';
+
+  list.innerHTML = items.slice((newsPage - 1) * PER_PAGE, newsPage * PER_PAGE).map(n => `
+    <article class="mk">
+      <small class="muted">${new Date(n.d + 'T12:00').toLocaleDateString(loc, { day: '2-digit', month: 'short', year: 'numeric' })} · ${t(...CAT[n.cat])}</small>
+      <h3>${isEN() ? n.en : n.pt}</h3>
+    </article>`).join('');
+
+  if (pag) {
+    pag.innerHTML = pages > 1
+      ? Array.from({ length: pages }, (_, i) =>
+          `<button class="filter${i + 1 === newsPage ? ' active' : ''}" data-page="${i + 1}" aria-label="${t('Página', 'Page')} ${i + 1}">${i + 1}</button>`).join('')
+      : '';
+  }
 }
-$$('.filter').forEach(b => b.onclick = () => {
-  $$('.filter').forEach(x => x.classList.remove('active'));
-  b.classList.add('active');
-  cat = b.dataset.cat;
-  page = 1;
+$$('.filters .filter').forEach(btn => btn.addEventListener('click', () => {
+  $$('.filters .filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  newsCat = btn.dataset.cat; newsPage = 1;
+  renderNews();
+}));
+$('#pagination')?.addEventListener('click', e => {
+  const b = e.target.closest('[data-page]'); if (!b) return;
+  newsPage = +b.dataset.page;
   renderNews();
 });
 
-/* Lightbox */
-const lb = $('#lightbox');
-$$('.gallery img').forEach(img => {
-  img.tabIndex = 0;
-  const open = () => { lb.querySelector('img').src = img.src.replace('w=800', 'w=1600'); lb.querySelector('img').alt = img.alt; lb.classList.add('open'); };
-  img.onclick = open;
-  img.onkeydown = e => e.key === 'Enter' && open();
-});
-lb.onclick = e => { if (e.target !== lb.querySelector('img')) lb.classList.remove('open'); };
-document.addEventListener('keydown', e => e.key === 'Escape' && lb.classList.remove('open'));
-
-/* Envio genérico via Formspree */
-async function sendForm(f, m, okTxt, errTxt) {
-  try {
-    const r = await fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } });
-    if (!r.ok) throw 0;
-    m.style.color = C.star; m.textContent = okTxt; f.reset();
-    return true;
-  } catch {
-    m.style.color = '#ef4444'; m.textContent = errTxt;
-    return false;
-  }
+/* ---------- Calculadora ---------- */
+function calc() {
+  const res = $('#cRes'); if (!res) return;
+  const inv = +$('#cInv').value || 0, buy = +$('#cBuy').value || 0, now = +$('#cNow').value || 0;
+  if (!buy) return (res.innerHTML = t('Informe o preço de compra.', 'Enter the purchase price.'));
+  const shares = Math.floor(inv / buy), val = shares * now, gain = val - inv, pct = inv ? (gain / inv) * 100 : 0;
+  const loc = isEN() ? 'en-CA' : 'pt-BR';
+  const money = v => v.toLocaleString(loc, { style: 'currency', currency: 'CAD' });
+  res.innerHTML = `
+    ${t('Ações', 'Shares')}: ${shares.toLocaleString(loc)}<br>
+    ${t('Valor final', 'Final value')}: <b>${money(val)}</b>
+    ${t('Resultado', 'Result')}: ${gain >= 0 ? '+' : ''}${money(gain)} (${pct.toFixed(1)}%)`;
 }
+$$('#cInv, #cBuy, #cNow').forEach(i => i.addEventListener('input', calc));
 
-/* Formulário de contato */
-const form = $('#form'), msg = $('#msg');
-form.addEventListener('submit', async e => {
-  e.preventDefault();
-  const en = lang === 'en';
-  if (window.grecaptcha && !grecaptcha.getResponse()) {
-    msg.style.color = '#ef4444';
-    msg.textContent = en ? 'Please confirm the reCAPTCHA.' : 'Confirme o reCAPTCHA.';
-    return;
-  }
-  const ok = await sendForm(form, msg,
-    en ? 'Message sent successfully!' : 'Mensagem enviada com sucesso!',
-    en ? 'Error sending. Please try again.' : 'Erro ao enviar. Tente novamente.');
-  if (ok && window.grecaptcha) grecaptcha.reset();
+/* ---------- Formulários (Formspree via fetch) ---------- */
+$$('#form, #alertForm, #quoteForm').forEach(form => {
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const msg = $('.form-msg, #msg', form);
+    const btn = $('button[type=submit]', form);
+
+    if (form.id === 'form' && window.grecaptcha && !grecaptcha.getResponse()) {
+      msg.textContent = t('Confirme o reCAPTCHA.', 'Please complete the reCAPTCHA.');
+      return;
+    }
+    btn.disabled = true;
+    msg.textContent = t('Enviando...', 'Sending...');
+    try {
+      const r = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      if (!r.ok) throw new Error(r.status);
+      form.reset();
+      window.grecaptcha && form.id === 'form' && grecaptcha.reset();
+      msg.textContent = t('Enviado com sucesso! Retornaremos em breve.', 'Sent successfully! We will get back to you soon.');
+    } catch {
+      msg.textContent = t('Erro ao enviar. Tente novamente ou escreva para info@southstarbatterymetals.com.', 'Sending failed. Try again or email info@southstarbatterymetals.com.');
+    } finally {
+      btn.disabled = false;
+    }
+  });
 });
 
-/* Formulários de alertas e cotação */
-$$('#alertForm, #quoteForm').forEach(f => f.addEventListener('submit', e => {
-  e.preventDefault();
-  const en = lang === 'en';
-  sendForm(f, f.querySelector('.form-msg'),
-    en ? 'Sent successfully!' : 'Enviado com sucesso!',
-    en ? 'Error sending. Please try again.' : 'Erro ao enviar. Tente novamente.');
-}));
+/* ---------- Cookies ---------- */
+safe('cookies', () => {
+  const box = $('#cookie'); if (!box) return;
+  const choice = localStorage.getItem('cookies');
+  if (!choice) box.classList.add('show');
+  const set = v => { localStorage.setItem('cookies', v); box.classList.remove('show'); };
+  $('#cookieYes')?.addEventListener('click', () => set('yes'));
+  $('#cookieNo')?.addEventListener('click', () => set('no'));
+});
 
-/* Cookies e Analytics */
-function loadAnalytics() {
-  const s = document.createElement('script');
-  s.defer = true;
-  s.dataset.domain = 'southstarbatterymetals.com';
-  s.src = 'https://plausible.io/js/script.js';
-  document.head.appendChild(s);
-}
-const consent = localStorage.getItem('cookies');
-if (consent === 'yes') loadAnalytics();
-else if (!consent) $('#cookie').classList.add('show');
-$('#cookieYes').onclick = () => { localStorage.setItem('cookies', 'yes'); $('#cookie').classList.remove('show'); loadAnalytics(); };
-$('#cookieNo').onclick = () => { localStorage.setItem('cookies', 'no'); $('#cookie').classList.remove('show'); };
-
-/* Inicialização */
+/* ---------- Inicialização ---------- */
 $('#year').textContent = new Date().getFullYear();
-setTheme(localStorage.getItem('theme') || 'dark');
-applyLang();
+safe('tema', () => setTheme(localStorage.getItem('theme') || 'dark'));
+safe('idioma', applyLang);
+setTimeout(() => safe('mapas', fixMaps), 300);
 
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});

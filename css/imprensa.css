@@ -1,0 +1,49 @@
+/* ==================== KIT DE MÍDIA ==================== */
+
+.kit {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.kit .mk {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/* ==================== PALETA DE CORES ==================== */
+
+.swatches {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.swatch {
+    width: 130px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--card);
+    cursor: pointer;
+    font: inherit;
+    color: var(--text);
+    padding: 0;
+    text-align: left;
+}
+
+.swatch i {
+    display: block;
+    height: 80px;
+}
+
+.swatch span {
+    display: block;
+    padding: 10px;
+    font-size: 0.85rem;
+}
