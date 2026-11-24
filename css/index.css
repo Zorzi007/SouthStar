@@ -861,3 +861,8 @@ tbody tr:hover {
         font-size: 1.1rem;
     }
 }
+
+/* Contato com fundo branco (alternância de seções) */
+#contato {
+    background: var(--bg2);
+}
