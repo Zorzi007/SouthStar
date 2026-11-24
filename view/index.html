@@ -11,7 +11,8 @@
 <link rel="alternate" hreflang="en" href="https://southstarbatterymetals.com/?lang=en">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="South Star Battery Metals | Graphite for the Future">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="South Star Battery Metals | Grafite para o Futuro">
 <meta property="og:description" content="Primeira nova produção comercial de grafite nas Américas desde 1996.">
 <meta property="og:image" content="https://southstarbatterymetals.com/assets/og-image.jpg">
 <meta property="og:url" content="https://southstarbatterymetals.com/">
@@ -19,14 +20,14 @@
 
 <script type="application/ld+json">
 {
- "@context":"https://schema.org",
- "@type":"Corporation",
- "name":"South Star Battery Metals Corp.",
- "url":"https://southstarbatterymetals.com",
- "logo":"https://southstarbatterymetals.com/assets/logo.png",
- "foundingDate":"1984",
- "tickerSymbol":"TSXV: STS",
- "address":{"@type":"PostalAddress","streetAddress":"1507 - 1030 West Georgia Street","addressLocality":"Vancouver","addressRegion":"BC","postalCode":"V6E 2Y3","addressCountry":"CA"}
+ "@context": "https://schema.org",
+ "@type": "Corporation",
+ "name": "South Star Battery Metals Corp.",
+ "url": "https://southstarbatterymetals.com",
+ "logo": "https://southstarbatterymetals.com/assets/logo.png",
+ "foundingDate": "1984",
+ "tickerSymbol": "TSXV: STS",
+ "address": {"@type": "PostalAddress", "streetAddress": "1507 - 1030 West Georgia Street", "addressLocality": "Vancouver", "addressRegion": "BC", "postalCode": "V6E 2Y3", "addressCountry": "CA"}
 }
 </script>
 
@@ -36,39 +37,25 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="/css/base.css">
 <link rel="stylesheet" href="/css/index.css">
-<style>
- /* Alturas obrigatórias para gráficos e mapas */
- .chart-box { position: relative; height: 300px; }
- #map { height: 450px; border-radius: 12px; overflow: hidden; }
- #worldMap { height: 350px; border-radius: 12px; overflow: hidden; }
- .tv-chart { height: 300px; }
-</style>
 </head>
 <body>
 
 <a href="#main" class="skip">Pular para o conteúdo</a>
 
-<div class="cursor" aria-hidden="true"></div>
-
 <header id="header">
  <nav class="container" aria-label="Menu principal">
-  <a href="#" class="logo">south<span>star</span></a>
+  <a href="#" class="logo">south <span>star</span> <i class="star" aria-hidden="true">✦</i></a>
   <ul class="menu" id="menu">
    <li><a href="#sobre" data-en="About">Sobre</a></li>
-   <li><a href="#grafite" data-en="Graphite">Grafite</a></li>
-   <li><a href="#projetos">Santa Cruz</a></li>
    <li><a href="#produto" data-en="Product">Produto</a></li>
    <li><a href="#comercial" data-en="Sales">Comercial</a></li>
-   <li><a href="#esg">ESG</a></li>
    <li><a href="#investidores" data-en="Investors">Investidores</a></li>
    <li><a href="#ferramentas" data-en="Tools">Ferramentas</a></li>
-   <li><a href="blog.html">Blog</a></li>
-   <li><a href="#contato" data-en="Contact">Contato</a></li>
   </ul>
   <div class="nav-tools">
-   <button id="langBtn" class="tool" aria-label="Mudar idioma">EN</button>
-   <button id="themeBtn" class="tool" aria-label="Alternar tema"><i data-lucide="sun"></i></button>
-   <button class="burger tool" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><i data-lucide="menu"></i></button>
+   <button id="langBtn" class="tool" type="button" aria-label="Mudar idioma">EN</button>
+   <button id="themeBtn" class="tool" type="button" aria-label="Alternar tema"><i data-lucide="sun"></i></button>
+   <button class="burger tool" id="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><i data-lucide="menu"></i></button>
   </div>
  </nav>
 </header>
@@ -77,10 +64,10 @@
 
 <!-- HERO -->
 <section class="hero">
- <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1578319439584-104c94d37305?w=1600&fm=webp&q=70">
+ <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" poster="https://images.unsplash.com/photo-1578319439584-104c94d37305?w=1600&fm=webp&q=70">
   <source src="assets/hero.mp4" type="video/mp4">
  </video>
- <div class="hero-overlay"></div>
+ <div class="hero-overlay" aria-hidden="true"></div>
  <div class="container hero-content">
   <p class="tag">Graphite for the Future</p>
   <h1 data-en="Natural graphite <span>powering</span> the energy transition">Grafite natural que <span>impulsiona</span> a transição energética</h1>
@@ -102,14 +89,14 @@
 </section>
 
 <!-- STATS -->
-<div class="stats">
+<section class="stats" aria-label="Números da operação">
  <div class="container grid">
   <div class="stat"><h3 class="count" data-target="5000">0</h3><p data-en="t/yr – Phase 1">t/ano – Fase 1</p></div>
   <div class="stat"><h3 class="count" data-target="10000">0</h3><p data-en="t/yr – 2027 target">t/ano – meta 2027</p></div>
   <div class="stat"><h3 class="count" data-target="50000">0</h3><p data-en="t/yr permitted">t/ano licenciadas</p></div>
   <div class="stat"><h3 class="count" data-target="99" data-suffix="%">0</h3><p data-en="Graphitic carbon (up to)">Carbono grafítico (até)</p></div>
  </div>
-</div>
+</section>
 
 <!-- SOBRE -->
 <section class="about" id="sobre">
@@ -158,7 +145,7 @@
      <li data-en="Expansion to 10,000 t/yr in 2027 (capex below US$ 1M)">Expansão para 10.000 t/ano em 2027, com investimento abaixo de US$ 1 milhão</li>
      <li data-en="Permitted for up to 50,000 t/yr">Licença para até 50.000 t/ano</li>
     </ul>
-    <div class="chart-box"><canvas id="prodChart" aria-label="Gráfico de capacidade de produção" role="img"></canvas></div>
+    <div class="chart-box"><canvas id="prodChart" role="img" aria-label="Gráfico de capacidade de produção"></canvas></div>
    </div>
    <div class="reveal">
     <div id="map" role="region" aria-label="Mapa da mina Santa Cruz"></div>
@@ -176,7 +163,7 @@
   <div class="table-wrap reveal">
    <table>
     <caption class="sr-only">Especificações do concentrado de grafite</caption>
-    <thead><tr><th data-en="Product">Produto</th><th data-en="Particle size">Granulometria</th><th data-en="Purity (Cg)">Pureza (Cg)</th><th data-en="Applications">Aplicações</th></tr></thead>
+    <thead><tr><th scope="col" data-en="Product">Produto</th><th scope="col" data-en="Particle size">Granulometria</th><th scope="col" data-en="Purity (Cg)">Pureza (Cg)</th><th scope="col" data-en="Applications">Aplicações</th></tr></thead>
     <tbody>
      <tr><td data-en="Large flake">Floco grande</td><td>+80 mesh</td><td>95–99%</td><td data-en="Refractories, expandable graphite, foils">Refratários, grafite expandido, folhas</td></tr>
      <tr><td data-en="Medium flake">Floco médio</td><td>-80 / +100 mesh</td><td>95–98%</td><td data-en="Foundry, lubricants, brake pads">Fundição, lubrificantes, pastilhas de freio</td></tr>
@@ -198,20 +185,19 @@
 </section>
 
 <!-- GALERIA -->
-<section class="gallery-sec">
+<section class="gallery-sec" id="galeria">
  <div class="container">
   <p class="tag" data-en="Gallery">Galeria</p>
   <h2 class="title" data-en="Santa Cruz operations">Operação Santa Cruz</h2>
   <div class="gallery">
-   <img src="https://images.unsplash.com/photo-1578319439584-104c94d37305?w=800&fm=webp&q=70" alt="Mina a céu aberto" loading="lazy">
-   <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&fm=webp&q=70" alt="Concentrado de grafite" loading="lazy">
-   <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&fm=webp&q=70" alt="Planta de beneficiamento" loading="lazy">
-   <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&fm=webp&q=70" alt="Embarque de produto" loading="lazy">
+   <img src="https://images.unsplash.com/photo-1578319439584-104c94d37305?w=800&fm=webp&q=70" alt="Mina a céu aberto" loading="lazy" tabindex="0">
+   <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&fm=webp&q=70" alt="Concentrado de grafite" loading="lazy" tabindex="0">
+   <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&fm=webp&q=70" alt="Planta de beneficiamento" loading="lazy" tabindex="0">
+   <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&fm=webp&q=70" alt="Embarque de produto" loading="lazy" tabindex="0">
   </div>
   <a href="tour.html" class="btn btn-out" style="margin-top:25px"><i data-lucide="rotate-3d"></i> <span data-en="360° virtual tour">Tour virtual 360°</span></a>
  </div>
 </section>
-<div id="lightbox" role="dialog" aria-modal="true" aria-label="Imagem ampliada"><button aria-label="Fechar"><i data-lucide="x"></i></button><img alt=""></div>
 
 <!-- TRAJETÓRIA -->
 <section id="historia">
@@ -236,9 +222,9 @@
   <p class="tag" data-en="Leadership">Liderança</p>
   <h2 class="title" data-en="Executive Team">Equipe Executiva</h2>
   <div class="team-grid">
-   <div class="member reveal"><div class="avatar">TC</div><h3>Tiago Cunha</h3><small data-en="President & CEO">Presidente e CEO</small><p data-en="Led the operational turnaround. Owns ~40% of the company and takes no salary.">Conduziu a retomada da operação. Detém cerca de 40% da empresa e não recebe salário.</p></div>
-   <div class="member reveal"><div class="avatar">RB</div><h3>Rogerio Barcellos</h3><small data-en="Chief Operating Officer">Diretor de Operações (COO)</small><p data-en="Chemical engineer with 20+ years at Anglo American, EuroChem and Bunge.">Engenheiro químico com mais de 20 anos em empresas como Anglo American, EuroChem e Bunge.</p></div>
-   <div class="member reveal"><div class="avatar">ML</div><h3>Marc Leduc</h3><small data-en="Chairman of the Board">Chairman do Conselho</small><p data-en="Chairs the Board of Directors.">Preside o Conselho de Administração.</p></div>
+   <div class="member reveal"><div class="avatar" aria-hidden="true">TC</div><h3>Tiago Cunha</h3><small data-en="President &amp; CEO">Presidente e CEO</small><p data-en="Led the operational turnaround. Owns ~40% of the company and takes no salary.">Conduziu a retomada da operação. Detém cerca de 40% da empresa e não recebe salário.</p></div>
+   <div class="member reveal"><div class="avatar" aria-hidden="true">RB</div><h3>Rogerio Barcellos</h3><small data-en="Chief Operating Officer">Diretor de Operações (COO)</small><p data-en="Chemical engineer with 20+ years at Anglo American, EuroChem and Bunge.">Engenheiro químico com mais de 20 anos em empresas como Anglo American, EuroChem e Bunge.</p></div>
+   <div class="member reveal"><div class="avatar" aria-hidden="true">ML</div><h3>Marc Leduc</h3><small data-en="Chairman of the Board">Chairman do Conselho</small><p data-en="Chairs the Board of Directors.">Preside o Conselho de Administração.</p></div>
   </div>
   <a href="carreiras.html" class="btn btn-out" style="margin-top:30px"><i data-lucide="briefcase"></i> <span data-en="Work with us">Trabalhe conosco</span></a>
  </div>
@@ -247,7 +233,7 @@
 <!-- ESG -->
 <section class="esg" id="esg">
  <div class="container">
-  <p class="tag" data-en="ESG & Safety">ESG e Segurança</p>
+  <p class="tag" data-en="ESG &amp; Safety">ESG e Segurança</p>
   <h2 class="title" data-en="Responsible mining">Mineração responsável</h2>
   <div class="inv">
    <div class="reveal"><h3>887</h3><p data-en="Days without lost-time incidents during construction">Dias sem acidentes com afastamento durante a construção</p></div>
@@ -273,8 +259,8 @@
    <div class="reveal">
     <h3 class="sub" data-en="Share price – TSXV: STS">Cotação – TSXV: STS</h3>
     <div class="tv-chart">
-     <div class="tradingview-widget-container" style="height:100%">
-      <div class="tradingview-widget-container__widget" style="height:100%"></div>
+     <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
       <script src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
       {"symbols":[["TSXV:STS|1M"],["OTC:STSBF|1M"]],"colorTheme":"dark","isTransparent":true,"autosize":true,"locale":"br","chartType":"area","lineColor":"#4da3ff","topColor":"rgba(77,163,255,0.3)","bottomColor":"rgba(77,163,255,0)"}
       </script>
@@ -283,7 +269,7 @@
    </div>
    <div class="reveal">
     <h3 class="sub" data-en="Cash cost (US$/t)">Custo caixa (US$/t)</h3>
-    <div class="chart-box"><canvas id="costChart" aria-label="Gráfico de redução de custo" role="img"></canvas></div>
+    <div class="chart-box"><canvas id="costChart" role="img" aria-label="Gráfico de redução de custo"></canvas></div>
    </div>
   </div>
   <div class="ir-grid">
@@ -316,12 +302,12 @@
   <p class="tag" data-en="News">Notícias</p>
   <h2 class="title" data-en="Latest Updates">Últimas Atualizações</h2>
   <div class="filters" role="group" aria-label="Filtrar notícias">
-   <button class="filter active" data-cat="all" data-en="All">Todas</button>
-   <button class="filter" data-cat="op" data-en="Operations">Operação</button>
-   <button class="filter" data-cat="corp" data-en="Corporate">Corporativo</button>
-   <button class="filter" data-cat="fin" data-en="Financial">Financeiro</button>
+   <button class="filter active" type="button" data-cat="all" data-en="All" aria-pressed="true">Todas</button>
+   <button class="filter" type="button" data-cat="op" data-en="Operations" aria-pressed="false">Operação</button>
+   <button class="filter" type="button" data-cat="corp" data-en="Corporate" aria-pressed="false">Corporativo</button>
+   <button class="filter" type="button" data-cat="fin" data-en="Financial" aria-pressed="false">Financeiro</button>
   </div>
-  <div class="cards" id="newsList"></div>
+  <div class="cards" id="newsList" aria-live="polite"></div>
   <div class="pagination" id="pagination"></div>
   <div class="center" style="margin-top:30px"><a href="blog.html" class="btn btn-main"><i data-lucide="book-open"></i> <span data-en="Visit our blog">Visite nosso blog</span></a></div>
  </div>
@@ -334,7 +320,8 @@
   <h2 class="title" data-en="Mineral Resources – Santa Cruz">Recursos Minerais – Santa Cruz</h2>
   <div class="table-wrap reveal">
    <table>
-    <thead><tr><th data-en="Category">Categoria</th><th data-en="Tonnes (Mt)">Toneladas (Mt)</th><th data-en="Grade (% Cg)">Teor (% Cg)</th><th data-en="Contained graphite (kt)">Grafite contido (kt)</th></tr></thead>
+    <caption class="sr-only">Recursos minerais do projeto Santa Cruz</caption>
+    <thead><tr><th scope="col" data-en="Category">Categoria</th><th scope="col" data-en="Tonnes (Mt)">Toneladas (Mt)</th><th scope="col" data-en="Grade (% Cg)">Teor (% Cg)</th><th scope="col" data-en="Contained graphite (kt)">Grafite contido (kt)</th></tr></thead>
     <tbody>
      <tr><td data-en="Measured">Medido</td><td>4,50</td><td>2,40%</td><td>108,0</td></tr>
      <tr><td data-en="Indicated">Indicado</td><td>9,20</td><td>2,20%</td><td>202,4</td></tr>
@@ -354,10 +341,10 @@
   <div class="ir-grid">
    <div class="calc reveal">
     <h3 class="sub" data-en="Investment calculator">Calculadora de investimento</h3>
-    <label><span data-en="Amount invested (CAD$)">Valor investido (CAD$)</span><input type="number" id="cInv" value="1000" min="0"></label>
-    <label><span data-en="Purchase price (CAD$)">Preço de compra (CAD$)</span><input type="number" id="cBuy" value="0.20" step="0.01" min="0"></label>
-    <label><span data-en="Current / target price (CAD$)">Preço atual / alvo (CAD$)</span><input type="number" id="cNow" value="0.30" step="0.01" min="0"></label>
-    <div class="calc-res" id="cRes"></div>
+    <label><span data-en="Amount invested (CAD$)">Valor investido (CAD$)</span><input type="number" id="cInv" value="1000" min="0" inputmode="decimal"></label>
+    <label><span data-en="Purchase price (CAD$)">Preço de compra (CAD$)</span><input type="number" id="cBuy" value="0.20" step="0.01" min="0" inputmode="decimal"></label>
+    <label><span data-en="Current / target price (CAD$)">Preço atual / alvo (CAD$)</span><input type="number" id="cNow" value="0.30" step="0.01" min="0" inputmode="decimal"></label>
+    <div class="calc-res" id="cRes" aria-live="polite"></div>
     <small class="muted" data-en="Illustrative simulation. Not investment advice.">Simulação ilustrativa. Não é recomendação de investimento.</small>
    </div>
    <div class="reveal">
@@ -369,7 +356,8 @@
   <h3 class="sub" data-en="Analyst coverage">Cobertura de analistas</h3>
   <div class="table-wrap reveal">
    <table>
-    <thead><tr><th data-en="Brokerage">Corretora</th><th data-en="Analyst">Analista</th><th data-en="Rating">Recomendação</th><th data-en="Target price">Preço-alvo</th></tr></thead>
+    <caption class="sr-only">Cobertura de analistas</caption>
+    <thead><tr><th scope="col" data-en="Brokerage">Corretora</th><th scope="col" data-en="Analyst">Analista</th><th scope="col" data-en="Rating">Recomendação</th><th scope="col" data-en="Target price">Preço-alvo</th></tr></thead>
     <tbody>
      <tr><td>Fulano de Tal</td><td>Fulano de Tal</td><td>Fulano de Tal</td><td>Fulano de Tal</td></tr>
      <tr><td>Fulano de Tal</td><td>Fulano de Tal</td><td>Fulano de Tal</td><td>Fulano de Tal</td></tr>
@@ -383,17 +371,17 @@
    <div class="reveal">
     <h3 class="sub" data-en="FAQ">Perguntas frequentes</h3>
     <div class="faq">
-     <details><summary>Onde posso comprar ações da South Star?</summary><p>Na TSX Venture (STS), no Canadá, e na OTCQB (STSBF), nos EUA. No Brasil, você compra por corretoras com acesso internacional.</p></details>
-     <details><summary>Qual é o ticker?</summary><p>TSXV: STS e OTCQB: STSBF.</p></details>
-     <details><summary>Quem audita a empresa?</summary><p>[PREENCHER: nome da auditoria]</p></details>
-     <details><summary>Onde encontro os relatórios oficiais?</summary><p>No SEDAR+ e na seção Documentos desta página.</p></details>
-     <details><summary>A empresa paga dividendos?</summary><p>Não há política de dividendos no momento. O foco é a expansão da produção.</p></details>
+     <details><summary data-en="Where can I buy South Star shares?">Onde posso comprar ações da South Star?</summary><p data-en="On the TSX Venture (STS) in Canada and on the OTCQB (STSBF) in the US. In Brazil, through brokers with international access.">Na TSX Venture (STS), no Canadá, e na OTCQB (STSBF), nos EUA. No Brasil, você compra por corretoras com acesso internacional.</p></details>
+     <details><summary data-en="What is the ticker?">Qual é o ticker?</summary><p data-en="TSXV: STS and OTCQB: STSBF.">TSXV: STS e OTCQB: STSBF.</p></details>
+     <details><summary data-en="Who audits the company?">Quem audita a empresa?</summary><p>[PREENCHER: nome da auditoria]</p></details>
+     <details><summary data-en="Where can I find official reports?">Onde encontro os relatórios oficiais?</summary><p data-en="On SEDAR+ and in the Documents section of this page.">No SEDAR+ e na seção Documentos desta página.</p></details>
+     <details><summary data-en="Does the company pay dividends?">A empresa paga dividendos?</summary><p data-en="There is no dividend policy at the moment. The focus is on expanding production.">Não há política de dividendos no momento. O foco é a expansão da produção.</p></details>
     </div>
    </div>
    <div class="reveal">
     <h3 class="sub" data-en="Email alerts">Alertas por e-mail</h3>
     <form id="alertForm" class="alert-form" action="https://formspree.io/f/SEU_ID" method="POST">
-     <input type="email" name="email" placeholder="Seu e-mail" data-en-ph="Your email" required aria-label="E-mail">
+     <input type="email" name="email" placeholder="Seu e-mail" data-en-ph="Your email" required aria-label="E-mail" autocomplete="email">
      <label class="chk"><input type="checkbox" name="alerta" value="resultados" checked> <span data-en="Quarterly results">Resultados trimestrais</span></label>
      <label class="chk"><input type="checkbox" name="alerta" value="comunicados" checked> <span data-en="Press releases">Comunicados à imprensa</span></label>
      <label class="chk"><input type="checkbox" name="alerta" value="eventos"> <span data-en="Events and webinars">Eventos e webinars</span></label>
@@ -428,12 +416,21 @@
   <h2 class="title" data-en="Buy graphite from South Star">Compre grafite da South Star</h2>
   <div class="ir-grid">
    <form id="quoteForm" class="alert-form reveal" action="https://formspree.io/f/SEU_ID" method="POST">
-    <select name="tipo" required aria-label="Tipo de solicitação"><option value="" data-en="Request type">Tipo de solicitação</option><option data-en="Quote">Cotação</option><option data-en="Sample">Amostra</option></select>
-    <input name="empresa" placeholder="Empresa" data-en-ph="Company" required aria-label="Empresa">
-    <input name="email" type="email" placeholder="E-mail corporativo" data-en-ph="Corporate email" required aria-label="E-mail corporativo">
-    <select name="granulometria" required aria-label="Granulometria"><option value="" data-en="Particle size">Granulometria</option><option>+80 mesh</option><option>-80/+100 mesh</option><option>-100 mesh</option></select>
+    <select name="tipo" required aria-label="Tipo de solicitação">
+     <option value="" data-en="Request type">Tipo de solicitação</option>
+     <option value="cotacao" data-en="Quote">Cotação</option>
+     <option value="amostra" data-en="Sample">Amostra</option>
+    </select>
+    <input name="empresa" type="text" placeholder="Empresa" data-en-ph="Company" required aria-label="Empresa" autocomplete="organization">
+    <input name="email" type="email" placeholder="E-mail corporativo" data-en-ph="Corporate email" required aria-label="E-mail corporativo" autocomplete="email">
+    <select name="granulometria" required aria-label="Granulometria">
+     <option value="" data-en="Particle size">Granulometria</option>
+     <option value="+80">+80 mesh</option>
+     <option value="-80/+100">-80/+100 mesh</option>
+     <option value="-100">-100 mesh</option>
+    </select>
     <input name="volume" type="number" placeholder="Volume anual (t)" data-en-ph="Annual volume (t)" min="1" aria-label="Volume anual">
-    <input name="destino" placeholder="País / porto de destino" data-en-ph="Destination country / port" aria-label="Destino">
+    <input name="destino" type="text" placeholder="País / porto de destino" data-en-ph="Destination country / port" aria-label="Destino">
     <textarea name="obs" rows="3" placeholder="Observações" data-en-ph="Notes" aria-label="Observações"></textarea>
     <button class="btn btn-main" type="submit" data-en="Send request">Enviar solicitação</button>
     <p class="form-msg" role="status" aria-live="polite"></p>
@@ -491,7 +488,7 @@
   </div>
   <form id="nlForm" action="https://SEU-DOMINIO.us21.list-manage.com/subscribe/post?u=XXXX&amp;id=YYYY" method="post" target="_blank">
    <label for="nlEmail" class="sr-only">E-mail</label>
-   <input id="nlEmail" type="email" name="EMAIL" placeholder="Seu e-mail" data-en-ph="Your email" required>
+   <input id="nlEmail" type="email" name="EMAIL" placeholder="Seu e-mail" data-en-ph="Your email" required autocomplete="email">
    <button class="btn btn-white" type="submit" data-en="Subscribe">Inscrever</button>
   </form>
  </div>
@@ -511,16 +508,16 @@
   </div>
   <form id="form" action="https://formspree.io/f/SEU_ID" method="POST">
    <label for="fNome" class="sr-only">Nome</label>
-   <input id="fNome" name="nome" type="text" placeholder="Nome" data-en-ph="Name" required>
+   <input id="fNome" name="nome" type="text" placeholder="Nome" data-en-ph="Name" required autocomplete="name">
    <label for="fEmail" class="sr-only">E-mail</label>
-   <input id="fEmail" name="email" type="email" placeholder="E-mail" required>
+   <input id="fEmail" name="email" type="email" placeholder="E-mail" required autocomplete="email">
    <label for="fAssunto" class="sr-only">Assunto</label>
    <select id="fAssunto" name="assunto" required>
     <option value="" data-en="Subject">Assunto</option>
-    <option data-en="Investors">Investidores</option>
-    <option data-en="Sales / Buy graphite">Comercial / Compra de grafite</option>
-    <option data-en="Partnerships">Parcerias</option>
-    <option data-en="Press">Imprensa</option>
+    <option value="investidores" data-en="Investors">Investidores</option>
+    <option value="comercial" data-en="Sales / Buy graphite">Comercial / Compra de grafite</option>
+    <option value="parcerias" data-en="Partnerships">Parcerias</option>
+    <option value="imprensa" data-en="Press">Imprensa</option>
    </select>
    <label for="fMsg" class="sr-only">Mensagem</label>
    <textarea id="fMsg" name="mensagem" rows="5" placeholder="Mensagem" data-en-ph="Message" required></textarea>
@@ -533,47 +530,66 @@
 
 </main>
 
-<footer>
- <div class="container grid">
-  <div>
-   <a href="#" class="logo">south<span>star</span></a>
-   <p data-en="Natural flake graphite produced in Brazil for the world.">Grafite natural em flocos, produzido no Brasil para o mundo.</p>
+<footer class="footer">
+ <div class="container">
+  <div class="ft-top">
+   <a href="#" class="ft-logo">south <span>star</span> <i class="star" aria-hidden="true">✦</i></a>
+   <div class="ft-social">
+    <a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+    </a>
+    <a href="https://linkedin.com/company/" target="_blank" rel="noopener" aria-label="LinkedIn">
+     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+   </div>
   </div>
-  <div>
-   <h4>Links</h4>
-   <ul>
-    <li><a href="#sobre" data-en="About">Sobre</a></li>
-    <li><a href="#investidores" data-en="Investors">Investidores</a></li>
-    <li><a href="#comercial" data-en="Sales">Comercial</a></li>
-    <li><a href="blog.html">Blog</a></li>
-    <li><a href="imprensa.html" data-en="Press">Imprensa</a></li>
-    <li><a href="tour.html">Tour 360°</a></li>
-    <li><a href="carreiras.html" data-en="Careers">Carreiras</a></li>
-    <li><a href="privacidade.html" data-en="Privacy Policy">Política de Privacidade</a></li>
-   </ul>
-  </div>
-  <div>
-   <h4 data-en="Market">Mercado</h4>
-   <ul><li>TSXV: STS</li><li>OTCQB: STSBF</li></ul>
+
+  <nav class="ft-grid" aria-label="Rodapé">
+   <div>
+    <h4 data-en="Company">Empresa</h4>
+    <a href="#sobre" data-en="About">Sobre</a>
+    <a href="#produto" data-en="Product">Produto</a>
+    <a href="#comercial" data-en="Sales">Comercial</a>
+   </div>
+   <div>
+    <h4 data-en="Investors">Investidores</h4>
+    <a href="#investidores" data-en="Overview">Visão geral</a>
+    <a href="#ferramentas" data-en="Tools">Ferramentas</a>
+    <a href="#noticias" data-en="News">Notícias</a>
+   </div>
+   <div>
+    <h4 data-en="Contact">Contato</h4>
+    <a href="mailto:info@southstarbatterymetals.com">info@southstarbatterymetals.com</a>
+    <a href="#contato" data-en="Send a message">Enviar mensagem</a>
+   </div>
+   <div>
+    <h4 data-en="Social">Redes sociais</h4>
+    <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://linkedin.com/company/" target="_blank" rel="noopener">LinkedIn</a>
+   </div>
+  </nav>
+
+  <div class="ft-bottom">
+   <small>© <span id="year"></span> South Star Battery Metals. <span data-en="All rights reserved.">Todos os direitos reservados.</span></small>
   </div>
  </div>
- <div class="container legal">
-  <h4>Forward-Looking Statements</h4>
-  <p data-en="This website contains forward-looking statements within the meaning of applicable securities laws. Such statements involve known and unknown risks and uncertainties that may cause actual results to differ materially. Readers should not place undue reliance on them. Neither the TSX Venture Exchange nor its Regulation Services Provider accepts responsibility for the adequacy or accuracy of this content.">Este site contém declarações prospectivas (forward-looking statements), conforme definido pelas leis de valores mobiliários aplicáveis. Essas declarações envolvem riscos e incertezas, conhecidos e desconhecidos, que podem fazer os resultados reais serem muito diferentes do previsto. O leitor não deve confiar indevidamente nelas. Nem a TSX Venture Exchange nem seu provedor de serviços de regulação se responsabilizam pela adequação ou precisão deste conteúdo.</p>
- </div>
- <p class="copy">© <span id="year"></span> South Star Battery Metals Corp. <span data-en="All rights reserved.">Todos os direitos reservados.</span></p>
 </footer>
 
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Imagem ampliada">
+ <button type="button" aria-label="Fechar"><i data-lucide="x"></i></button>
+ <img src="data:," alt="">
+</div>
+
 <a href="https://wa.me/5571999999999?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20comerciais" class="whatsapp" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
- <svg viewBox="0 0 32 32" width="28" height="28" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.7 3.3 15.7c0 2.5.7 4.9 2 7L3 29l6.5-2.1c2 1.1 4.2 1.7 6.5 1.7 7 0 12.7-5.7 12.7-12.7S23 3 16 3zm0 23.2c-2.1 0-4.1-.6-5.9-1.7l-.4-.3-3.9 1.3 1.3-3.8-.3-.4c-1.2-1.8-1.9-4-1.9-6.2C4.9 9.6 9.9 4.6 16 4.6s11.1 5 11.1 11.1-5 10.5-11.1 10.5zm6.1-7.9c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.7-1.7-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.5 0-.6l-1.1-2.6c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2 2.9 1.2 3.5.9 4.1.9.6-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.2-.3-.3-.6-.4z"/></svg>
+ <svg viewBox="0 0 32 32" width="28" height="28" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.7 3.3 15.7c0 2.5.7 4.9 2 7L3 29l6.5-2.1c2 1.1 4.2 1.7 6.5 1.7 7 0 12.700-5.7 12.7-12.7S23 3 16 3zm0 23.2c-2.1 0-4.1-.6-5.9-1.700l-.4-.3-3.9 1.3 1.300-3.800-.3-.4c-1.200-1.800-1.900-4-1.900-6.200C4.9 9.6 9.9 4.6 16 4.6s11.1 5 11.1 11.1-5 10.5-11.1 10.5zm6.1-7.9c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.7-1.7-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.5 0-.6l-1.1-2.6c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.200 1.200-1.200 2.900s1.200 3.400 1.400 3.600c.2.2 2.400 3.700 5.900 5.200 2.900 1.200 3.500.9 4.100.9.6-.1 2-.8 2.300-1.600.3-.8.3-1.500.2-1.600-.1-.2-.3-.3-.6-.4z"/></svg>
 </a>
 
 <div id="cookie" role="dialog" aria-label="Aviso de cookies">
- <p data-en="We use cookies for analytics. See our <a href='privacidade.html'>Privacy Policy</a>.">Usamos cookies para análise de acessos. Veja nossa <a href="privacidade.html">Política de Privacidade</a>.</p>
- <div><button class="btn btn-out" id="cookieNo" data-en="Decline">Recusar</button><button class="btn btn-main" id="cookieYes" data-en="Accept">Aceitar</button></div>
+ <p data-en="We use cookies for analytics. See our &lt;a href='privacidade.html'&gt;Privacy Policy&lt;/a&gt;.">Usamos cookies para análise de acessos. Veja nossa <a href="privacidade.html">Política de Privacidade</a>.</p>
+ <div><button class="btn btn-out" type="button" id="cookieNo" data-en="Decline">Recusar</button><button class="btn btn-main" type="button" id="cookieYes" data-en="Accept">Aceitar</button></div>
 </div>
 
-<button id="toTop" aria-label="Voltar ao topo"><i data-lucide="arrow-up"></i></button>
+<button id="toTop" type="button" aria-label="Voltar ao topo"><i data-lucide="arrow-up"></i></button>
 
 <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -585,10 +601,12 @@
 <script>
 /* Barras do Painel ESG */
 (() => {
+  const bars = document.querySelectorAll('.bar');
+  if (!('IntersectionObserver' in window)) { bars.forEach(b => b.classList.add('on')); return; }
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
   }), { threshold: 0.4 });
-  document.querySelectorAll('.bar').forEach(b => io.observe(b));
+  bars.forEach(b => io.observe(b));
 })();
 </script>
 </body>

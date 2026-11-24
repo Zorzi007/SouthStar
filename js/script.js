@@ -93,15 +93,6 @@ addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 toTop?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
 
-/* ---------- Cursor ---------- */
-safe('cursor', () => {
-  const cur = $('.cursor');
-  if (!cur || matchMedia('(pointer:coarse)').matches) return cur?.remove();
-  addEventListener('mousemove', e => {
-    cur.style.transform = `translate(${e.clientX}px,${e.clientY}px)`;
-  }, { passive: true });
-});
-
 /* ---------- Reveal + contadores + barras ESG ---------- */
 /* ---------- Reveal + contadores + barras ESG ---------- */
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;

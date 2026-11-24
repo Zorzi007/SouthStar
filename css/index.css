@@ -40,11 +40,16 @@
     color: #fff;
 }
 
-.hero h1 span {
-    background: linear-gradient(90deg, #4da3ff, #9cc9ff);
+.hero h1 span,
+.stat h3,
+.inv h3 {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+}
+
+.hero h1 span {
+    background-image: linear-gradient(90deg, #4da3ff, #9cc9ff);
 }
 
 .hero p {
@@ -77,14 +82,13 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
-    animation: bounce 2s infinite;
     color: #4da3ff;
+    animation: bounce 2s infinite;
 }
 
 @keyframes bounce {
-    50% {
-        transform: translate(-50%, 10px);
-    }
+    0%, 100% { transform: translate(-50%, 0); }
+    50%      { transform: translate(-50%, 10px); }
 }
 
 
@@ -105,10 +109,7 @@
 
 .stat h3,
 .inv h3 {
-    background: var(--grad-text);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    background-image: var(--grad-text);
 }
 
 .stat h3 {
@@ -131,16 +132,16 @@
     align-items: center;
 }
 
+.about .grid > *,
+.proj-grid > *,
+.ir-grid > * {
+    min-width: 0;
+}
+
 .ir-grid + .ir-grid,
 .ir-grid + .sub,
 .table-wrap + .ir-grid {
     margin-top: 50px;
-}
-
-.proj-grid > *,
-.ir-grid > *,
-.about .grid > * {
-    min-width: 0;
 }
 
 .parallax-wrap {
@@ -209,13 +210,8 @@
     background: #0a1a4a;
 }
 
-#map {
-    height: 450px;
-}
-
-#worldMap {
-    height: 350px;
-}
+#map { height: 450px; }
+#worldMap { height: 350px; }
 
 .leaflet-container {
     font-family: Inter, sans-serif;
@@ -252,8 +248,8 @@
 
 table {
     width: 100%;
-    border-collapse: collapse;
     min-width: 600px;
+    border-collapse: collapse;
     background: var(--card);
 }
 
@@ -289,12 +285,12 @@ tbody tr:hover {
 }
 
 .gallery img {
-    height: 260px;
     width: 100%;
+    height: 260px;
     object-fit: cover;
     border-radius: 12px;
     cursor: zoom-in;
-    transition: 0.4s;
+    transition: transform 0.4s, filter 0.4s, box-shadow 0.4s;
 }
 
 .gallery img:hover,
@@ -356,9 +352,9 @@ tbody tr:hover {
 }
 
 .item {
+    position: relative;
     padding-left: 60px;
     margin-bottom: 35px;
-    position: relative;
 }
 
 .item::before {
@@ -394,22 +390,22 @@ tbody tr:hover {
 }
 
 .member small {
-    color: var(--accent);
     display: block;
     margin: 5px 0 12px;
+    color: var(--accent);
 }
 
 .avatar {
     width: 80px;
     height: 80px;
+    margin: 0 auto 15px;
     border-radius: 50%;
-    background: var(--grad);
-    color: #fff;
-    font: 800 1.5rem Montserrat, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 15px;
+    background: var(--grad);
+    color: #fff;
+    font: 800 1.5rem Montserrat, sans-serif;
     box-shadow: 0 0 20px #4da3ff44;
 }
 
@@ -441,7 +437,7 @@ tbody tr:hover {
 }
 
 .cert li {
-    margin-bottom: 0;
+    margin: 0;
 }
 
 
@@ -481,13 +477,18 @@ tbody tr:hover {
 }
 
 .calc-res b {
-    font-size: 1.6rem;
     display: block;
+    font-size: 1.6rem;
 }
 
-.alert-form {
+.alert-form,
+#form {
     display: grid;
     gap: 12px;
+}
+
+#form {
+    gap: 15px;
 }
 
 .chk {
@@ -518,13 +519,13 @@ tbody tr:hover {
 }
 
 .step {
+    position: relative;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 25px;
     text-align: center;
-    position: relative;
-    transition: 0.3s;
+    transition: border-color 0.3s, transform 0.3s;
 }
 
 .step:hover {
@@ -535,8 +536,8 @@ tbody tr:hover {
 .step svg {
     width: 40px;
     height: 40px;
-    color: var(--accent);
     margin-bottom: 10px;
+    color: var(--accent);
 }
 
 .step:not(:last-child)::after {
@@ -550,7 +551,7 @@ tbody tr:hover {
 }
 
 
-/* ==================== PAINEL ESG – BARRAS ==================== */
+/* ==================== PAINEL ESG ==================== */
 
 .bar {
     display: grid;
@@ -573,8 +574,8 @@ tbody tr:hover {
 
 .bar > div > i {
     display: block;
-    height: 100%;
     width: 0;
+    height: 100%;
     background: linear-gradient(90deg, #3b82f6, #22d3ee);
     border-radius: 999px;
     box-shadow: 0 0 10px #22d3ee66;
@@ -602,8 +603,8 @@ tbody tr:hover {
 }
 
 .social img {
-    height: 200px;
     width: 100%;
+    height: 200px;
     object-fit: cover;
     border-radius: 12px;
 }
@@ -623,22 +624,134 @@ tbody tr:hover {
     gap: 50px;
 }
 
-#form {
+
+/* ==================== FOOTER ==================== */
+
+.footer {
+    background: #0b1530;
+    color: #c9d6f5;
+    padding: 60px 0 25px;
+    border-top: 1px solid #4da3ff22;
+}
+
+.ft-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 35px;
+    border-bottom: 1px solid #ffffff14;
+}
+
+.ft-logo {
+    font: 800 2rem Montserrat, sans-serif;
+    color: #fff;
+    text-decoration: none;
+}
+
+.ft-logo span,
+.ft-logo .star {
+    color: #4da3ff;
+    font-style: normal;
+}
+
+.ft-social {
+    display: flex;
+    gap: 12px;
+}
+
+.ft-social a {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
     display: grid;
-    gap: 15px;
+    place-items: center;
+    background: #ffffff0d;
+    border: 1px solid #4da3ff40;
+    color: #fff;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.ft-social a:hover,
+.ft-social a:focus-visible {
+    background: #4da3ff;
+    transform: translateY(-3px);
+}
+
+.ft-social svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.ft-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    padding: 40px 0;
+}
+
+.ft-grid h4 {
+    margin-bottom: 16px;
+    font: 700 0.85rem Montserrat, sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.ft-grid a {
+    display: block;
+    margin-bottom: 10px;
+    color: #9fb2dd;
+    font-size: 0.95rem;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    transition: color 0.2s;
+}
+
+.ft-grid a:hover {
+    color: #4da3ff;
+}
+
+.ft-bottom {
+    border-top: 1px solid #ffffff14;
+    padding-top: 20px;
+    text-align: center;
+    color: #7f92bd;
+}
+
+
+/* ==================== ESTRELA SINCRONIZADA (NAVBAR + FOOTER) ==================== */
+
+@keyframes starPulse {
+    0%, 100% { transform: rotate(0deg) scale(1);     filter: drop-shadow(0 0 0 #4da3ff); }
+    50%      { transform: rotate(180deg) scale(1.2); filter: drop-shadow(0 0 8px #4da3ff); }
+}
+
+.logo .star,
+.ft-logo .star {
+    display: inline-block;
+    animation: starPulse 3s ease-in-out infinite;
 }
 
 
 /* ==================== ACESSIBILIDADE ==================== */
 
 @media (prefers-reduced-motion: reduce) {
-    .scroll-down {
+    .scroll-down,
+    .logo .star,
+    .ft-logo .star {
         animation: none;
     }
 
     .bar > div > i,
     .gallery img,
-    .step {
+    .step,
+    .ft-social a {
         transition: none;
     }
 }
@@ -647,7 +760,8 @@ tbody tr:hover {
 /* ==================== RESPONSIVO ==================== */
 
 @media (max-width: 900px) {
-    .stats .grid {
+    .stats .grid,
+    .ft-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
@@ -671,18 +785,22 @@ tbody tr:hover {
         grid-column: 1 / -1;
     }
 
-    #map {
-        height: 350px;
-    }
-
-    #worldMap {
-        height: 300px;
-    }
+    #map { height: 350px; }
+    #worldMap { height: 300px; }
 }
 
 @media (max-width: 500px) {
-    .social {
+    .social,
+    .ft-grid {
         grid-template-columns: 1fr;
+    }
+
+    .ft-top {
+        flex-direction: column;
+    }
+
+    .ft-grid {
+        text-align: center;
     }
 
     .stat h3 {
