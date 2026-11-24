@@ -5,39 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tour 360° | South Star Battery Metals</title>
 <meta name="description" content="Visite virtualmente a mina de grafite Santa Cruz, na Bahia.">
+<meta name="theme-color" content="#050d24">
 <link rel="canonical" href="https://southstarbatterymetals.com/tour.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
 <link rel="stylesheet" href="/css/base.css">
-<link rel="stylesheet" href="/css/tour.css"> <!-- troque pelo CSS da página -->
+<link rel="stylesheet" href="/css/tour.css">
+<style>
+ #pano{width:100%;height:clamp(320px,65vh,620px);border-radius:16px;overflow:hidden;background:#0a1430;margin-bottom:12px}
+ .pano-err{display:flex;align-items:center;justify-content:center;height:100%;padding:20px;text-align:center;color:#9fb3d9}
+ .video-wrap{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden}
+ .video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+</style>
 </head>
 <body>
+
+<a href="#main" class="skip">Pular para o conteúdo</a>
+
 <div id="hdr"></div>
 
-<main>
+<main id="main">
  <section class="page-hero">
   <div class="container">
-   <p class="tag">Visita virtual</p>
-   <h1 class="title">Tour 360° – Mina Santa Cruz</h1>
-   <p>Arraste a imagem para explorar a operação e clique nos pontos para ver os detalhes.</p>
+   <p class="tag" data-en="Virtual visit">Visita virtual</p>
+   <h1 class="title" data-en="360° Tour – Santa Cruz Mine">Tour 360° – Mina Santa Cruz</h1>
+   <p data-en="Drag the image to explore the operation and click the hotspots for details.">Arraste a imagem para explorar a operação e clique nos pontos para ver os detalhes.</p>
   </div>
  </section>
 
  <section>
   <div class="container">
    <div class="filters" role="group" aria-label="Escolher cena" style="margin-bottom:20px">
-    <button class="filter active" data-scene="mina">Cava</button>
-    <button class="filter" data-scene="planta">Planta</button>
+    <button class="filter active" type="button" data-scene="mina" aria-pressed="true" data-en="Pit">Cava</button>
+    <button class="filter" type="button" data-scene="planta" aria-pressed="false" data-en="Plant">Planta</button>
    </div>
-   <div id="pano" class="reveal"></div>
-   <small class="muted">Use o mouse ou o dedo para girar. O botão no canto ativa a tela cheia.</small>
+   <div id="pano" role="region" aria-label="Tour virtual 360°"></div>
+   <small class="muted" data-en="Use your mouse or finger to rotate. The corner button enables full screen.">Use o mouse ou o dedo para girar. O botão no canto ativa a tela cheia.</small>
   </div>
  </section>
 
  <section class="projects">
   <div class="container">
-   <p class="tag">Vídeo</p>
-   <h2 class="title">Vista aérea com drone</h2>
+   <p class="tag" data-en="Video">Vídeo</p>
+   <h2 class="title" data-en="Aerial drone view">Vista aérea com drone</h2>
    <div class="video-wrap reveal">
     <!-- Troque VIDEO_ID pelo ID do vídeo no YouTube -->
     <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID?rel=0" title="Vídeo aéreo da mina Santa Cruz" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
@@ -48,34 +60,66 @@
 
 <div id="ftr"></div>
 
-<script src="https://unpkg.com/lucide@latest"></script>
+<button id="toTop" type="button" aria-label="Voltar ao topo"><i data-lucide="arrow-up"></i></button>
+
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
-<script src="pages.js"></script>
+<script src="/js/pages.js"></script>
+<script src="/js/script.js"></script>
 <script>
-/* As imagens precisam ser panorâmicas equiretangulares (proporção 2:1) */
-const viewer = pannellum.viewer('pano', {
-  default: { firstScene: 'mina', autoLoad: true, autoRotate: -2, sceneFadeDuration: 800 },
-  scenes: {
-    mina: {
-      title: 'Cava – Mina Santa Cruz',
-      panorama: 'assets/mina-360.jpg',
-      hotSpots: [
-        { pitch: -5, yaw: 30, type: 'info', text: 'Minério friável: lavra sem explosivos' },
-        { pitch: -2, yaw: 150, type: 'scene', text: 'Ir para a planta', sceneId: 'planta' }
-      ]
-    },
-    planta: {
-      title: 'Planta de beneficiamento',
-      panorama: 'assets/planta-360.jpg',
-      hotSpots: [
-        { pitch: 0, yaw: 0, type: 'info', text: 'Flotação: concentrado com até 99% de Cg' },
-        { pitch: -2, yaw: -150, type: 'scene', text: 'Voltar para a cava', sceneId: 'mina' }
-      ]
-    }
+
+
+
+
+
+(() => {
+  const $$ = s => document.querySelectorAll(s);
+  const icons = () => { if (window.lucide) lucide.createIcons(); };
+
+  /* Recria os ícones depois que o pages.js monta o header e o footer */
+  icons();
+  window.addEventListener('load', icons);
+  setTimeout(icons, 300);
+
+  /* Tour 360° – imagens equiretangulares (proporção 2:1) */
+  const pano = document.getElementById('pano');
+  if (!window.pannellum || !pano) {
+    if (pano) pano.innerHTML = '<p class="pano-err">Não foi possível carregar o tour 360°.</p>';
+    return;
   }
-});
-$$('.filter').forEach(b => b.onclick = () => viewer.loadScene(b.dataset.scene));
-viewer.on('scenechange', id => $$('.filter').forEach(b => b.classList.toggle('active', b.dataset.scene === id)));
+
+  const viewer = pannellum.viewer('pano', {
+    default: { firstScene: 'mina', autoLoad: true, autoRotate: -2, sceneFadeDuration: 800 },
+    scenes: {
+      mina: {
+        title: 'Cava – Mina Santa Cruz',
+        panorama: '/assets/mina-360.jpg',
+        hotSpots: [
+          { pitch: -5, yaw: 30, type: 'info', text: 'Minério friável: lavra sem explosivos' },
+          { pitch: -2, yaw: 150, type: 'scene', text: 'Ir para a planta', sceneId: 'planta' }
+        ]
+      },
+      planta: {
+        title: 'Planta de beneficiamento',
+        panorama: '/assets/planta-360.jpg',
+        hotSpots: [
+          { pitch: 0, yaw: 0, type: 'info', text: 'Flotação: concentrado com até 99% de Cg' },
+          { pitch: -2, yaw: -150, type: 'scene', text: 'Voltar para a cava', sceneId: 'mina' }
+        ]
+      }
+    }
+  });
+
+  const mark = id => $$('.filter').forEach(b => {
+    const on = b.dataset.scene === id;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-pressed', on);
+  });
+
+  $$('.filter').forEach(b => b.addEventListener('click', () => viewer.loadScene(b.dataset.scene)));
+  viewer.on('scenechange', mark);
+  viewer.on('error', () => console.warn('Tour 360°: verifique se /assets/mina-360.jpg e /assets/planta-360.jpg existem.'));
+})();
 </script>
 </body>
 </html>

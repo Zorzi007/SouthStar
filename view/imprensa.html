@@ -81,8 +81,13 @@
 <div id="ftr"></div>
 
 <script src="https://unpkg.com/lucide@latest"></script>
-<script src="pages.js"></script>
+<script src="/js/pages.js"></script>
+<script src="/js/script.js"></script>
 <script>
+
+
+
+
 const CORES = [['Navy', '#0a1a4a'], ['Royal', '#1f4fd1'], ['Star', '#4da3ff'], ['Ice', '#9cc9ff'], ['Deep', '#050d24']];
 $('#swatches').innerHTML = CORES.map(([n, h]) =>
   `<button class="swatch" data-hex="${h}"><i style="background:${h}"></i><span><b>${n}</b><br>${h}</span></button>`).join('');

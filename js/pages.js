@@ -1,67 +1,71 @@
-const $ = s => document.querySelector(s);
-const $$ = s => document.querySelectorAll(s);
+const ROOT = new URL('../', document.currentScript.src).href;
+const LOGO = ROOT + 'img/Logo SouthStar - White.png';
+const HOME = ROOT + 'view/index.html';
+const BLOG = ROOT + 'view/blog.html';
 
-/* Menu das páginas internas */
-const NAV = [
-  ['index.html', 'Início'], ['blog.html', 'Blog'], ['imprensa.html', 'Imprensa'],
-  ['tour.html', 'Tour 360°'], ['carreiras.html', 'Carreiras'], ['index.html#contato', 'Contato']
-];
-const here = location.pathname.split('/').pop() || 'index.html';
-
-$('#hdr').outerHTML = `
-<header id="header" class="scrolled">
+const HEADER = `
+<header id="header">
  <nav class="container" aria-label="Menu principal">
-  <a href="index.html" class="logo">south<span>star</span></a>
+  <a href="${HOME}" class="logo" aria-label="South Star Battery Metals – início">
+   <img src="${LOGO}" alt="South Star Battery Metals" width="180" height="46">
+  </a>
   <ul class="menu" id="menu">
-   ${NAV.map(([h, t]) => `<li><a href="${h}"${h === here ? ' aria-current="page"' : ''}>${t}</a></li>`).join('')}
+   <li><a href="${HOME}#sobre" data-en="About">Sobre</a></li>
+   <li><a href="${HOME}#produto" data-en="Product">Produto</a></li>
+   <li><a href="${HOME}#comercial" data-en="Sales">Comercial</a></li>
+   <li><a href="${HOME}#investidores" data-en="Investors">Investidores</a></li>
+   <li><a href="${HOME}#ferramentas" data-en="Tools">Ferramentas</a></li>
   </ul>
   <div class="nav-tools">
-   <button id="themeBtn" class="tool" aria-label="Alternar tema"></button>
-   <button class="burger tool" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><i data-lucide="menu"></i></button>
+   <button id="langBtn" class="tool" type="button" aria-label="Mudar idioma">EN</button>
+   <button id="themeBtn" class="tool" type="button" aria-label="Alternar tema"><i data-lucide="sun"></i></button>
+   <button class="burger tool" id="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><i data-lucide="menu"></i></button>
   </div>
  </nav>
 </header>`;
 
-$('#ftr').outerHTML = `
-<footer>
- <div class="container grid">
-  <div><a href="index.html" class="logo">south<span>star</span></a><p>Grafite natural em flocos, produzido no Brasil para o mundo.</p></div>
-  <div><h4>Links</h4><ul>${NAV.map(([h, t]) => `<li><a href="${h}">${t}</a></li>`).join('')}<li><a href="privacidade.html">Política de Privacidade</a></li></ul></div>
-  <div><h4>Mercado</h4><ul><li>TSXV: STS</li><li>OTCQB: STSBF</li></ul></div>
+const FOOTER = `
+<footer class="footer">
+ <div class="container">
+  <div class="ft-top">
+   <a href="${HOME}" class="ft-logo" aria-label="South Star Battery Metals – início">
+    <img src="${LOGO}" alt="South Star Battery Metals" width="200" height="50" loading="lazy">
+   </a>
+   <div class="ft-social">
+    <a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+    </a>
+    <a href="https://linkedin.com/company/" target="_blank" rel="noopener" aria-label="LinkedIn">
+     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+   </div>
+  </div>
+  <nav class="ft-grid" aria-label="Rodapé">
+   <div><h4 data-en="Company">Empresa</h4>
+    <a href="${HOME}#sobre" data-en="About">Sobre</a>
+    <a href="${HOME}#produto" data-en="Product">Produto</a>
+    <a href="${HOME}#comercial" data-en="Sales">Comercial</a></div>
+   <div><h4 data-en="Investors">Investidores</h4>
+    <a href="${HOME}#investidores" data-en="Overview">Visão geral</a>
+    <a href="${HOME}#ferramentas" data-en="Tools">Ferramentas</a>
+    <a href="${BLOG}">Blog</a></div>
+   <div><h4 data-en="Contact">Contato</h4>
+    <a href="mailto:info@southstarbatterymetals.com">info@southstarbatterymetals.com</a>
+    <a href="${HOME}#contato" data-en="Send a message">Enviar mensagem</a></div>
+   <div><h4 data-en="Social">Redes sociais</h4>
+    <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://linkedin.com/company/" target="_blank" rel="noopener">LinkedIn</a></div>
+  </nav>
+  <div class="ft-bottom">
+   <small>© ${new Date().getFullYear()} South Star Battery Metals. <span data-en="All rights reserved.">Todos os direitos reservados.</span></small>
+  </div>
  </div>
- <p class="copy">© ${new Date().getFullYear()} South Star Battery Metals Corp. Todos os direitos reservados.</p>
 </footer>`;
 
-/* Tema */
-const setTheme = t => {
-  document.documentElement.dataset.theme = t;
-  localStorage.setItem('theme', t);
-  $('#themeBtn').innerHTML = `<i data-lucide="${t === 'dark' ? 'sun' : 'moon'}"></i>`;
-  lucide.createIcons();
-};
-$('#themeBtn').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
-setTheme(localStorage.getItem('theme') || 'dark');
+(() => {
+    const hdr = document.getElementById('hdr');
+    const ftr = document.getElementById('ftr');
 
-/* Menu mobile */
-const menu = $('#menu'), burger = $('#burger');
-burger.onclick = () => burger.setAttribute('aria-expanded', menu.classList.toggle('open'));
-
-/* Revelar ao rolar */
-const obs = new IntersectionObserver(es => es.forEach(e => {
-  if (e.isIntersecting) { e.target.classList.add('show'); obs.unobserve(e.target); }
-}), { threshold: .15 });
-window.observeReveal = () => $$('.reveal:not(.show)').forEach(el => obs.observe(el));
-observeReveal();
-
-/* Formulários (Formspree) */
-$$('form.ajax').forEach(f => f.addEventListener('submit', async e => {
-  e.preventDefault();
-  const m = f.querySelector('.form-msg');
-  try {
-    const r = await fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } });
-    if (!r.ok) throw 0;
-    m.style.color = '#4da3ff'; m.textContent = 'Enviado com sucesso!'; f.reset();
-  } catch { m.style.color = '#ef4444'; m.textContent = 'Erro ao enviar. Tente novamente.'; }
-}));
-
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
+    if (hdr) hdr.outerHTML = HEADER;
+    if (ftr) ftr.outerHTML = FOOTER;
+})();

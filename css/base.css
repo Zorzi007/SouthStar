@@ -245,11 +245,10 @@ section {
     color: #4da3ff;
 }
 
-.logo .star {
-    color: #4da3ff;
-    font-style: normal;
-    font-size: 1.1rem;
-    text-shadow: 0 0 12px #4da3ff;
+.logo img {
+    height: 46px;
+    width: auto;
+    display: block;
 }
 
 
@@ -334,7 +333,6 @@ section {
     }
 }
 
-
 /* ==================== HEADER ==================== */
 
 header {
@@ -344,10 +342,6 @@ header {
     width: 100%;
     z-index: 100;
     color: #fff;
-    transition: background 0.3s, box-shadow 0.3s;
-}
-
-header.scrolled {
     background: rgba(5, 13, 36, 0.92);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
@@ -386,11 +380,13 @@ header nav {
 }
 
 .menu a:hover::after,
-.menu a[aria-current="page"]::after {
+.menu a[aria-current="page"]::after,
+.menu a.active::after {
     width: 100%;
 }
 
-.menu a[aria-current="page"] {
+.menu a[aria-current="page"],
+.menu a.active {
     color: var(--accent);
 }
 
@@ -427,7 +423,6 @@ header nav {
 .burger {
     display: none;
 }
-
 
 /* ==================== HERO DAS PÁGINAS INTERNAS ==================== */
 
@@ -718,33 +713,100 @@ select:focus {
 }
 
 
-/* ==================== RODAPÉ (PÁGINAS INTERNAS) ==================== */
-/* O footer da home usa .footer, estilizado no index.css */
+/* ==================== FOOTER (GLOBAL) ==================== */
 
-footer:not(.footer) {
-    background: var(--bg2);
-    padding: 60px 0 20px;
-    font-size: 0.9rem;
-    border-top: 1px solid var(--border);
+.footer {
+    background: #0b1530;
+    color: #c9d6f5;
+    padding: 60px 0 25px;
+    border-top: 1px solid #4da3ff22;
 }
 
-footer .grid {
+.ft-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 35px;
+    border-bottom: 1px solid #ffffff14;
+}
+
+.ft-logo {
+    display: inline-block;
+}
+
+.ft-logo img {
+    height: 50px;
+    width: auto;
+    display: block;
+}
+
+.ft-social {
+    display: flex;
+    gap: 12px;
+}
+
+.ft-social a {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 40px;
+    place-items: center;
+    background: #ffffff0d;
+    border: 1px solid #4da3ff40;
+    color: #fff;
+    transition: background 0.3s, transform 0.3s;
 }
 
-footer:not(.footer) h4 {
-    margin-bottom: 12px;
+.ft-social a:hover,
+.ft-social a:focus-visible {
+    background: #4da3ff;
+    transform: translateY(-3px);
 }
 
-footer li {
-    list-style: none;
-    margin: 6px 0;
+.ft-social svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
-footer a:hover {
-    color: var(--accent);
+.ft-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    padding: 40px 0;
+}
+
+.ft-grid h4 {
+    margin-bottom: 16px;
+    font: 700 0.85rem Montserrat, sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.ft-grid a {
+    display: block;
+    margin-bottom: 10px;
+    color: #9fb2dd;
+    font-size: 0.95rem;
+    overflow-wrap: anywhere;
+    transition: color 0.2s;
+}
+
+.ft-grid a:hover {
+    color: #4da3ff;
+}
+
+.ft-bottom {
+    border-top: 1px solid #ffffff14;
+    padding-top: 20px;
+    text-align: center;
+    color: #7f92bd;
 }
 
 .legal {
@@ -899,8 +961,8 @@ footer a:hover {
         padding: 70px 0;
     }
 
-    footer .grid {
-        grid-template-columns: 1fr;
+    .ft-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .nl-box form {
@@ -910,6 +972,15 @@ footer a:hover {
 }
 
 @media (max-width: 500px) {
+    .ft-top {
+        flex-direction: column;
+    }
+
+    .ft-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
     #cookie {
         left: 10px;
         right: 10px;

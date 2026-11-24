@@ -33,6 +33,7 @@ function setTheme(mode) {
     icons();
   }
   safe('gráficos', () => window.Chart && renderCharts());
+  safe('mapas-tema', updateTiles);
 }
 $('#themeBtn')?.addEventListener('click', () =>
   setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
@@ -77,7 +78,7 @@ burger?.addEventListener('click', () => {
   icons();
 });
 $$('#menu a').forEach(a => a.addEventListener('click', () => {
-  menu.classList.remove('open');
+  menu?.classList.remove('open');
   burger?.setAttribute('aria-expanded', 'false');
   if (burger) { burger.innerHTML = '<i data-lucide="menu"></i>'; icons(); }
 }));
@@ -93,7 +94,6 @@ addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 toTop?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
 
-/* ---------- Reveal + contadores + barras ESG ---------- */
 /* ---------- Reveal + contadores + barras ESG ---------- */
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const COUNT_SEL = '.count, .counter, [data-target], [data-count]';
@@ -124,11 +124,17 @@ const io = new IntersectionObserver(entries => entries.forEach(e => {
   io.unobserve(el);
 }), { threshold: 0.1 });
 
-$$(`.reveal, .bar, ${COUNT_SEL}`).forEach(el => io.observe(el));
+/* Observa elementos novos (usado também pelo blog) */
+function observeReveal() {
+  $$(`.reveal:not(.show), .bar:not(.on), ${COUNT_SEL}`).forEach(el => {
+    if (!el.dataset.done) io.observe(el);
+  });
+}
+window.observeReveal = observeReveal;
+observeReveal();
 
 // Garantia: anima tudo que ficou parado depois de 4 s
 setTimeout(() => $$(COUNT_SEL).forEach(countUp), 4000);
-
 
 /* ---------- Parallax ---------- */
 safe('parallax', () => {
@@ -202,12 +208,40 @@ function renderCharts() {
   });
 }
 
-/* ---------- Mapas ---------- */
+/* ---------- Mapas (sem API key) ---------- */
 let map, wm;
+const tileLayers = [];
+
+const TILES = {
+  dark:  'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+  light: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+  osm:   'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+};
+const ATTR = 'Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap';
+const ATTR_OSM = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+
+const themeUrl = () => document.documentElement.dataset.theme === 'light' ? TILES.light : TILES.dark;
+
+function addTiles(target) {
+  const layer = L.tileLayer(themeUrl(), { attribution: ATTR, maxZoom: 16 });
+  let fallback = false;
+  layer.on('tileerror', () => {
+    if (fallback) return;
+    fallback = true;
+    layer.options.attribution = ATTR_OSM;
+    layer.options.maxZoom = 19;
+    layer.setUrl(TILES.osm);
+  });
+  layer.addTo(target);
+  tileLayers.push({ layer, isFallback: () => fallback });
+}
+
+function updateTiles() {
+  tileLayers.forEach(({ layer, isFallback }) => !isFallback() && layer.setUrl(themeUrl()));
+}
+
 safe('mapas', () => {
   if (!window.L) return;
-  const tiles = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-  const attr = '&copy; OpenStreetMap &copy; CARTO';
   const dot = color => L.divIcon({
     className: '',
     html: `<span style="display:block;width:16px;height:16px;border-radius:50%;background:${color};border:3px solid #fff;box-shadow:0 0 12px ${color}"></span>`,
@@ -216,7 +250,7 @@ safe('mapas', () => {
 
   if ($('#map')) {
     map = L.map('map', { scrollWheelZoom: false }).setView([-15.4, -39.3], 8);
-    L.tileLayer(tiles, { attribution: attr, maxZoom: 18 }).addTo(map);
+    addTiles(map);
     L.marker(C.mine, { icon: dot(C.accent) }).addTo(map).bindPopup('<b>Mina Santa Cruz</b>').openPopup();
     L.marker(C.port, { icon: dot(C.accent2) }).addTo(map).bindPopup('<b>Porto de Ilhéus</b>');
     L.polyline([C.mine, C.port], { color: C.accent, dashArray: '6 8' }).addTo(map);
@@ -224,11 +258,11 @@ safe('mapas', () => {
 
   if ($('#worldMap')) {
     wm = L.map('worldMap', { scrollWheelZoom: false, worldCopyJump: true }).setView([10, -20], 2);
-    L.tileLayer(tiles, { attribution: attr }).addTo(wm);
+    addTiles(wm);
     const dest = [
-      { n: 'EUA / USA', c: [29.76, -95.37] },
-      { n: 'Europa / Europe', c: [51.92, 4.48] },
-      { n: 'Ásia / Asia', c: [31.23, 121.47] }
+      { n: 'Houston · EUA / USA', c: [29.76, -95.37] },
+      { n: 'Roterdã · Europa / Rotterdam · Europe', c: [51.92, 4.48] },
+      { n: 'Busan · Ásia / Asia', c: [35.10, 129.04] }
     ];
     L.marker(C.port, { icon: dot(C.accent) }).addTo(wm).bindPopup('<b>Bahia, Brasil</b>');
     dest.forEach(d => {
@@ -294,21 +328,25 @@ function renderNews() {
   if (pag) {
     pag.innerHTML = pages > 1
       ? Array.from({ length: pages }, (_, i) =>
-          `<button class="filter${i + 1 === newsPage ? ' active' : ''}" data-page="${i + 1}" aria-label="${t('Página', 'Page')} ${i + 1}">${i + 1}</button>`).join('')
+          `<button type="button" class="filter${i + 1 === newsPage ? ' active' : ''}" data-page="${i + 1}" aria-label="${t('Página', 'Page')} ${i + 1}">${i + 1}</button>`).join('')
       : '';
   }
 }
-$$('.filters .filter').forEach(btn => btn.addEventListener('click', () => {
-  $$('.filters .filter').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  newsCat = btn.dataset.cat; newsPage = 1;
-  renderNews();
-}));
-$('#pagination')?.addEventListener('click', e => {
-  const b = e.target.closest('[data-page]'); if (!b) return;
-  newsPage = +b.dataset.page;
-  renderNews();
-});
+
+/* Filtros das notícias só onde existe #newsList (não interfere no blog) */
+if ($('#newsList')) {
+  $$('.filters .filter').forEach(btn => btn.addEventListener('click', () => {
+    $$('.filters .filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    newsCat = btn.dataset.cat; newsPage = 1;
+    renderNews();
+  }));
+  $('#pagination')?.addEventListener('click', e => {
+    const b = e.target.closest('[data-page]'); if (!b) return;
+    newsPage = +b.dataset.page;
+    renderNews();
+  });
+}
 
 /* ---------- Calculadora ---------- */
 function calc() {
@@ -320,7 +358,7 @@ function calc() {
   const money = v => v.toLocaleString(loc, { style: 'currency', currency: 'CAD' });
   res.innerHTML = `
     ${t('Ações', 'Shares')}: ${shares.toLocaleString(loc)}<br>
-    ${t('Valor final', 'Final value')}: <b>${money(val)}</b>
+    ${t('Valor final', 'Final value')}: <b>${money(val)}</b><br>
     ${t('Resultado', 'Result')}: ${gain >= 0 ? '+' : ''}${money(gain)} (${pct.toFixed(1)}%)`;
 }
 $$('#cInv, #cBuy, #cNow').forEach(i => i.addEventListener('input', calc));
@@ -329,14 +367,14 @@ $$('#cInv, #cBuy, #cNow').forEach(i => i.addEventListener('input', calc));
 $$('#form, #alertForm, #quoteForm').forEach(form => {
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    const msg = $('.form-msg, #msg', form);
+    const msg = $('.form-msg, #msg', form) || { textContent: '' };
     const btn = $('button[type=submit]', form);
 
     if (form.id === 'form' && window.grecaptcha && !grecaptcha.getResponse()) {
       msg.textContent = t('Confirme o reCAPTCHA.', 'Please complete the reCAPTCHA.');
       return;
     }
-    btn.disabled = true;
+    if (btn) btn.disabled = true;
     msg.textContent = t('Enviando...', 'Sending...');
     try {
       const r = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
@@ -347,7 +385,7 @@ $$('#form, #alertForm, #quoteForm').forEach(form => {
     } catch {
       msg.textContent = t('Erro ao enviar. Tente novamente ou escreva para info@southstarbatterymetals.com.', 'Sending failed. Try again or email info@southstarbatterymetals.com.');
     } finally {
-      btn.disabled = false;
+      if (btn) btn.disabled = false;
     }
   });
 });
@@ -355,17 +393,19 @@ $$('#form, #alertForm, #quoteForm').forEach(form => {
 /* ---------- Cookies ---------- */
 safe('cookies', () => {
   const box = $('#cookie'); if (!box) return;
-  const choice = localStorage.getItem('cookies');
-  if (!choice) box.classList.add('show');
+  if (!localStorage.getItem('cookies')) box.classList.add('show');
   const set = v => { localStorage.setItem('cookies', v); box.classList.remove('show'); };
   $('#cookieYes')?.addEventListener('click', () => set('yes'));
   $('#cookieNo')?.addEventListener('click', () => set('no'));
 });
 
 /* ---------- Inicialização ---------- */
-$('#year').textContent = new Date().getFullYear();
+const year = $('#year');
+if (year) year.textContent = new Date().getFullYear();
 safe('tema', () => setTheme(localStorage.getItem('theme') || 'dark'));
 safe('idioma', applyLang);
 setTimeout(() => safe('mapas', fixMaps), 300);
 
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  navigator.serviceWorker.register(new URL('../sw.js', document.currentScript?.src || location.href)).catch(() => {});
+}

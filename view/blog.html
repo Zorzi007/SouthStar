@@ -5,10 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blog | South Star Battery Metals</title>
 <meta name="description" content="Análises e notícias sobre o mercado de grafite, baterias e a operação Santa Cruz.">
-<link rel="canonical" href="https://southstarbatterymetals.com/blog.html">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/base.css">
-<link rel="stylesheet" href="/css/blog.css"> <!-- troque pelo CSS da página -->
+<link rel="canonical" href="https://southstarbatterymetals.com/view/blog.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/blog.css">
 </head>
 <body>
 <div id="hdr"></div>
@@ -26,10 +28,10 @@
   <div class="container" id="blogRoot">
    <div class="toolbar">
     <div class="filters" role="group" aria-label="Filtrar posts">
-     <button class="filter active" data-cat="all">Todos</button>
-     <button class="filter" data-cat="Mercado">Mercado</button>
-     <button class="filter" data-cat="Tecnologia">Tecnologia</button>
-     <button class="filter" data-cat="Operação">Operação</button>
+     <button type="button" class="filter active" data-cat="all">Todos</button>
+     <button type="button" class="filter" data-cat="Mercado">Mercado</button>
+     <button type="button" class="filter" data-cat="Tecnologia">Tecnologia</button>
+     <button type="button" class="filter" data-cat="Operação">Operação</button>
     </div>
     <label class="sr-only" for="q">Buscar</label>
     <input id="q" type="search" placeholder="Buscar artigos...">
@@ -43,8 +45,16 @@
 
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="pages.js"></script>
+<script src="/js/pages.js"></script>
+<script src="/js/script.js"></script>
 <script>
+
+
+
+
+
+
+
 /* Para publicar um post novo, basta acrescentar um objeto neste array */
 const POSTS = [
  {
@@ -95,10 +105,10 @@ if (post) {
     <div class="share">
      <a class="btn btn-out" target="_blank" rel="noopener" href="https://www.linkedin.com/sharing/share-offsite/?url=${url}"><i data-lucide="linkedin"></i> LinkedIn</a>
      <a class="btn btn-out" target="_blank" rel="noopener" href="https://wa.me/?text=${t}%20${url}"><i data-lucide="message-circle"></i> WhatsApp</a>
-     <button class="btn btn-out" onclick="navigator.clipboard.writeText(location.href);this.lastChild.textContent=' Copiado!'"><i data-lucide="link"></i> Copiar link</button>
+     <button type="button" class="btn btn-out" onclick="navigator.clipboard.writeText(location.href);this.lastChild.textContent=' Copiado!'"><i data-lucide="link"></i> Copiar link</button>
     </div>
    </article>`;
-  lucide.createIcons(); observeReveal();
+  icons(); observeReveal();
 } else {
   /* Lista de posts */
   let cat = 'all';
