@@ -1,19 +1,21 @@
 /* ==================== PALETA SOUTH STAR ==================== */
 
+/* ==================== PALETA SOUTH STAR ==================== */
+
 :root {
-    --bg: #050d24;
-    --bg2: #0a1838;
-    --card: #0d1d42;
-    --border: #1a2f63;
-    --accent: #4da3ff;
+    --bg: #f4f7fd;
+    --bg2: #fff;
+    --card: #fff;
+    --border: #dbe4f5;
+    --accent: #1f4fd1;
     --blue: #1f4fd1;
     --navy: #0a1a4a;
     --ice: #9cc9ff;
-    --text: #c7d4ee;
-    --head: #fff;
-    --muted: #8299c4;
+    --text: #334566;
+    --head: #0a1a4a;
+    --muted: #64748b;
     --grad: linear-gradient(135deg, #0a1a4a 0%, #1f4fd1 60%, #4da3ff 100%);
-    --grad-text: linear-gradient(90deg, #4da3ff, #9cc9ff);
+    --grad-text: linear-gradient(90deg, #0a1a4a, #1f4fd1);
     --header-h: 80px;
 }
 

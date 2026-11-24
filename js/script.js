@@ -23,20 +23,8 @@ const cssVar = v => getComputedStyle(document.documentElement).getPropertyValue(
 /* ---------- Ícones ---------- */
 icons();
 
-/* ---------- Tema ---------- */
-function setTheme(mode) {
-  document.documentElement.dataset.theme = mode;
-  localStorage.setItem('theme', mode);
-  const btn = $('#themeBtn');
-  if (btn) {
-    btn.innerHTML = `<i data-lucide="${mode === 'dark' ? 'sun' : 'moon'}"></i>`;
-    icons();
-  }
-  safe('gráficos', () => window.Chart && renderCharts());
-  safe('mapas-tema', updateTiles);
-}
-$('#themeBtn')?.addEventListener('click', () =>
-  setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
+/* ---------- Tema (somente claro) ---------- */
+localStorage.removeItem('theme');
 
 /* ---------- Idioma ---------- */
 function applyLang() {
@@ -149,8 +137,8 @@ safe('parallax', () => {
 /* ---------- Gráficos ---------- */
 const charts = {};
 function renderCharts() {
-  const text = cssVar('--text') || '#dbe6ff';
-  const grid = cssVar('--border') || '#ffffff1a';
+  const text = cssVar('--text') || '#0f1b3d';
+  const grid = cssVar('--border') || 'rgba(15,27,61,.1)';
   Chart.defaults.color = text;
   Chart.defaults.font.family = 'Inter, sans-serif';
 
@@ -210,20 +198,16 @@ function renderCharts() {
 
 /* ---------- Mapas (sem API key) ---------- */
 let map, wm;
-const tileLayers = [];
 
 const TILES = {
-  dark:  'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
   light: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
   osm:   'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
 };
 const ATTR = 'Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap';
 const ATTR_OSM = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
-const themeUrl = () => document.documentElement.dataset.theme === 'light' ? TILES.light : TILES.dark;
-
 function addTiles(target) {
-  const layer = L.tileLayer(themeUrl(), { attribution: ATTR, maxZoom: 16 });
+  const layer = L.tileLayer(TILES.light, { attribution: ATTR, maxZoom: 16 });
   let fallback = false;
   layer.on('tileerror', () => {
     if (fallback) return;
@@ -233,11 +217,6 @@ function addTiles(target) {
     layer.setUrl(TILES.osm);
   });
   layer.addTo(target);
-  tileLayers.push({ layer, isFallback: () => fallback });
-}
-
-function updateTiles() {
-  tileLayers.forEach(({ layer, isFallback }) => !isFallback() && layer.setUrl(themeUrl()));
 }
 
 safe('mapas', () => {
@@ -402,7 +381,6 @@ safe('cookies', () => {
 /* ---------- Inicialização ---------- */
 const year = $('#year');
 if (year) year.textContent = new Date().getFullYear();
-safe('tema', () => setTheme(localStorage.getItem('theme') || 'dark'));
 safe('idioma', applyLang);
 setTimeout(() => safe('mapas', fixMaps), 300);
 

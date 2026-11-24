@@ -18,7 +18,6 @@ const HEADER = `
   </ul>
   <div class="nav-tools">
    <button id="langBtn" class="tool" type="button" aria-label="Mudar idioma">EN</button>
-   <button id="themeBtn" class="tool" type="button" aria-label="Alternar tema"><i data-lucide="sun"></i></button>
    <button class="burger tool" id="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><i data-lucide="menu"></i></button>
   </div>
  </nav>
