@@ -175,10 +175,30 @@
     color: var(--accent);
 }
 
-.why,
-.projects,
-.esg,
-.gallery-sec {
+
+/* ==================== FUNDOS ALTERNADOS ==================== */
+/* Stats (bg2) → Branca → Cinza → Branca ... até Contato */
+
+#sobre,
+#galeria,
+#equipe,
+#mercados,
+#recursos,
+#painel-esg,
+#ferramentas,
+#cadeia,
+#contato {
+    background: var(--bg);
+}
+
+#historia,
+#projetos,
+#grafite,
+#produto,
+#esg,
+#investidores,
+#noticias,
+#comercial {
     background: var(--bg2);
 }
 
@@ -476,7 +496,7 @@ tbody tr:hover {
     height: 21px;
     border-radius: 50%;
     background: var(--accent);
-    border: 4px solid var(--bg);
+    border: 4px solid var(--bg2); /* acompanha o fundo cinza de #historia */
     box-shadow: 0 0 12px var(--accent);
 }
 
@@ -981,11 +1001,6 @@ tbody tr:hover {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
     gap: 50px;
-}
-
-/* Contato com fundo alternado */
-#contato {
-    background: var(--bg2);
 }
 
 
