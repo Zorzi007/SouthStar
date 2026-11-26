@@ -20,6 +20,66 @@ const isEN = () => document.documentElement.lang === 'en';
 const t = (pt, en) => (isEN() ? en : pt);
 const cssVar = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
+/* ---------- Tela de carregamento entre páginas ---------- */
+(() => {
+  const html = document.documentElement;
+  const loader = document.createElement('div');
+  loader.id = 'loader';
+  loader.setAttribute('role', 'status');
+  loader.setAttribute('aria-label', 'Carregando');
+  loader.innerHTML = '<i></i>';
+  document.body.appendChild(loader);
+
+  const MINIMO = 600; // tempo mínimo da tela (ms)
+  const inicio = performance.now();
+  let saiu = false;
+
+  /* Some de uma vez, sem fade: evita ver a bolinha e o conteúdo juntos */
+  const esconder = () => {
+    loader.style.transition = 'none';
+    loader.classList.remove('on');
+    html.classList.remove('loading');
+    void loader.offsetWidth; // aplica a mudança antes de restaurar a transição
+    loader.style.transition = '';
+  };
+
+  const sair = () => {
+    if (saiu) return;
+    saiu = true;
+    const espera = Math.max(0, MINIMO - (performance.now() - inicio));
+    setTimeout(esconder, espera);
+  };
+
+  /* Chegou por clique interno: espera carregar (ou 8 s, por segurança) */
+  if (sessionStorage.getItem('nav')) {
+    sessionStorage.removeItem('nav');
+    loader.classList.add('on');
+    document.readyState === 'complete' ? sair() : addEventListener('load', sair);
+    setTimeout(sair, 8000);
+  } else {
+    html.classList.remove('loading');
+  }
+
+  /* Clique em link interno para outra página */
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href]');
+    if (!a || e.defaultPrevented || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+    if (a.target === '_blank' || a.hasAttribute('download')) return;
+
+    const url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || url.pathname === location.pathname || !/^https?:$/.test(url.protocol)) return;
+
+    sessionStorage.setItem('nav', '1');
+    loader.classList.add('on');
+  });
+
+  /* Botão "voltar": página restaurada do cache não fica travada */
+  addEventListener('pageshow', e => {
+    if (e.persisted) { saiu = false; esconder(); }
+  });
+})();
+
+
 /* ---------- Ícones ---------- */
 icons();
 

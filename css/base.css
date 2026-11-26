@@ -1,7 +1,5 @@
 /* ==================== PALETA SOUTH STAR ==================== */
 
-/* ==================== PALETA SOUTH STAR ==================== */
-
 :root {
     --bg: #f4f7fd;
     --bg2: #fff;
@@ -16,19 +14,8 @@
     --muted: #64748b;
     --grad: linear-gradient(135deg, #0a1a4a 0%, #1f4fd1 60%, #4da3ff 100%);
     --grad-text: linear-gradient(90deg, #0a1a4a, #1f4fd1);
+    --grad-light: linear-gradient(90deg, #4da3ff, #9cc9ff);
     --header-h: 80px;
-}
-
-[data-theme="light"] {
-    --bg: #f4f7fd;
-    --bg2: #fff;
-    --card: #fff;
-    --border: #dbe4f5;
-    --accent: #1f4fd1;
-    --text: #334566;
-    --head: #0a1a4a;
-    --muted: #64748b;
-    --grad-text: linear-gradient(90deg, #0a1a4a, #1f4fd1);
 }
 
 
@@ -53,7 +40,6 @@ body {
     color: var(--text);
     line-height: 1.65;
     overflow-x: hidden;
-    transition: background 0.3s, color 0.3s;
 }
 
 h1,
@@ -335,6 +321,7 @@ section {
     }
 }
 
+
 /* ==================== HEADER ==================== */
 
 header {
@@ -360,36 +347,42 @@ header nav {
 
 .menu {
     display: flex;
-    gap: 20px;
+    align-items: center;
+    gap: 22px;
     list-style: none;
 }
 
-.menu a {
+.menu > li > a,
+.sub-btn {
     position: relative;
     font-weight: 500;
     font-size: 0.92rem;
+    transition: color 0.3s;
 }
 
-.menu a::after {
+.menu > li > a::after,
+.sub-btn::after {
     content: "";
     position: absolute;
     left: 0;
     bottom: -4px;
     width: 0;
     height: 2px;
-    background: var(--grad-text);
+    background: var(--grad-light);
     transition: width 0.3s;
 }
 
-.menu a:hover::after,
+.menu > li > a:hover::after,
 .menu a[aria-current="page"]::after,
-.menu a.active::after {
+.menu > li > a.active::after,
+.has-sub:hover > .sub-btn::after,
+.has-sub.open > .sub-btn::after {
     width: 100%;
 }
 
 .menu a[aria-current="page"],
 .menu a.active {
-    color: var(--accent);
+    color: #4da3ff;
 }
 
 .nav-tools {
@@ -425,6 +418,103 @@ header nav {
 .burger {
     display: none;
 }
+
+
+/* ==================== SUBMENU ==================== */
+
+.has-sub {
+    position: relative;
+}
+
+.sub-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0;
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.sub-btn svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s;
+}
+
+.submenu {
+    list-style: none;
+}
+
+.submenu a {
+    display: block;
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+}
+
+@media (min-width: 1025px) {
+    /* Ponte invisível para o hover não fechar ao descer o mouse */
+    .has-sub::before {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 22px;
+    }
+
+    .submenu {
+        position: absolute;
+        top: calc(100% + 18px);
+        left: 50%;
+        min-width: 210px;
+        padding: 8px;
+        background: #fff;
+        color: var(--navy);
+        border-radius: 10px;
+        box-shadow: 0 15px 40px #0a1a4a40;
+        opacity: 0;
+        visibility: hidden;
+        transform: translate(-50%, 8px);
+        transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
+    }
+
+    .submenu::before {
+        content: "";
+        position: absolute;
+        top: -6px;
+        left: 50%;
+        width: 12px;
+        height: 12px;
+        background: #fff;
+        transform: translateX(-50%) rotate(45deg);
+    }
+
+    .has-sub:hover > .submenu,
+    .has-sub:focus-within > .submenu,
+    .has-sub.open > .submenu {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, 0);
+    }
+
+    .has-sub:hover > .sub-btn svg,
+    .has-sub.open > .sub-btn svg {
+        transform: rotate(180deg);
+    }
+
+    .submenu a:hover,
+    .submenu a.active {
+        background: #eef3fd;
+        color: var(--accent);
+    }
+}
+
 
 /* ==================== HERO DAS PÁGINAS INTERNAS ==================== */
 
@@ -514,7 +604,7 @@ header nav {
 }
 
 
-/* ==================== DOCUMENTOS E FAQ ==================== */
+/* ==================== DOCUMENTOS ==================== */
 
 .docs {
     list-style: none;
@@ -553,28 +643,6 @@ header nav {
 .docs b {
     margin-right: 8px;
     color: var(--accent);
-}
-
-.faq details {
-    margin-bottom: 10px;
-    padding: 14px 18px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-}
-
-.faq details[open] {
-    border-color: var(--accent);
-}
-
-.faq summary {
-    cursor: pointer;
-    font-weight: 600;
-    color: var(--head);
-}
-
-.faq p {
-    margin-top: 10px;
 }
 
 
@@ -644,6 +712,11 @@ select {
     background: var(--card);
     color: var(--text);
     font: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--muted);
 }
 
 textarea {
@@ -846,7 +919,7 @@ select:focus {
     justify-content: center;
     background: #25d366;
     border-radius: 50%;
-    box-shadow: 0 5px 20px #0005;
+    box-shadow: 0 5px 20px #0003;
     transition: transform 0.3s;
 }
 
@@ -893,7 +966,7 @@ select:focus {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 12px;
-    box-shadow: 0 10px 40px #0006;
+    box-shadow: 0 10px 40px #0a1a4a26;
     display: none;
 }
 
@@ -931,6 +1004,17 @@ select:focus {
 
 /* ==================== RESPONSIVO ==================== */
 
+@media (max-width: 1200px) and (min-width: 1025px) {
+    .menu {
+        gap: 16px;
+    }
+
+    .menu > li > a,
+    .sub-btn {
+        font-size: 0.85rem;
+    }
+}
+
 @media (max-width: 1024px) {
     .menu {
         position: fixed;
@@ -940,8 +1024,9 @@ select:focus {
         max-height: calc(100vh - var(--header-h));
         overflow-y: auto;
         flex-direction: column;
-        gap: 18px;
-        padding: 30px 5%;
+        align-items: stretch;
+        gap: 0;
+        padding: 20px 5% 30px;
         background: #050d24;
         transform: translateX(100%);
         visibility: hidden;
@@ -951,6 +1036,61 @@ select:focus {
     .menu.open {
         transform: none;
         visibility: visible;
+    }
+
+    .menu > li {
+        border-bottom: 1px solid #ffffff14;
+    }
+
+    .menu > li > a,
+    .sub-btn {
+        display: flex;
+        width: 100%;
+        padding: 14px 0;
+        font-size: 1rem;
+    }
+
+    .sub-btn {
+        justify-content: space-between;
+    }
+
+    .menu > li > a::after,
+    .sub-btn::after {
+        display: none;
+    }
+
+    /* Acordeão */
+    .submenu {
+        max-height: 0;
+        overflow: hidden;
+        padding-left: 14px;
+        border-left: 2px solid #4da3ff55;
+        margin-left: 4px;
+        transition: max-height 0.35s ease, padding 0.35s;
+    }
+
+    .has-sub.open > .submenu {
+        max-height: 400px;
+        padding-bottom: 12px;
+    }
+
+    .has-sub.open > .sub-btn {
+        color: #4da3ff;
+    }
+
+    .has-sub.open > .sub-btn svg {
+        transform: rotate(180deg);
+    }
+
+    .submenu a {
+        padding: 9px 10px;
+        color: #c9d6f5;
+    }
+
+    .submenu a:hover,
+    .submenu a.active {
+        background: #ffffff0d;
+        color: #4da3ff;
     }
 
     .burger {
@@ -992,5 +1132,63 @@ select:focus {
     #toTop {
         right: 32px;
         bottom: 92px;
+    }
+}
+
+/* ==================== TELA DE CARREGAMENTO ==================== */
+
+#loader {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f2f2f2;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+#loader.on,
+html.loading #loader {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Na página nova, a tela já entra visível, sem fade de entrada */
+html.loading #loader {
+    transition: none;
+}
+
+#loader i {
+    width: 100px;
+    height: 100px;
+    border: 2px solid transparent;
+    border-top-color: #0a1a4a;
+    border-left-color: #0a1a4a;
+    border-bottom-color: #0a1a4a;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Esconde o conteúdo até a página nova terminar de carregar */
+html.loading,
+html.loading body {
+    background: #f2f2f2;
+}
+
+html.loading body > *:not(#loader) {
+    visibility: hidden;
+}
+
+/* Com movimento reduzido ativado, a bolinha gira mais devagar em vez de parar */
+@media (prefers-reduced-motion: reduce) {
+    #loader i {
+        animation: spin 2.5s linear infinite !important;
     }
 }

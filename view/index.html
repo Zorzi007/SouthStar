@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<script>if(sessionStorage.getItem('nav'))document.documentElement.classList.add('loading')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>South Star Battery Metals | Grafite para o Futuro</title>
 <meta name="description" content="South Star Battery Metals – produtora de grafite natural em flocos na Bahia, Brasil. TSXV: STS | OTCQB: STSBF.">
@@ -48,11 +49,56 @@
    <img src="/img/Logo%20SouthStar%20-%20White.png" alt="South Star Battery Metals" width="180" height="46">
   </a>
   <ul class="menu" id="menu">
-   <li><a href="#sobre" data-en="About">Sobre</a></li>
-   <li><a href="#produto" data-en="Product">Produto</a></li>
-   <li><a href="#comercial" data-en="Sales">Comercial</a></li>
-   <li><a href="#investidores" data-en="Investors">Investidores</a></li>
-   <li><a href="#ferramentas" data-en="Tools">Ferramentas</a></li>
+   <li class="has-sub">
+    <button type="button" class="sub-btn" aria-expanded="false" aria-controls="sub-empresa"><span data-en="Company">Empresa</span> <i data-lucide="chevron-down"></i></button>
+    <ul class="submenu" id="sub-empresa">
+     <li><a href="#sobre" data-en="About">Sobre</a></li>
+     <li><a href="#equipe" data-en="Management">Liderança</a></li>
+     <li><a href="#historia" data-en="History">Trajetória</a></li>
+     <li><a href="/view/carreiras.html" data-en="Careers">Carreiras</a></li>
+    </ul>
+   </li>
+   <li class="has-sub">
+    <button type="button" class="sub-btn" aria-expanded="false" aria-controls="sub-projetos"><span data-en="Projects">Projetos</span> <i data-lucide="chevron-down"></i></button>
+    <ul class="submenu" id="sub-projetos">
+     <li><a href="#projetos">Santa Cruz</a></li>
+     <li><a href="#grafite" data-en="Why graphite?">Por que grafite?</a></li>
+     <li><a href="#cadeia" data-en="From mine to battery">Da mina à bateria</a></li>
+     <li><a href="#galeria" data-en="Gallery">Galeria</a></li>
+     <li><a href="/view/tour.html" data-en="360° virtual tour">Tour virtual 360°</a></li>
+    </ul>
+   </li>
+   <li class="has-sub">
+    <button type="button" class="sub-btn" aria-expanded="false" aria-controls="sub-produtos"><span data-en="Products">Produtos</span> <i data-lucide="chevron-down"></i></button>
+    <ul class="submenu" id="sub-produtos">
+     <li><a href="#produto" data-en="Specifications">Especificações</a></li>
+     <li><a href="#comercial" data-en="Buy graphite">Comprar grafite</a></li>
+    </ul>
+   </li>
+   <li class="has-sub">
+    <button type="button" class="sub-btn" aria-expanded="false" aria-controls="sub-esg"><span data-en="Sustainability">Sustentabilidade</span> <i data-lucide="chevron-down"></i></button>
+    <ul class="submenu" id="sub-esg">
+     <li><a href="#esg" data-en="ESG &amp; Safety">ESG e Segurança</a></li>
+     <li><a href="#painel-esg" data-en="ESG Dashboard">Painel ESG</a></li>
+    </ul>
+   </li>
+   <li class="has-sub">
+    <button type="button" class="sub-btn" aria-expanded="false" aria-controls="sub-inv"><span data-en="Investors">Investidores</span> <i data-lucide="chevron-down"></i></button>
+    <ul class="submenu" id="sub-inv">
+     <li><a href="#investidores" data-en="Overview">Visão geral</a></li>
+     <li><a href="#recursos" data-en="Mineral Resources">Recursos Minerais</a></li>
+     <li><a href="#ferramentas" data-en="Investor Tools">Ferramentas</a></li>
+    </ul>
+   </li>
+   <li class="has-sub">
+    <button type="button" class="sub-btn" aria-expanded="false" aria-controls="sub-news"><span data-en="News">Notícias</span> <i data-lucide="chevron-down"></i></button>
+    <ul class="submenu" id="sub-news">
+     <li><a href="#noticias" data-en="Latest Updates">Últimas atualizações</a></li>
+     <li><a href="/view/blog.html">Blog</a></li>
+     <li><a href="/view/imprensa.html" data-en="Press">Imprensa</a></li>
+    </ul>
+   </li>
+   <li><a href="#contato" data-en="Contact">Contato</a></li>
   </ul>
   <div class="nav-tools">
    <button id="langBtn" class="tool" type="button" aria-label="Mudar idioma">EN</button>
@@ -263,7 +309,7 @@
      <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
       <script src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
-      {"symbols":[["TSXV:STS|1M"],["OTC:STSBF|1M"]],"colorTheme":"dark","isTransparent":true,"autosize":true,"locale":"br","chartType":"area","lineColor":"#4da3ff","topColor":"rgba(77,163,255,0.3)","bottomColor":"rgba(77,163,255,0)"}
+      {"symbols":[["TSXV:STS|1M"],["OTC:STSBF|1M"]],"colorTheme":"light","isTransparent":true,"autosize":true,"locale":"br","chartType":"area","lineColor":"#1f4fd1","topColor":"rgba(31,79,209,0.25)","bottomColor":"rgba(31,79,209,0)"}
       </script>
      </div>
     </div>
@@ -368,8 +414,9 @@
    </table>
   </div>
 
-  <div class="ir-grid">
+  <div class="ir-grid faq-grid">
    <div class="reveal">
+    <p class="tag" data-en="Questions">Dúvidas</p>
     <h3 class="sub" data-en="FAQ">Perguntas frequentes</h3>
     <div class="faq">
      <details><summary data-en="Where can I buy South Star shares?">Onde posso comprar ações da South Star?</summary><p data-en="On the TSX Venture (STS) in Canada and on the OTCQB (STSBF) in the US. In Brazil, through brokers with international access.">Na TSX Venture (STS), no Canadá, e na OTCQB (STSBF), nos EUA. No Brasil, você compra por corretoras com acesso internacional.</p></details>
@@ -378,15 +425,22 @@
      <details><summary data-en="Where can I find official reports?">Onde encontro os relatórios oficiais?</summary><p data-en="On SEDAR+ and in the Documents section of this page.">No SEDAR+ e na seção Documentos desta página.</p></details>
      <details><summary data-en="Does the company pay dividends?">A empresa paga dividendos?</summary><p data-en="There is no dividend policy at the moment. The focus is on expanding production.">Não há política de dividendos no momento. O foco é a expansão da produção.</p></details>
     </div>
+    <a href="#contato" class="faq-more"><span data-en="Didn't find your answer? Talk to IR">Não achou sua resposta? Fale com RI</span> <i data-lucide="arrow-right"></i></a>
    </div>
-   <div class="reveal">
+
+   <div class="alert-card reveal">
+    <div class="alert-ic"><i data-lucide="bell-ring"></i></div>
     <h3 class="sub" data-en="Email alerts">Alertas por e-mail</h3>
-    <form id="alertForm" class="alert-form" action="https://formspree.io/f/SEU_ID" method="POST">
+    <p class="alert-desc" data-en="Get results, press releases and events straight to your inbox.">Receba resultados, comunicados e eventos direto na sua caixa de entrada.</p>
+    <form id="alertForm" action="https://formspree.io/f/SEU_ID" method="POST">
      <input type="email" name="email" placeholder="Seu e-mail" data-en-ph="Your email" required aria-label="E-mail" autocomplete="email">
-     <label class="chk"><input type="checkbox" name="alerta" value="resultados" checked> <span data-en="Quarterly results">Resultados trimestrais</span></label>
-     <label class="chk"><input type="checkbox" name="alerta" value="comunicados" checked> <span data-en="Press releases">Comunicados à imprensa</span></label>
-     <label class="chk"><input type="checkbox" name="alerta" value="eventos"> <span data-en="Events and webinars">Eventos e webinars</span></label>
-     <button class="btn btn-main" type="submit" data-en="Enable alerts">Ativar alertas</button>
+     <div class="chips" role="group" aria-label="Tipos de alerta">
+      <label class="chip"><input type="checkbox" name="alerta" value="resultados" checked><span data-en="Quarterly results">Resultados trimestrais</span></label>
+      <label class="chip"><input type="checkbox" name="alerta" value="comunicados" checked><span data-en="Press releases">Comunicados à imprensa</span></label>
+      <label class="chip"><input type="checkbox" name="alerta" value="eventos"><span data-en="Events and webinars">Eventos e webinars</span></label>
+     </div>
+     <button class="btn btn-main" type="submit"><i data-lucide="send"></i> <span data-en="Enable alerts">Ativar alertas</span></button>
+     <small class="alert-note" data-en="No spam. Unsubscribe anytime.">Sem spam. Cancele quando quiser.</small>
      <p class="form-msg" role="status" aria-live="polite"></p>
     </form>
    </div>
@@ -416,82 +470,80 @@
   <p class="tag" data-en="Sales">Comercial</p>
   <h2 class="title" data-en="Buy graphite from South Star">Compre grafite da South Star</h2>
   <div class="ir-grid">
-    <form id="quoteForm" class="alert-form quote-form reveal" action="https://formspree.io/f/SEU_ID" method="POST">
- <select name="tipo" required aria-label="Tipo de solicitação">
-  <option value="" data-en="Request type">Tipo de solicitação</option>
-  <option value="cotacao" data-en="Quote">Cotação</option>
-  <option value="amostra" data-en="Sample">Amostra</option>
-  <option value="contrato" data-en="Supply agreement">Contrato de fornecimento</option>
- </select>
+   <form id="quoteForm" class="quote-form reveal" action="https://formspree.io/f/SEU_ID" method="POST">
+    <select name="tipo" required aria-label="Tipo de solicitação">
+     <option value="" data-en="Request type">Tipo de solicitação</option>
+     <option value="cotacao" data-en="Quote">Cotação</option>
+     <option value="amostra" data-en="Sample">Amostra</option>
+     <option value="contrato" data-en="Supply agreement">Contrato de fornecimento</option>
+    </select>
 
- <input name="empresa" type="text" placeholder="Empresa" data-en-ph="Company" required aria-label="Empresa" autocomplete="organization">
+    <input name="empresa" type="text" placeholder="Empresa" data-en-ph="Company" required aria-label="Empresa" autocomplete="organization">
 
- <div class="form-row">
-  <input name="nome" type="text" placeholder="Nome do contato" data-en-ph="Contact name" required aria-label="Nome do contato" autocomplete="name">
-  <input name="cargo" type="text" placeholder="Cargo" data-en-ph="Job title" aria-label="Cargo" autocomplete="organization-title">
- </div>
+    <div class="form-row">
+     <input name="nome" type="text" placeholder="Nome do contato" data-en-ph="Contact name" required aria-label="Nome do contato" autocomplete="name">
+     <input name="cargo" type="text" placeholder="Cargo" data-en-ph="Job title" aria-label="Cargo" autocomplete="organization-title">
+    </div>
 
- <div class="form-row">
-  <input name="email" type="email" placeholder="E-mail corporativo" data-en-ph="Corporate email" required aria-label="E-mail corporativo" autocomplete="email">
-  <input name="telefone" type="tel" placeholder="Telefone / WhatsApp" data-en-ph="Phone / WhatsApp" aria-label="Telefone" autocomplete="tel">
- </div>
+    <div class="form-row">
+     <input name="email" type="email" placeholder="E-mail corporativo" data-en-ph="Corporate email" required aria-label="E-mail corporativo" autocomplete="email">
+     <input name="telefone" type="tel" placeholder="Telefone / WhatsApp" data-en-ph="Phone / WhatsApp" aria-label="Telefone" autocomplete="tel">
+    </div>
 
- <div class="form-row">
-  <select name="granulometria" required aria-label="Granulometria">
-   <option value="" data-en="Particle size">Granulometria</option>
-   <option value="+80">+80 mesh</option>
-   <option value="-80/+100">-80/+100 mesh</option>
-   <option value="-100">-100 mesh</option>
-  </select>
-  <select name="pureza" aria-label="Pureza">
-   <option value="" data-en="Purity (Cg)">Pureza (Cg)</option>
-   <option value="94-95">94–95%</option>
-   <option value="95-97">95–97%</option>
-   <option value="97-99">97–99%</option>
-  </select>
- </div>
+    <div class="form-row">
+     <select name="granulometria" required aria-label="Granulometria">
+      <option value="" data-en="Particle size">Granulometria</option>
+      <option value="+80">+80 mesh</option>
+      <option value="-80/+100">-80/+100 mesh</option>
+      <option value="-100">-100 mesh</option>
+     </select>
+     <select name="pureza" aria-label="Pureza">
+      <option value="" data-en="Purity (Cg)">Pureza (Cg)</option>
+      <option value="94-95">94–95%</option>
+      <option value="95-97">95–97%</option>
+      <option value="97-99">97–99%</option>
+     </select>
+    </div>
 
- <div class="form-row">
-  <input name="volume" type="number" placeholder="Volume anual (t)" data-en-ph="Annual volume (t)" min="1" aria-label="Volume anual">
-  <select name="frequencia" aria-label="Frequência de entrega">
-   <option value="" data-en="Delivery frequency">Frequência de entrega</option>
-   <option value="spot" data-en="Spot (single)">Spot (única)</option>
-   <option value="mensal" data-en="Monthly">Mensal</option>
-   <option value="trimestral" data-en="Quarterly">Trimestral</option>
-  </select>
- </div>
+    <div class="form-row">
+     <input name="volume" type="number" placeholder="Volume anual (t)" data-en-ph="Annual volume (t)" min="1" aria-label="Volume anual">
+     <select name="frequencia" aria-label="Frequência de entrega">
+      <option value="" data-en="Delivery frequency">Frequência de entrega</option>
+      <option value="spot" data-en="Spot (single)">Spot (única)</option>
+      <option value="mensal" data-en="Monthly">Mensal</option>
+      <option value="trimestral" data-en="Quarterly">Trimestral</option>
+     </select>
+    </div>
 
- <div class="form-row">
-  <select name="incoterm" aria-label="Incoterm">
-   <option value="" data-en="Incoterm">Incoterm</option>
-   <option value="FOB">FOB</option>
-   <option value="CIF">CIF</option>
-   <option value="CFR">CFR</option>
-   <option value="EXW">EXW</option>
-  </select>
-  <select name="embalagem" aria-label="Embalagem">
-   <option value="" data-en="Packaging">Embalagem</option>
-   <option value="bigbag-1t" data-en="Big bag 1 t">Big bag 1 t</option>
-   <option value="saco-25kg" data-en="25 kg bags">Sacos de 25 kg</option>
-   <option value="outra" data-en="Other">Outra</option>
-  </select>
- </div>
+    <div class="form-row">
+     <select name="incoterm" aria-label="Incoterm">
+      <option value="" data-en="Incoterm">Incoterm</option>
+      <option value="FOB">FOB</option>
+      <option value="CIF">CIF</option>
+      <option value="CFR">CFR</option>
+      <option value="EXW">EXW</option>
+     </select>
+     <select name="embalagem" aria-label="Embalagem">
+      <option value="" data-en="Packaging">Embalagem</option>
+      <option value="bigbag-1t" data-en="Big bag 1 t">Big bag 1 t</option>
+      <option value="saco-25kg" data-en="25 kg bags">Sacos de 25 kg</option>
+      <option value="outra" data-en="Other">Outra</option>
+     </select>
+    </div>
 
- <input name="destino" type="text" placeholder="País / porto de destino" data-en-ph="Destination country / port" aria-label="Destino">
+    <input name="destino" type="text" placeholder="País / porto de destino" data-en-ph="Destination country / port" aria-label="Destino">
 
- <textarea name="obs" rows="3" placeholder="Observações" data-en-ph="Notes" aria-label="Observações"></textarea>
+    <textarea name="obs" rows="3" placeholder="Observações" data-en-ph="Notes" aria-label="Observações"></textarea>
 
- <label class="chk">
-  <input type="checkbox" name="lgpd" required>
-  <span data-en="I agree to the processing of my data under the Privacy Policy.">Concordo com o tratamento dos meus dados conforme a Política de Privacidade.</span>
- </label>
+    <label class="chk">
+     <input type="checkbox" name="lgpd" required>
+     <span data-en="I agree to the processing of my data under the Privacy Policy.">Concordo com o tratamento dos meus dados conforme a Política de Privacidade.</span>
+    </label>
 
- <button class="btn btn-main" type="submit" data-en="Send request">Enviar solicitação</button>
- <p class="form-msg" role="status" aria-live="polite"></p>
-</form>
+    <button class="btn btn-main" type="submit" data-en="Send request">Enviar solicitação</button>
+    <p class="form-msg" role="status" aria-live="polite"></p>
+   </form>
 
-
-   
    <div class="reveal">
     <div id="worldMap" role="region" aria-label="Mapa logístico mundial"></div>
     <div class="lanes">
@@ -619,19 +671,27 @@
    <div>
     <h4 data-en="Company">Empresa</h4>
     <a href="#sobre" data-en="About">Sobre</a>
-    <a href="#produto" data-en="Product">Produto</a>
-    <a href="#comercial" data-en="Sales">Comercial</a>
+    <a href="#equipe" data-en="Management">Liderança</a>
+    <a href="#projetos" data-en="Projects">Projetos</a>
+    <a href="#produto" data-en="Products">Produtos</a>
+    <a href="#esg" data-en="Sustainability">Sustentabilidade</a>
+    <a href="/view/carreiras.html" data-en="Careers">Carreiras</a>
    </div>
    <div>
     <h4 data-en="Investors">Investidores</h4>
     <a href="#investidores" data-en="Overview">Visão geral</a>
+    <a href="#recursos" data-en="Mineral Resources">Recursos Minerais</a>
     <a href="#ferramentas" data-en="Tools">Ferramentas</a>
     <a href="#noticias" data-en="News">Notícias</a>
+    <a href="/view/blog.html">Blog</a>
    </div>
    <div>
     <h4 data-en="Contact">Contato</h4>
     <a href="mailto:info@southstarbatterymetals.com">info@southstarbatterymetals.com</a>
+    <a href="#comercial" data-en="Buy graphite">Comprar grafite</a>
     <a href="#contato" data-en="Send a message">Enviar mensagem</a>
+    <a href="/view/imprensa.html" data-en="Press">Imprensa</a>
+    <a href="/view/privacidade.html" data-en="Privacy Policy">Política de Privacidade</a>
    </div>
    <div>
     <h4 data-en="Social">Redes sociais</h4>
@@ -652,7 +712,7 @@
 </div>
 
 <a href="https://wa.me/5571999999999?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20comerciais" class="whatsapp" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
- <svg viewBox="0 0 32 32" width="28" height="28" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.7 3.3 15.7c0 2.5.7 4.9 2 7L3 29l6.5-2.1c2 1.1 4.2 1.7 6.5 1.7 7 0 12.7-5.7 12.7-12.7S23 3 16 3zm0 23.2c-2.1 0-4.1-.6-5.9-1.7l-.4-.3-3.9 1.3 1.3-3.8-.3-.4c-1.2-1.8-1.9-4-1.9-6.2C4.9 9.6 9.9 4.6 16 4.6s11.1 5 11.1 11.1-5 10.5-11.1 10.5zm6.1-7.9c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.7-1.7-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.5 0-.6l-1.1-2.6c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2 2.9 1.2 3.5.9 4.1.9.6-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.2-.3-.3-.6-.4z"/></svg>
+ <svg viewBox="0 0 32 32" width="28" height="28" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.7 3.3 15.7c0 2.5.7 4.9 2 7L3 29l6.5-2.1c2 1.1 4.2 1.7 6.5 1.7 7 0 12.7-5.7 12.7-12.7S23 3 16 3zm0 23.2c-2.1 0-4.1-.6-5.9-1.7l-.4-.3-3.9 1.3 1.3-3.8-.3-.4c-1.2-1.8-1.9-4-1.9-6.2C4.9 9.6 9.9 4.6 16 4.6s11.1 5 11.1 11.1-5 10.5-11.1 10.5zm6.1-7.9c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.7-1.7-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.5 0-.6l-1.1-2.6c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2 2.9 1.2 3.5.9 4.1.9.6-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.600-.1-.2-.3-.3-.6-.4z"/></svg>
 </a>
 
 <div id="cookie" role="dialog" aria-label="Aviso de cookies">
@@ -670,11 +730,11 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src="/js/script.js"></script>
 <script>
-
-
-
-
 (() => {
+
+
+
+
   /* Garante que os ícones apareçam mesmo se o script.js falhar */
   const icons = () => { if (window.lucide) lucide.createIcons(); };
   icons();

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<script>if(sessionStorage.getItem('nav'))document.documentElement.classList.add('loading')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blog | South Star Battery Metals</title>
 <meta name="description" content="Análises e notícias sobre o mercado de grafite, baterias e a operação Santa Cruz.">
@@ -9,8 +10,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/base.css">
-<link rel="stylesheet" href="../css/blog.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/blog.css">
 </head>
 <body>
 <div id="hdr"></div>
@@ -48,13 +49,6 @@
 <script src="/js/pages.js"></script>
 <script src="/js/script.js"></script>
 <script>
-
-
-
-
-
-
-
 /* Para publicar um post novo, basta acrescentar um objeto neste array */
 const POSTS = [
  {
@@ -99,7 +93,7 @@ if (post) {
   const url = encodeURIComponent(location.href), t = encodeURIComponent(post.titulo);
   root.innerHTML = `
    <article class="post reveal">
-    <a href="blog.html" class="more">← Voltar ao blog</a>
+    <a href="/view/blog.html" class="more">← Voltar ao blog</a>
     <img src="${post.img}" alt="${post.titulo}">
     ${post.corpo}
     <div class="share">

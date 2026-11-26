@@ -551,7 +551,7 @@ tbody tr:hover {
 }
 
 
-/* ==================== CALCULADORA E ALERTAS ==================== */
+/* ==================== CALCULADORA ==================== */
 
 .calc {
     background: var(--card);
@@ -618,6 +618,209 @@ tbody tr:hover {
     display: none;
 }
 
+
+/* ==================== FAQ ==================== */
+
+.faq-grid .sub {
+    margin-top: 6px;
+}
+
+.faq {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.faq details {
+    padding: 0;
+    margin: 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.faq details:hover {
+    border-color: var(--accent);
+}
+
+.faq details[open] {
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px #1f4fd114;
+}
+
+.faq summary {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 22px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.faq summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq summary::after {
+    content: "+";
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #1f4fd114;
+    color: var(--accent);
+    font-size: 1.3rem;
+    line-height: 1;
+    transition: transform 0.3s, background 0.3s, color 0.3s;
+}
+
+.faq details[open] summary::after {
+    transform: rotate(45deg);
+    background: var(--grad);
+    color: #fff;
+}
+
+.faq summary:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 14px;
+}
+
+.faq details p {
+    margin: 0;
+    padding: 0 22px 20px;
+    color: var(--muted);
+}
+
+.faq-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.faq-more svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s;
+}
+
+.faq-more:hover svg {
+    transform: translateX(4px);
+}
+
+
+/* ==================== ALERTAS POR E-MAIL ==================== */
+
+.alert-card {
+    padding: 36px;
+    background: linear-gradient(160deg, #fff 0%, #eef4ff 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 15px 40px #1f4fd10f;
+}
+
+.alert-card .sub {
+    margin: 0 0 8px;
+}
+
+.alert-ic {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 18px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--grad);
+    color: #fff;
+    box-shadow: 0 0 16px #4da3ff33;
+}
+
+.alert-ic svg {
+    width: 24px;
+    height: 24px;
+}
+
+.alert-desc {
+    margin: 0 0 22px;
+    color: var(--muted);
+}
+
+#alertForm {
+    display: grid;
+    gap: 18px;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.chip {
+    position: relative;
+}
+
+.chip input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.chip span {
+    display: inline-block;
+    padding: 9px 16px;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    background: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.chip span::before {
+    content: "+ ";
+}
+
+.chip:hover span {
+    border-color: var(--accent);
+}
+
+.chip input:checked + span {
+    background: var(--grad);
+    color: #fff;
+    border-color: transparent;
+}
+
+.chip input:checked + span::before {
+    content: "✓ ";
+}
+
+.chip input:focus-visible + span {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+}
+
+#alertForm .btn {
+    justify-content: center;
+}
+
+.alert-note {
+    margin-top: -8px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+
 /* ==================== FORMULÁRIO COMERCIAL ==================== */
 
 #comercial .ir-grid + .sub {
@@ -663,7 +866,6 @@ tbody tr:hover {
         grid-template-columns: 1fr;
     }
 }
-
 
 
 /* ==================== DA MINA À BATERIA ==================== */
@@ -724,7 +926,7 @@ tbody tr:hover {
 
 .bar > div {
     height: 10px;
-    background: #1e2d5a;
+    background: #1f4fd11a;
     border-radius: 999px;
     overflow: hidden;
 }
@@ -781,6 +983,11 @@ tbody tr:hover {
     gap: 50px;
 }
 
+/* Contato com fundo alternado */
+#contato {
+    background: var(--bg2);
+}
+
 
 /* ==================== ACESSIBILIDADE ==================== */
 
@@ -792,11 +999,16 @@ tbody tr:hover {
     .bar > div > i,
     .gallery img,
     .step,
-    .lane {
+    .lane,
+    .faq details,
+    .faq summary::after,
+    .faq-more svg,
+    .chip span {
         transition: none;
     }
 
-    .lane:hover {
+    .lane:hover,
+    .faq-more:hover svg {
         transform: none;
     }
 }
@@ -860,9 +1072,16 @@ tbody tr:hover {
     .lane-days strong {
         font-size: 1.1rem;
     }
-}
 
-/* Contato com fundo branco (alternância de seções) */
-#contato {
-    background: var(--bg2);
+    .alert-card {
+        padding: 24px;
+    }
+
+    .faq summary {
+        padding: 16px 18px;
+    }
+
+    .faq details p {
+        padding: 0 18px 16px;
+    }
 }

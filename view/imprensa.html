@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<script>if(sessionStorage.getItem('nav'))document.documentElement.classList.add('loading')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Imprensa | South Star Battery Metals</title>
 <meta name="description" content="Kit de mídia, releases e contato de imprensa da South Star Battery Metals.">
-<link rel="canonical" href="https://southstarbatterymetals.com/imprensa.html">
+<link rel="canonical" href="https://southstarbatterymetals.com/view/imprensa.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/base.css">
-<link rel="stylesheet" href="/css/imprensa.css"> <!-- troque pelo CSS da página -->
+<link rel="stylesheet" href="/css/imprensa.css">
 </head>
 <body>
+<a href="#main" class="skip">Pular para o conteúdo</a>
 <div id="hdr"></div>
 
-<main>
+<main id="main">
  <section class="page-hero">
   <div class="container">
    <p class="tag">Sala de imprensa</p>
@@ -28,10 +32,10 @@
    <p class="tag">Downloads</p>
    <h2 class="title">Kit de mídia</h2>
    <div class="kit">
-    <div class="mk reveal"><i data-lucide="image" class="ic"></i><h3>Logotipos</h3><p>SVG e PNG, versões clara e escura.</p><a href="assets/logo-southstar.svg" class="btn btn-out" download>SVG</a><a href="assets/logo-southstar.png" class="btn btn-out" download>PNG</a></div>
-    <div class="mk reveal"><i data-lucide="camera" class="ic"></i><h3>Fotos em alta</h3><p>Mina, planta e equipe.</p><a href="assets/fotos-alta.zip" class="btn btn-out" download>Baixar ZIP</a></div>
-    <div class="mk reveal"><i data-lucide="file-text" class="ic"></i><h3>Fact sheet</h3><p>Resumo da empresa em uma página.</p><a href="assets/fact-sheet.pdf" class="btn btn-out" download>PDF</a></div>
-    <div class="mk reveal"><i data-lucide="package" class="ic"></i><h3>Kit completo</h3><p>Todos os materiais em um só arquivo.</p><a href="assets/press-kit.zip" class="btn btn-main" download>Baixar kit</a></div>
+    <div class="mk reveal"><i data-lucide="image" class="ic"></i><h3>Logotipos</h3><p>SVG e PNG, versões clara e escura.</p><a href="/assets/logo-southstar.svg" class="btn btn-out" download>SVG</a><a href="/assets/logo-southstar.png" class="btn btn-out" download>PNG</a></div>
+    <div class="mk reveal"><i data-lucide="camera" class="ic"></i><h3>Fotos em alta</h3><p>Mina, planta e equipe.</p><a href="/assets/fotos-alta.zip" class="btn btn-out" download>Baixar ZIP</a></div>
+    <div class="mk reveal"><i data-lucide="file-text" class="ic"></i><h3>Fact sheet</h3><p>Resumo da empresa em uma página.</p><a href="/assets/fact-sheet.pdf" class="btn btn-out" download>PDF</a></div>
+    <div class="mk reveal"><i data-lucide="package" class="ic"></i><h3>Kit completo</h3><p>Todos os materiais em um só arquivo.</p><a href="/assets/press-kit.zip" class="btn btn-main" download>Baixar kit</a></div>
    </div>
 
    <h3 class="sub">Cores da marca <small class="muted" style="display:inline">(clique para copiar)</small></h3>
@@ -61,18 +65,18 @@
     <h2 class="title">Assessoria de imprensa</h2>
     <ul class="checks">
      <li>[PREENCHER: nome do responsável]</li>
-     <li>press@southstarbatterymetals.com</li>
+     <li><a href="mailto:press@southstarbatterymetals.com" style="color:var(--accent)">press@southstarbatterymetals.com</a></li>
      <li>Entrevistas em português e inglês</li>
     </ul>
    </div>
    <form class="ajax alert-form reveal" action="https://formspree.io/f/SEU_ID" method="POST">
     <input type="hidden" name="_subject" value="Solicitação de imprensa">
-    <input name="nome" placeholder="Nome" required>
-    <input name="veiculo" placeholder="Veículo / publicação" required>
-    <input name="email" type="email" placeholder="E-mail" required>
-    <textarea name="pauta" rows="4" placeholder="Pauta e prazo" required></textarea>
-    <button class="btn btn-main">Enviar solicitação</button>
-    <p class="form-msg" role="status"></p>
+    <input name="nome" type="text" placeholder="Nome" required aria-label="Nome" autocomplete="name">
+    <input name="veiculo" type="text" placeholder="Veículo / publicação" required aria-label="Veículo ou publicação" autocomplete="organization">
+    <input name="email" type="email" placeholder="E-mail" required aria-label="E-mail" autocomplete="email">
+    <textarea name="pauta" rows="4" placeholder="Pauta e prazo" required aria-label="Pauta e prazo"></textarea>
+    <button class="btn btn-main" type="submit">Enviar solicitação</button>
+    <p class="form-msg" role="status" aria-live="polite"></p>
    </form>
   </div>
  </section>
@@ -80,17 +84,13 @@
 
 <div id="ftr"></div>
 
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 <script src="/js/pages.js"></script>
 <script src="/js/script.js"></script>
 <script>
-
-
-
-
 const CORES = [['Navy', '#0a1a4a'], ['Royal', '#1f4fd1'], ['Star', '#4da3ff'], ['Ice', '#9cc9ff'], ['Deep', '#050d24']];
 $('#swatches').innerHTML = CORES.map(([n, h]) =>
-  `<button class="swatch" data-hex="${h}"><i style="background:${h}"></i><span><b>${n}</b><br>${h}</span></button>`).join('');
+  `<button type="button" class="swatch" data-hex="${h}" aria-label="Copiar cor ${n} ${h}"><i style="background:${h}"></i><span><b>${n}</b><br>${h}</span></button>`).join('');
 $$('.swatch').forEach(s => s.onclick = () => {
   navigator.clipboard.writeText(s.dataset.hex);
   const b = s.querySelector('b'), old = b.textContent;

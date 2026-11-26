@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<script>if(sessionStorage.getItem('nav'))document.documentElement.classList.add('loading')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carreiras | South Star Battery Metals</title>
 <meta name="description" content="Trabalhe na South Star: vagas na mina Santa Cruz, sul da Bahia.">
-<link rel="canonical" href="https://southstarbatterymetals.com/carreiras.html">
+<link rel="canonical" href="https://southstarbatterymetals.com/view/carreiras.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/base.css">
-<link rel="stylesheet" href="/css/carreiras.css"> <!-- troque pelo CSS da página -->
+<link rel="stylesheet" href="/css/carreiras.css">
 </head>
 <body>
+<a href="#main" class="skip">Pular para o conteúdo</a>
 <div id="hdr"></div>
 
-<main>
+<main id="main">
  <section class="page-hero">
   <div class="container">
    <p class="tag">Trabalhe conosco</p>
@@ -40,12 +44,12 @@
    <p class="tag">Oportunidades</p>
    <h2 class="title">Vagas abertas</h2>
    <div class="filters" role="group" aria-label="Filtrar vagas" style="margin-bottom:25px">
-    <button class="filter active" data-area="all">Todas</button>
-    <button class="filter" data-area="Operação">Operação</button>
-    <button class="filter" data-area="Engenharia">Engenharia</button>
-    <button class="filter" data-area="Administrativo">Administrativo</button>
+    <button type="button" class="filter active" data-area="all" aria-pressed="true">Todas</button>
+    <button type="button" class="filter" data-area="Operação" aria-pressed="false">Operação</button>
+    <button type="button" class="filter" data-area="Engenharia" aria-pressed="false">Engenharia</button>
+    <button type="button" class="filter" data-area="Administrativo" aria-pressed="false">Administrativo</button>
    </div>
-   <div id="jobs"></div>
+   <div id="jobs" aria-live="polite"></div>
   </div>
  </section>
 
@@ -58,14 +62,17 @@
    </div>
    <form class="ajax alert-form reveal" action="https://formspree.io/f/SEU_ID" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="_subject" value="Nova candidatura">
-    <input name="nome" placeholder="Nome completo" required>
-    <input name="email" type="email" placeholder="E-mail" required>
-    <input name="telefone" type="tel" placeholder="Telefone / WhatsApp" required>
-    <select name="vaga" id="vagaSel" required><option value="">Vaga de interesse</option><option>Banco de talentos</option></select>
+    <input name="nome" type="text" placeholder="Nome completo" required aria-label="Nome completo" autocomplete="name">
+    <input name="email" type="email" placeholder="E-mail" required aria-label="E-mail" autocomplete="email">
+    <input name="telefone" type="tel" placeholder="Telefone / WhatsApp" required aria-label="Telefone" autocomplete="tel">
+    <select name="vaga" id="vagaSel" required aria-label="Vaga de interesse">
+     <option value="">Vaga de interesse</option>
+     <option>Banco de talentos</option>
+    </select>
     <label class="muted" style="margin:0">Currículo (PDF, até 5 MB)<input name="curriculo" type="file" accept=".pdf" required></label>
-    <label class="chk"><input type="checkbox" required> Autorizo o uso dos meus dados para o processo seletivo, conforme a <a href="privacidade.html" style="color:var(--accent)">LGPD</a>.</label>
-    <button class="btn btn-main">Enviar candidatura</button>
-    <p class="form-msg" role="status"></p>
+    <label class="chk"><input type="checkbox" name="lgpd" required> <span>Autorizo o uso dos meus dados para o processo seletivo, conforme a <a href="/view/privacidade.html" style="color:var(--accent)">Política de Privacidade (LGPD)</a>.</span></label>
+    <button class="btn btn-main" type="submit">Enviar candidatura</button>
+    <p class="form-msg" role="status" aria-live="polite"></p>
    </form>
   </div>
  </section>
@@ -73,16 +80,10 @@
 
 <div id="ftr"></div>
 
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 <script src="/js/pages.js"></script>
 <script src="/js/script.js"></script>
 <script>
-
-
-
-
-
-
 /* Edite as vagas aqui [PREENCHER com as vagas reais] */
 const VAGAS = [
   { t: 'Operador de Planta de Beneficiamento', a: 'Operação', l: 'Santa Cruz – BA', r: 'CLT · Turno' },
@@ -102,12 +103,14 @@ const render = () => {
     </div>
     <a href="#candidatura" class="btn btn-main" data-vaga="${v.t}">Candidatar-se</a>
    </div>`).join('') : '<p class="empty">Nenhuma vaga nesta área no momento.</p>';
-  lucide.createIcons(); observeReveal();
+  if (window.lucide) lucide.createIcons();
+  observeReveal();
   $$('[data-vaga]').forEach(b => b.onclick = () => $('#vagaSel').value = b.dataset.vaga);
 };
 $$('.filter').forEach(b => b.onclick = () => {
-  $$('.filter').forEach(x => x.classList.remove('active'));
-  b.classList.add('active'); area = b.dataset.area; render();
+  $$('.filter').forEach(x => { x.classList.remove('active'); x.setAttribute('aria-pressed', 'false'); });
+  b.classList.add('active'); b.setAttribute('aria-pressed', 'true');
+  area = b.dataset.area; render();
 });
 render();
 </script>
